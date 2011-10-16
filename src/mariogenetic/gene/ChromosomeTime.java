@@ -30,7 +30,8 @@ public class ChromosomeTime extends Chromosome{
         }
 
         for (int i = 0; i < special.length; i++) {
-            special[i] = Chromosome.possibleSpecial[generator.nextInt(Chromosome.possibleSpecial.length)];
+            special[i] = GeneticsConf.getJump(generator.nextDouble());
+                    //Chromosome.possibleSpecial[generator.nextInt(Chromosome.possibleSpecial.length)];
         }
     }
     public boolean isEnd(long time)

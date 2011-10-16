@@ -13,6 +13,9 @@ public class GeneticsConf {
 
     public static double right_probability = 0.85;
     public static double left_probability = 0.1;
+
+    public static double jump_probability = 0.2;
+
     public static int getMove(Double d)
     {
         if(d>=right_probability+left_probability)
@@ -21,6 +24,12 @@ public class GeneticsConf {
             return Global.MOVE_LEFT;
         else
             return Global.MOVE_RIGHT;
+    }
+    public static int getJump(Double d)
+    {
+        if(d<=jump_probability)
+            return Global.MOVE_JUMP;
+        return Global.MOVE_NONE;
     }
 
 }

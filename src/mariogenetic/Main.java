@@ -121,6 +121,13 @@ public class Main extends JPanel implements Runnable{
         menu.add(mi_loadmap);
 
         JMenuItem mi_settings = new JMenuItem("Settings",new ImageIcon("img/configuration02.png"));
+        mi_settings.addActionListener(new ActionListener(){
+
+            public void actionPerformed(ActionEvent e) {
+                Conf.main(null);
+            }
+
+        });
         menu.add(mi_settings);
 
         
