@@ -5,6 +5,7 @@
 
 package mariogenetic;
 
+import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -13,12 +14,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JToolBar;
 
 import mariogenetic.game.*;
 import mariogenetic.mapeditor.MapMain;
@@ -130,6 +133,20 @@ public class Main extends JPanel implements Runnable{
         });
         menu.add(mi_settings);
 
+        JToolBar toolbar = new JToolBar("Tools", JToolBar.HORIZONTAL);
+        toolbar.setFloatable(false);
+        JButton btn_restart = new JButton("Restart",new ImageIcon("img/reload.png"));
+        btn_restart.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+//                main.gamestate.reset();
+//                main.resources.reset();
+            }
+        });
+        toolbar.add(btn_restart);
+
+        frame.setLayout(new BorderLayout());
+        frame.add(toolbar,BorderLayout.NORTH);
         
         jmb.add(menu);
         frame.setJMenuBar(jmb);
