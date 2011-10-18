@@ -40,6 +40,7 @@ public class Conf extends JPanel{
         public static final Color color_map_not_selected = (new JButton()).getBackground();
         public static final Color color_map_object_selected = Color.MAGENTA;
         public static boolean show_coords = true;
+        public static boolean mouse_cam = false;
 
 
         public static void main(String[] args) {
@@ -71,21 +72,48 @@ public class Conf extends JPanel{
 
             JPanel container = new JPanel();
 
-            final JSlider sli_jmp = new JSlider(0, 1000);
+            final FloatSlider sli_jmp = new FloatSlider(1.0); 
+            sli_jmp.setValue(GeneticsConf.jump_probability);
+            final JLabel txt_jmp = new JLabel(String.format("Jump probability:%.2f", sli_jmp.getFloatValue()));
+            
+            final FloatSlider sli_move = new FloatSlider(1.0); 
+            sli_move.setValue(GeneticsConf.move_probability);
+            final JLabel txt_move = new JLabel(String.format("Move probability:%.2f", sli_move.getFloatValue()));
+            
+            final FloatSlider sli_lr = new FloatSlider(1.0); 
+            sli_lr.setValue(GeneticsConf.right_probability);
+            final JLabel txt_lr = new JLabel(String.format("Right probability:%.2f (left:%.2f)", sli_lr.getFloatValue(),1-sli_lr.getFloatValue()));
 
-            double sli_init = 200;
-            final JLabel txt_jmp = new JLabel(String.format("Jump probability:%.2f", sli_init/sli_jmp.getMaximum()));
             sli_jmp.addChangeListener(new ChangeListener() {
-
             public void stateChanged(ChangeEvent e) {
-                GeneticsConf.jump_probability = (double)sli_jmp.getValue();
-                txt_jmp.setText(String.format("Jump probability:%.2f", GeneticsConf.jump_probability/sli_jmp.getMaximum()));
+                GeneticsConf.jump_probability = sli_jmp.getFloatValue();
+                txt_jmp.setText(String.format("Jump probability:%.2f", GeneticsConf.jump_probability));
             }
             });
-            
-            sli_jmp.setValue((int)sli_init);
+
+            sli_move.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                GeneticsConf.move_probability = sli_move.getFloatValue();
+                txt_move.setText(String.format("Move probability:%.2f", GeneticsConf.move_probability));
+            }
+            });
+
+            sli_lr.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                GeneticsConf.right_probability = sli_lr.getFloatValue();
+//                GeneticsConf.left_probability = 1-sli_lr.getFloatValue();
+                txt_lr.setText(String.format("Right probability:%.2f (left:%.2f)", GeneticsConf.right_probability,1-GeneticsConf.right_probability));
+            }
+            });
+                        
             container.add(txt_jmp);
             container.add(sli_jmp);
+
+            container.add(txt_move);
+            container.add(sli_move);
+
+            container.add(txt_lr);
+            container.add(sli_lr);
 
             frame.add(toolbar,BorderLayout.NORTH);
             frame.add(container,BorderLayout.CENTER);

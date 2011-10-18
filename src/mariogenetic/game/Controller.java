@@ -46,5 +46,9 @@ public abstract class Controller implements KeyListener{
     public void generateEvent() {
         
     }
+    public void resetPopulation()
+    {
+        
+    }
 
 }

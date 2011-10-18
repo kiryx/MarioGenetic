@@ -6,6 +6,7 @@
 package mariogenetic.game;
 
 import java.awt.event.KeyEvent;
+import mariogenetic.GeneticsConf;
 import mariogenetic.Global;
 import mariogenetic.gene.Chromosome;
 import mariogenetic.gene.ChromosomeTime;
@@ -26,9 +27,15 @@ public class ControllerTime extends Controller{
     {
         //c1 = new ChromosomeTime();
         p = new Population();
-        p.generateNew(Global.population_size);
+        p.generateNew(GeneticsConf.population_size);
     }
 
+    public void resetPopulation()
+    {
+        p = new Population();
+        p.generateNew(GeneticsConf.population_size);
+        current_chromosome=0;
+    }
     public void keyPressed(KeyEvent e) {
         super.keyPressed(e);
     }
@@ -63,11 +70,14 @@ public class ControllerTime extends Controller{
             }
             c1.setGameState(m.gamestate);
             c1.calcFunc();
+            System.out.print(Global.global_result_counter+++" ");
             System.out.println(c1);
             current_chromosome++;
             if(current_chromosome==p.chromosomes.size())
             {
+                Global.shuffling_resources=true;
                 p.nextPopulation();
+                Global.shuffling_resources=false;
                 current_chromosome=0;
             }
             //current_chromosome%=p.chromosomes.size();
@@ -86,6 +96,10 @@ public class ControllerTime extends Controller{
         else if(move==Global.MOVE_RIGHT)
         {
             a.right();
+        }
+        else if(move==Global.MOVE_NONE)
+        {
+            a.stopX();
         }
 
     }

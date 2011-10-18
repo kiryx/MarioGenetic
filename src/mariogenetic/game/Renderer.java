@@ -17,7 +17,7 @@ import mariogenetic.*;
 public abstract class Renderer {
 
     public Camera camera;
-    public Main m = Global.frame_main;
+    
     public Renderer(){camera = new Camera(new Vector(0.0,0.0));}
     
     void render() {}

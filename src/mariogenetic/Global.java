@@ -36,5 +36,8 @@ public class Global {
 
     public static int camera_actor = 0;
 
-    public static int population_size = 10;
+    public static boolean shuffling_resources = false;
+    public static int global_result_counter = 0;
+
+    
 }

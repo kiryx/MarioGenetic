@@ -15,12 +15,12 @@ import mariogenetic.objects.WorldObject;
  * @author alice
  */
 public class Camera {
-    public Vector pos;
+    private Vector position;
 //    public Vector followBox;
     WorldObject following;
     public Camera(Vector initial_pos)
     {
-        pos = initial_pos;
+        position = initial_pos;
 //        followBox = new Vector(100,100);
     }
     public Camera(Vector initial_pos, WorldObject o)
@@ -30,11 +30,25 @@ public class Camera {
     }
     public void setFollow(WorldObject o)
     {
-        following = o;
+        following = o;        
     }
+    public void setPosition(Vector pos)
+    {
+        this.position = pos;
+    }
+    public Vector getPosition()
+    {
+        return position;
+    }
+
     public void update()
     {
-        pos = following.position;
+        
+        if(following!=null)
+        {
+            position = following.position;
+            
+        }
        
     }
 }

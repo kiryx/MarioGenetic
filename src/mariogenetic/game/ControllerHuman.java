@@ -67,5 +67,6 @@ public class ControllerHuman extends Controller{
             m.resources.actors.get(0).stopX();
         }
     }
+    
 
 }

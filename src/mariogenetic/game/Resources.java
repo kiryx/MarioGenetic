@@ -29,14 +29,17 @@ public class Resources {
     public Actor main_actor;
 
     public Resources(String file){
+        Global.shuffling_resources=true;
         actors = new ArrayList<Actor>();
         terrain = new ArrayList<Terrain>();
         bonus = new ArrayList<Bonus>();
+        Global.shuffling_resources=false;
         resourceName = file;
         loadResources(file);
     }
     public void loadResources(String file)
     {
+        Global.shuffling_resources=true;
 //        synchronized(actors)
 //        {
 //            actors.clear();
@@ -108,7 +111,8 @@ public class Resources {
             in.close();
         } catch (IOException e) {
         }
-                
+
+        Global.shuffling_resources=false;
     }
 
     public ArrayList<WorldObject> getReopenedResource()

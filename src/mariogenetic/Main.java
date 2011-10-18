@@ -6,6 +6,7 @@
 package mariogenetic;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -43,6 +44,7 @@ public class Main extends JPanel implements Runnable{
             this.setDoubleBuffered(true);
             this.setPreferredSize(Conf.window_main_size);
             this.setIgnoreRepaint(true);
+            
             Graphics2D g2 =(Graphics2D) this.getGraphics();
             Global.frame_main = this;
             
@@ -134,16 +136,67 @@ public class Main extends JPanel implements Runnable{
         menu.add(mi_settings);
 
         JToolBar toolbar = new JToolBar("Tools", JToolBar.HORIZONTAL);
+        toolbar.setFocusable(false);
+        
+        main.setFocusable(true);
+        
+
         toolbar.setFloatable(false);
         JButton btn_restart = new JButton("Restart",new ImageIcon("img/reload.png"));
         btn_restart.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-//                main.gamestate.reset();
+                main.gamestate.reset();
 //                main.resources.reset();
+                main.controller.resetPopulation();
+                main.requestFocus();
             }
         });
         toolbar.add(btn_restart);
+
+
+        final JButton btn_speed = new JButton("SpeedUp",new ImageIcon("img/plane.png"));
+        btn_speed.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                
+                //Jesli ma przyspieszyc
+                if(Global.SLEEP_TIME>0)
+                {
+                    btn_speed.setBackground(Conf.color_map_selected);
+                    Global.SLEEP_TIME=0;
+                }
+                else
+                {
+                    btn_speed.setBackground(Conf.color_map_not_selected);
+                    Global.SLEEP_TIME=10;
+                }
+            }
+        });
+        toolbar.add(btn_speed);
+
+        final JButton btn_cam = new JButton("Mouse Cam",new ImageIcon("img/mouse.png"));
+        btn_cam.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+
+                Conf.mouse_cam = !Conf.mouse_cam;
+
+                if(Conf.mouse_cam)
+                {
+                    btn_cam.setBackground(Conf.color_map_selected);
+                    main.renderer.camera.setFollow(null);
+                }
+                //follow player
+                else
+                {
+                    btn_cam.setBackground(Conf.color_map_not_selected);
+                    main.renderer.camera.setFollow(main.resources.actors.get(Global.camera_actor));
+                }
+
+            }
+        });
+        toolbar.add(btn_cam);
 
         frame.setLayout(new BorderLayout());
         frame.add(toolbar,BorderLayout.NORTH);
@@ -154,6 +207,7 @@ public class Main extends JPanel implements Runnable{
         frame.getContentPane().add(main);
         frame.pack();
         frame.setVisible(true);
+        main.requestFocus();
    }
 
    public void run() {

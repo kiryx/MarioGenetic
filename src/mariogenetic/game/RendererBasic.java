@@ -22,11 +22,11 @@ import mariogenetic.objects.Terrain;
  */
 public class RendererBasic extends Renderer{
 
-    public Camera camera;
+    
     public RendererBasic()
-    {
+    {       
         camera = new Camera(new Vector(0,0));
-        camera.setFollow(m.resources.actors.get(Global.camera_actor));
+        camera.setFollow(Global.frame_main.resources.actors.get(Global.camera_actor));
     }
 
 //    public static void drawGrid(Graphics2D g2,JPanel panel)
@@ -118,55 +118,58 @@ public class RendererBasic extends Renderer{
     {
         
         //g2.setRenderingHint(Graphics2D.ANTIALIASING, Graphics2D.ANTIALIAS_ON);
-        if(m.resources.actors.size()==0)
+        if(Global.frame_main.resources.actors.size()==0)
             return;
-        Actor a = m.resources.actors.get(0);
+        Actor a = Global.frame_main.resources.actors.get(0);
         g2.drawString(String.format("falling: %s, sleep: %d",a.falling,Global.SLEEP_TIME), 30, 30);
         g2.drawString(String.format("x:%.2f y:%.2f",a.position.x,a.position.y ),30,40);
         g2.drawString(String.format("vx:%.2f vy:%.2f",a.velocity.x,a.velocity.y),30,50);
-        if(m.controller instanceof ControllerTime)
+        if(Global.frame_main.controller instanceof ControllerTime)
         {
-            ControllerTime cont = (ControllerTime) m.controller;
+            ControllerTime cont = (ControllerTime) Global.frame_main.controller;
             g2.drawString(String.format("Chromosome: %d",cont.current_chromosome),30,70);
         }
-        g2.drawString(m.gamestate.toString(), 30, 60);
+        g2.drawString(Global.frame_main.gamestate.toString(), 30, 60);
         
         camera.update();
-        g2.translate(-camera.pos.x, -camera.pos.y);
+        g2.translate(-camera.getPosition().x, -camera.getPosition().y);
         
         Main m = Global.frame_main;
         g2.translate(m.getWidth()/2, m.getHeight()/2);
 //        drawGrid(g2, m);
 
         Iterator it;
-        synchronized(m.resources.actors)
+        if(!Global.shuffling_resources)
         {
-            it = m.resources.actors.iterator();
-            while(it.hasNext())
-            {
-                Actor ac = (Actor)it.next();
-                ac.paint(g2);
-            }
-        }
-
-        synchronized(m.resources.terrain)
-        {
-            it = m.resources.terrain.iterator();
-            while(it.hasNext())
-            {
-                Terrain t = (Terrain)it.next();
-                t.paint(g2);
-            }
-        }
-
-        synchronized(m.resources.bonus)
-        {
-            it = m.resources.bonus.iterator();
-            while(it.hasNext())
-            {
-                Bonus b = (Bonus)it.next();
-                b.paint(g2);
-            }
+//            synchronized(m.resources.actors)
+//            {
+                it = m.resources.actors.iterator();
+                while(it.hasNext())
+                {
+                    Actor ac = (Actor)it.next();
+                    ac.paint(g2);
+                }
+//            }
+//
+//            synchronized(m.resources.terrain)
+//            {
+                it = m.resources.terrain.iterator();
+                while(it.hasNext())
+                {
+                    Terrain t = (Terrain)it.next();
+                    t.paint(g2);
+                }
+//            }
+//
+//            synchronized(m.resources.bonus)
+//            {
+                it = m.resources.bonus.iterator();
+                while(it.hasNext())
+                {
+                    Bonus b = (Bonus)it.next();
+                    b.paint(g2);
+                }
+//            }
         }
 
 
@@ -187,7 +190,7 @@ public class RendererBasic extends Renderer{
     }
     public void reset()
     {
-        camera.setFollow(m.resources.actors.get(Global.camera_actor));
+        
     }
 
 }

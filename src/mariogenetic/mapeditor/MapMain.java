@@ -301,6 +301,7 @@ public class MapMain extends JPanel implements KeyListener, MouseListener, Mouse
         toolbar.add(map_main.btn_delete);
         toolbar.add(map_main.btn_clear);
         toolbar.add(map_main.btn_testrun);
+        
 
         frame.add(toolbar,BorderLayout.NORTH);
                 

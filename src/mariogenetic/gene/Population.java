@@ -8,6 +8,7 @@ package mariogenetic.gene;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import mariogenetic.GeneticsConf;
 import mariogenetic.Global;
 
 /**
@@ -42,7 +43,7 @@ public class Population {
 //        }
         elita.add(chromosomes.get(0));
         
-        while(elita.size()<Global.population_size)
+        while(elita.size()<GeneticsConf.population_size)
         {
             elita.add(new ChromosomeTime());
         }
