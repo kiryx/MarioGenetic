@@ -16,13 +16,23 @@ import mariogenetic.*;
  */
 public abstract class Renderer {
 
-    public Camera camera;
+    protected Camera camera;
+    protected static Renderer singleton;
     
-    public Renderer(){camera = new Camera(new Vector(0.0,0.0));}
+    protected Renderer(){ }
     
-    void render() {}
+    public void render() {}
 
     public void render(Graphics2D g2) { }
+
+    public static Renderer getInstance()
+    {
+        return null;
+    }
+    public Camera getCamera()
+    {
+        return camera;
+    }
 
     void reset() {
 

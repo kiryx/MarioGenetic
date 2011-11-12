@@ -45,7 +45,7 @@ public abstract class Bonus extends WorldObject{
     }
     public void evalCollision()
     {
-        Global.frame_main.gamestate.score+=value;
+        Global.main.gamestate.score+=value;
     }
 
 }

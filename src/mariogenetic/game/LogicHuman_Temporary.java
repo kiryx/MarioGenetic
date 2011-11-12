@@ -24,7 +24,7 @@ public class LogicHuman_Temporary extends Logic{
 
 
     public void doLogic() {
-        Main m = Global.frame_main;
+        Main m = Global.main;
         for(Actor a : m.resources.actors )
         {
             //Sprawdzanie kolizji ze scianami

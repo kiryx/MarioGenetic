@@ -17,9 +17,9 @@ public abstract class Chromosome implements Comparable{
 
     public static int[] possibleMoves = {Global.MOVE_NONE, Global.MOVE_LEFT, Global.MOVE_RIGHT};
     public static int[] possibleSpecial = {Global.MOVE_NONE, Global.MOVE_JUMP };
-    public static GameState final_state = null;
-    public static int arr_length = 100; // 100 == 10 sekund
-    public int final_score;
+//    public static GameState final_state = null;
+    public static int arr_length = 100; // 100 == 10 sekund    
+    public ResultData resultData;
     
     public Chromosome()
     {
@@ -29,8 +29,12 @@ public abstract class Chromosome implements Comparable{
     {
 
     }
-    public void setGameState(GameState gs)
+//    public void setGameState(GameState gs)
+//    {
+//        final_state = new GameState(gs);
+//    }
+    public void setResultData(ResultData rd)
     {
-        final_state = new GameState(gs);
+        resultData = rd;
     }
 }

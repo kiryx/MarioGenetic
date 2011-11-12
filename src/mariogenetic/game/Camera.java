@@ -15,26 +15,37 @@ import mariogenetic.objects.WorldObject;
  * @author alice
  */
 public class Camera {
+
     private Vector position;
+    public Rectangle tmp_drag;
 //    public Vector followBox;
-    WorldObject following;
-    public Camera(Vector initial_pos)
+    private WorldObject target;
+    boolean follow = true;
+//    private static Camera singleton;
+    public Camera()
     {
-        position = initial_pos;
+        position = new Vector(0,0);
 //        followBox = new Vector(100,100);
     }
-    public Camera(Vector initial_pos, WorldObject o)
+
+//    public static Camera getInstance()
+//    {
+//        if(singleton==null)
+//            singleton = new Camera();
+//        return singleton;
+//    }
+
+    public void setTarget(WorldObject o)
     {
-        this(initial_pos);
-        following = o;
+        target = o;
     }
-    public void setFollow(WorldObject o)
+    public void setFollow(boolean f)
     {
-        following = o;        
+        follow = f;
     }
     public void setPosition(Vector pos)
     {
-        this.position = pos;
+        position = pos;
     }
     public Vector getPosition()
     {
@@ -42,13 +53,21 @@ public class Camera {
     }
 
     public void update()
-    {
-        
-        if(following!=null)
-        {
-            position = following.position;
-            
-        }
+    {        
+        if(target!=null && follow)
+        {            
+            setPosition(new Vector(target.position));
+        }        
        
+    }
+    public void reset()
+    {
+//        position = new Vector(0.0,0.0);
+    }
+    public String toString()
+    {
+        return String.format("X:%.2f Y:%.2f\n", position.x,position.y);
+
+
     }
 }

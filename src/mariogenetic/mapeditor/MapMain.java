@@ -31,7 +31,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import mariogenetic.Conf;
@@ -87,8 +86,8 @@ public class MapMain extends JPanel implements KeyListener, MouseListener, Mouse
             public void actionPerformed(ActionEvent e) {
                 String test_path = "maps/test_run";
                 saveMap(test_path);
-                Global.frame_main.resources = new Resources(test_path);
-                Global.frame_main.gamestate.reset();
+                Global.main.resources = new Resources(test_path);
+                Global.main.gamestate.reset();
                 repaint();
             }
         });
@@ -188,6 +187,7 @@ public class MapMain extends JPanel implements KeyListener, MouseListener, Mouse
     private void loadMap(String path) {
         Resources resources = new Resources(path);
         world_objects = resources.getAsWorldObjects();
+        selected_object = null;
         repaint();
     }
     public void saveMap(String filename)
@@ -257,7 +257,7 @@ public class MapMain extends JPanel implements KeyListener, MouseListener, Mouse
             g2.drawRect(Math.min(selection.x,selection.width)-screenDrag.x,
                     Math.min(selection.y,selection.height)-screenDrag.y,
                     Math.abs(selection.width-selection.x),
-                    Math.abs(selection.height-selection.y));            
+                    Math.abs(selection.height-selection.y));
         }
         Point screenDragTotal = this.getScreenDragTotal();
 //        g2.drawString("Block Type: "+String.valueOf(selected_type), 10-screenDragTotal.x, 30-screenDragTotal.y);
@@ -267,7 +267,7 @@ public class MapMain extends JPanel implements KeyListener, MouseListener, Mouse
 
         g2.setColor(Conf.color_map_object_selected);
         if(selected_object!=null)
-        g2.drawRect((int)selected_object.position.x, (int)selected_object.position.y,
+            g2.drawRect((int)selected_object.position.x, (int)selected_object.position.y,
                 selected_object.size.x, selected_object.size.y);
 
         translateDiffNeg(g2, screenDrag_tmp);
@@ -344,10 +344,10 @@ public class MapMain extends JPanel implements KeyListener, MouseListener, Mouse
         
         frame.setPreferredSize(Conf.window_editor_size);
         int loc_x = 0;
-        if(Global.frame_main!=null)
+        if(Global.main!=null)
         {
-            loc_x = Global.frame_main.getSize().width;
-            map_main.world_objects = Global.frame_main.resources.getReopenedResource();
+            loc_x = Global.main.getSize().width;
+            map_main.world_objects = Global.main.resources.getReopenedResource();
          }
         else
         {
@@ -408,16 +408,24 @@ public class MapMain extends JPanel implements KeyListener, MouseListener, Mouse
         repaint();
     }
 
+//    public Point cameraToWorld(Point p)
+//    {
+//        //TODO zamiast dragów operuj obiektem Camera
+//
+//    }
+
     public void keyReleased(KeyEvent e) {
 
     }
 
     public void mouseClicked(MouseEvent e) {
-
-        System.out.println(e.getX());
+        
+        int realX = e.getX()-screenDrag.x;
+        int realY = e.getY()-screenDrag.y;        
+        
         for(WorldObject o : world_objects)
         {
-            if(o.getRectangle().intersects(new Rectangle(e.getX(),e.getY(),1,1)))
+            if(o.getRectangle().intersects(new Rectangle(realX,realY,1,1)))
             {
                 selected_object = o;
                 break;
@@ -426,14 +434,14 @@ public class MapMain extends JPanel implements KeyListener, MouseListener, Mouse
         repaint();
     }
 
-    public void mousePressed(MouseEvent e) {
+    public void mousePressed(MouseEvent e) {        
         if(e.getButton() == e.BUTTON1)
         {
             selection = new Rectangle(e.getX(),e.getY(),e.getX(),e.getY());
 
         }
         else if(e.getButton() == e.BUTTON3)
-        {
+        {            
             screenDrag_tmp = new Rectangle(e.getX(),e.getY(),e.getX(),e.getY());
         }
         
@@ -447,10 +455,12 @@ public class MapMain extends JPanel implements KeyListener, MouseListener, Mouse
                         Math.abs(selection.width-selection.x),
                         Math.abs(selection.height-selection.y));
 
+            selection = null;
+
             //jesli prostokat o polu 1
             if(new_sel.width<1 && new_sel.height<1)
                 return;
-            selection = null;
+            
             switch(selected_type)
             {
                 case Terrain:
@@ -496,7 +506,7 @@ public class MapMain extends JPanel implements KeyListener, MouseListener, Mouse
         else if(e.getButton() == e.BUTTON3)
         {
             screenDrag=getScreenDragTotal();
-            screenDrag_tmp=null;
+            screenDrag_tmp=null;            
 
         }
         this.repaint();
@@ -512,21 +522,28 @@ public class MapMain extends JPanel implements KeyListener, MouseListener, Mouse
     }
 
     public void mouseDragged(MouseEvent e) {
-        
-        if(selection!=null)
+                    
+        if((e.getModifiers() | MouseEvent.BUTTON1_DOWN_MASK)>0)
         {
-            selection.width = e.getX();
-            selection.height = e.getY();
-//            selection.x = Math.min(selection.x, e.getX());
-//            selection.y = Math.min(selection.y, e.getY());
-//            System.out.println(selection);
+            if(selection!=null)
+            {
+                selection.width = e.getX();
+                selection.height = e.getY();
+    //            selection.x = Math.min(selection.x, e.getX());
+    //            selection.y = Math.min(selection.y, e.getY());
+    //            System.out.println(selection);
 
+            }
         }
 
-        if(screenDrag_tmp!=null)
-        {
-            screenDrag_tmp.width=e.getX();
-            screenDrag_tmp.height=e.getY();
+        if((e.getModifiers() | MouseEvent.BUTTON3_DOWN_MASK)>0)
+        {            
+            
+            if(screenDrag_tmp!=null)
+            {
+                screenDrag_tmp.width=e.getX();
+                screenDrag_tmp.height=e.getY();
+            }
         }
         this.repaint();
     }

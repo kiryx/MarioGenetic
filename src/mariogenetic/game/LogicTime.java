@@ -23,7 +23,7 @@ public class LogicTime extends Logic{
     public LogicTime(){ }
 
     public void doLogic() {
-        Main m = Global.frame_main;
+        Main m = Global.main;
         synchronized(m.resources.actors)
         {
             for(Actor a : m.resources.actors )

@@ -14,7 +14,7 @@ import mariogenetic.game.Controller;
  */
 public class Global {
     
-    public static Main frame_main;
+    public static Main main;
     public static boolean KEY_UP=false;
     public static boolean KEY_DOWN=false;
     public static boolean KEY_LEFT=false;

@@ -6,11 +6,13 @@
 package mariogenetic.game;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import mariogenetic.GeneticsConf;
 import mariogenetic.Global;
 import mariogenetic.gene.Chromosome;
 import mariogenetic.gene.ChromosomeTime;
 import mariogenetic.gene.Population;
+import mariogenetic.gene.ResultData;
 import mariogenetic.objects.Actor;
 
 /**
@@ -42,7 +44,7 @@ public class ControllerTime extends Controller{
 
     public void generateEvent()
     {
-        long time = Global.frame_main.gamestate.timeElapsed();
+        long time = Global.main.gamestate.timeElapsed();
 
         long time10 = time/100; //10 razy na sek
 
@@ -68,8 +70,8 @@ public class ControllerTime extends Controller{
             {
                 m.gamestate.result = GameState.RESULT_TIMEOUT;
             }
-            c1.setGameState(m.gamestate);
-            c1.calcFunc();
+            c1.setResultData(new ResultData(m.gamestate));
+            c1.resultData.calcFunc();
             System.out.print(Global.global_result_counter+++" ");
             System.out.println(c1);
             current_chromosome++;
@@ -103,5 +105,7 @@ public class ControllerTime extends Controller{
         }
 
     }
+
+   
 
 }

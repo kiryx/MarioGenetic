@@ -38,6 +38,7 @@ public class Main extends JPanel implements Runnable{
         public Resources resources;
         public Controller controller;
         public GameState gamestate;
+        
 	public Main()
 	{
             this.setSize(Conf.window_main_size);
@@ -46,15 +47,15 @@ public class Main extends JPanel implements Runnable{
             this.setIgnoreRepaint(true);
             
             Graphics2D g2 =(Graphics2D) this.getGraphics();
-            Global.frame_main = this;
+            Global.main = this;
             
 
             logic = new LogicHuman_Temporary();
             resources = new Resources("maps/map1");
 //            controller = new ControllerHuman();
             controller = new ControllerTime();
-            renderer = new RendererBasic();
-            gamestate = new GameState();
+            renderer = RendererBasic.getInstance();
+            gamestate = GameState.getInstance();
 
             this.setFocusable(true);
             this.addKeyListener(new KeyListener()
@@ -171,6 +172,7 @@ public class Main extends JPanel implements Runnable{
                     btn_speed.setBackground(Conf.color_map_not_selected);
                     Global.SLEEP_TIME=10;
                 }
+                main.requestFocus();
             }
         });
         toolbar.add(btn_speed);
@@ -185,14 +187,19 @@ public class Main extends JPanel implements Runnable{
                 if(Conf.mouse_cam)
                 {
                     btn_cam.setBackground(Conf.color_map_selected);
-                    main.renderer.camera.setFollow(null);
+                    main.renderer.getCamera().setFollow(false);
+//                    main.renderer.render();
+                    
                 }
                 //follow player
                 else
                 {
                     btn_cam.setBackground(Conf.color_map_not_selected);
-                    main.renderer.camera.setFollow(main.resources.actors.get(Global.camera_actor));
+                    main.renderer.getCamera().setFollow(true);
+//                    main.renderer.render();
+                    
                 }
+                main.requestFocus();
 
             }
         });

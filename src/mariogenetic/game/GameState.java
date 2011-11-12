@@ -15,6 +15,8 @@ import mariogenetic.Global;
  * @author alice
  */
 public class GameState {
+
+    public static GameState singleton;
     
     public static int RESULT_NONE = 0;
     public static int RESULT_TIMEOUT = 1;
@@ -28,7 +30,7 @@ public class GameState {
     public int score;
     public int result;
     boolean game_over = false;
-    public GameState()
+    private GameState()
     {
         now = started = new Date().getTime();
         score = 0;
@@ -36,7 +38,7 @@ public class GameState {
         result = RESULT_NONE;
     }
 
-    public GameState(GameState gs) {
+    private GameState(GameState gs) {
         this();
         this.now = gs.now;
         this.score = gs.score;
@@ -51,8 +53,8 @@ public class GameState {
         score = 0;
         game_over=false;
         result = RESULT_NONE;
-        Global.frame_main.resources.reset();
-        Global.frame_main.renderer.reset();
+        Global.main.resources.reset();
+        Global.main.renderer.reset();
     }
     public void updateTime(long d_time)
     {
@@ -68,7 +70,7 @@ public class GameState {
     public String toString()
     {
 //        long now = new Date().getTime();
-        return String.format("Result: %s Score: %d Time: %d",result_strings[result] ,score,(now-started));
+        return String.format("Result: %s Score: %d Time: %d Cam %s",result_strings[result] ,score,(now-started),Global.main.renderer.camera);
     }
 
     public void check() {
@@ -81,14 +83,16 @@ public class GameState {
             {
                 case Global.MODE_USER:
                 {
-                    Global.frame_main.logic=new LogicHuman_Temporary();
-                    Global.frame_main.controller = new ControllerHuman();
+                    // TODO: LogicHuman i LogicTime nie są potrzebne, wystarczy np LogicMario
+                    Global.main.logic=new LogicHuman_Temporary();
+//                    Global.main.logic = new LogicTime();
+                    Global.main.controller = new ControllerHuman();
                     break;
                 }
                 case Global.MODE_TIME:
                 {
-                    Global.frame_main.logic=new LogicTime();
-                    Global.frame_main.controller = new ControllerTime();
+                    Global.main.logic=new LogicTime();
+                    Global.main.controller = new ControllerTime();
                     break;
                 }
             }
@@ -101,7 +105,7 @@ public class GameState {
             }
             else if(Global.MODE_CURRENT == Global.MODE_TIME)
             {
-                
+                // TODO moze dodac reset()? jak wyzej
             }
         }
     }
@@ -109,6 +113,15 @@ public class GameState {
     {
 //        long now = new Date().getTime();
         return now-started;
+    }
+
+    public static GameState getInstance()
+    {
+        if(singleton == null)
+        {
+            singleton = new GameState();
+        }
+        return singleton;
     }
     
 

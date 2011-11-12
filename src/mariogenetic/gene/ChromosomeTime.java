@@ -19,8 +19,7 @@ public class ChromosomeTime extends Chromosome{
     public int[] special = new int[Chromosome.arr_length];
     
     public ChromosomeTime()
-    {
-        final_score=0;
+    {     
         Random generator = new Random();
 
         for (int i = 0; i < moves.length; i++) {
@@ -46,34 +45,31 @@ public class ChromosomeTime extends Chromosome{
     {
         return special[(int)time%special.length];
     }
-    public void calcFunc()
-    {
-        final_score=0;
-        if(final_state.result==GameState.RESULT_DEAD)
-        {
-            final_score-=40;
-        }
-        else if(final_state.result==GameState.RESULT_WON)
-        {
-            final_score+=30;
-        }
-        final_score += final_state.score*2;
-        final_score += 15*((Chromosome.arr_length*100)/final_state.timeElapsed());
-    }
+//    public void calcFunc()
+//    {
+//        final_score=0;
+//        if(final_state.result==GameState.RESULT_DEAD)
+//        {
+//            final_score-=40;
+//        }
+//        else if(final_state.result==GameState.RESULT_WON)
+//        {
+//            final_score+=30;
+//        }
+//        final_score += final_state.score*2;
+//        final_score += 15*((Chromosome.arr_length*100)/final_state.timeElapsed());
+//    }
     @Override
     public String toString()
     {
-        String s = "";
-        if(final_state!=null)
-            s+=final_state.toString();
-        else
-            s+="State not set";
-        s+=" Final Score:"+final_score;
+        String s = "State not Set";
+        if(resultData!=null)
+            s=resultData.toString();
         return s;
     }
 
     public int compareTo(Object o) {
         ChromosomeTime ct = (ChromosomeTime)o;
-       return (this.final_score<ct.final_score?-1:(this.final_score>ct.final_score?1:0));
+       return (resultData.final_score<ct.resultData.final_score?-1:(resultData.final_score>ct.resultData.final_score?1:0));
     }
 }

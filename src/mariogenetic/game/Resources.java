@@ -26,7 +26,7 @@ public class Resources {
     public ArrayList<Terrain> terrain;
     public ArrayList<Bonus> bonus;
     public String resourceName;
-    public Actor main_actor;
+//    public Actor main_actor;
 
     public Resources(String file){
         Global.shuffling_resources=true;

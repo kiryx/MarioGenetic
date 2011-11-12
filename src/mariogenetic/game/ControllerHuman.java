@@ -7,6 +7,7 @@ package mariogenetic.game;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import mariogenetic.Global;
 
 /**
@@ -26,7 +27,7 @@ public class ControllerHuman extends Controller{
             case KeyEvent.VK_LEFT: {Global.KEY_LEFT=true; break; }
             case KeyEvent.VK_RIGHT: {Global.KEY_RIGHT=true; break;}
             case KeyEvent.VK_UP: {Global.KEY_UP=true; break;}
-            case KeyEvent.VK_R: { Global.frame_main.gamestate.reset();break;}
+            case KeyEvent.VK_R: { Global.main.gamestate.reset();break;}
             
 //            case KeyEvent.VK_DOWN: {m.resources.actors.get(0).crouch(); break;}
         }
@@ -67,6 +68,9 @@ public class ControllerHuman extends Controller{
             m.resources.actors.get(0).stopX();
         }
     }
+
+
+
     
 
 }

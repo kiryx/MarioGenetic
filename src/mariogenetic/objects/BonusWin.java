@@ -29,7 +29,7 @@ public class BonusWin extends Bonus{
     public void evalCollision()
     {
         super.evalCollision();
-        Global.frame_main.gamestate.result = GameState.RESULT_WON;
+        Global.main.gamestate.result = GameState.RESULT_WON;
     }
 
 }
