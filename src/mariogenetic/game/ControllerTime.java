@@ -52,8 +52,8 @@ public class ControllerTime extends Controller{
 //        System.out.println(p.chromosomes.size());
         ChromosomeTime c1 = (ChromosomeTime) p.chromosomes.get(current_chromosome);
 
-        long move = c1.getCurrentMove(time10);
-        long special = c1.getSpecial(time10);
+        Global.Keys move = c1.getCurrentMove(time10);
+        Global.Keys special = c1.getSpecial(time10);
 
 
         //jesli koniec czasu lub wczesniejszy koniec
@@ -86,20 +86,20 @@ public class ControllerTime extends Controller{
             m.gamestate.reset();
             return;
         }
-        if(special==Global.MOVE_JUMP)
+        if(special==Global.Keys.A)
         {
             a.jump();
         }
         //poruszanie sie
-        if(move==Global.MOVE_LEFT)
+        if(move==Global.Keys.LEFT)
         {
             a.left();
         }
-        else if(move==Global.MOVE_RIGHT)
+        else if(move==Global.Keys.RIGHT)
         {
             a.right();
         }
-        else if(move==Global.MOVE_NONE)
+        else if(move==Global.Keys.NONE)
         {
             a.stopX();
         }

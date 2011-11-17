@@ -21,10 +21,18 @@ public class Global {
     public static boolean KEY_RIGHT=false;
     public static boolean KEY_DOUBLE_JUMP=false;
 
-    public static int MOVE_NONE = 0;
-    public static int MOVE_JUMP = 1;
-    public static int MOVE_LEFT = 2;
-    public static int MOVE_RIGHT = 3;
+
+    public enum Keys
+    {
+        NONE,UP,DOWN,LEFT,RIGHT,A,B,C,D
+    }
+    public static Keys moveKeys[] = {Keys.UP, Keys.DOWN, Keys.LEFT, Keys.RIGHT, Keys.NONE};
+    public static Keys specialKeys[] = {Keys.A, Keys.B, Keys.C, Keys.D, Keys.NONE};
+
+//    public static int MOVE_NONE = 0;
+//    public static int MOVE_JUMP = 1;
+//    public static int MOVE_LEFT = 2;
+//    public static int MOVE_RIGHT = 3;
 
     public static long SLEEP_TIME = 10;
 

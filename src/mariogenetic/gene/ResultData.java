@@ -13,13 +13,19 @@ import mariogenetic.game.GameState;
  */
 public class ResultData {
 
-    public int final_score;
+    private int final_score=-1;
     public int final_state;
     public int score;
     public long time_elapsed;
     public ResultData(GameState gs)
     {
         getDataFromGameState(gs);
+    }
+    public int getFinalScore()
+    {
+        if(final_score<0)
+            this.calcFunc();
+        return final_score;
     }
     public void calcFunc()
     {
@@ -44,6 +50,6 @@ public class ResultData {
     public String toString()
     {
 //        long now = new Date().getTime();
-        return String.format("Result: %s Score: %d Time: %d Final Score %d",GameState.result_strings[final_state] ,score,time_elapsed,final_score);
+        return String.format("Result: %s Score: %d Time: %d Final Score %d",GameState.result_strings[final_state] ,score,time_elapsed,this.getFinalScore());
     }
 }

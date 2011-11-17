@@ -438,7 +438,6 @@ public class MapMain extends JPanel implements KeyListener, MouseListener, Mouse
         if(e.getButton() == e.BUTTON1)
         {
             selection = new Rectangle(e.getX(),e.getY(),e.getX(),e.getY());
-
         }
         else if(e.getButton() == e.BUTTON3)
         {            

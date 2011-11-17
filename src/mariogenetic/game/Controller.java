@@ -25,7 +25,9 @@ public abstract class Controller implements KeyListener,MouseMotionListener,Mous
     public Controller()
     {
         m = Global.main;
-    }    
+    }
+
+   
 
     public void keyTyped(KeyEvent e) { }
 

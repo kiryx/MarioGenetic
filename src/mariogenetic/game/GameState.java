@@ -8,6 +8,7 @@ package mariogenetic.game;
 import java.sql.Time;
 import java.util.Date;
 import mariogenetic.Global;
+import mariogenetic.gene.ResultData;
 
 
 /**
@@ -101,6 +102,8 @@ public class GameState {
         {
             if(Global.MODE_CURRENT == Global.MODE_USER)
             {
+                System.out.print(Global.global_result_counter+++" ");
+                System.out.println("(H):"+new ResultData(this));
                 reset();
             }
             else if(Global.MODE_CURRENT == Global.MODE_TIME)

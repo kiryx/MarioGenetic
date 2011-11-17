@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 import mariogenetic.GeneticsConf;
 import mariogenetic.Global;
+import mariogenetic.game.GameState;
 
 /**
  *
@@ -31,25 +32,36 @@ public class Population {
 
     public void nextPopulation() {
         Collections.sort(chromosomes);
+
         Collections.reverse(chromosomes);
 //        System.out.println("SORTED:\n------");
 //        for (int i = 0; i < chromosomes.size(); i++) {
 //            System.out.println(chromosomes.get(i));
 //        }
 //        System.out.println("------");
-        ArrayList<Chromosome> elita = new ArrayList<Chromosome>();
+        ArrayList<Chromosome> new_population = new ArrayList<Chromosome>();
 //        for (int i = 0; i < chromosomes.size()/2; i++) {
 //            elita.add(chromosomes.get(i));
 //        }
-        elita.add(chromosomes.get(0));
-        
-        while(elita.size()<GeneticsConf.population_size)
-        {
-            elita.add(new ChromosomeTime());
+        for (int i = 0; i < chromosomes.size() && (new_population.size()< (GeneticsConf.population_size/2)); i++) {
+            if(chromosomes.get(i).resultData.final_state==GameState.RESULT_WON)
+                new_population.add(chromosomes.get(i));
+
         }
+        
+        Chromosome[] parents = (Chromosome[]) new_population.toArray(new Chromosome[new_population.size()]);
+        while(new_population.size()<GeneticsConf.population_size)
+        {
+            new_population.add(new ChromosomeTime(parents));
+        }
+
+//        while(new_population.size()<GeneticsConf.population_size)
+//        {
+//            new_population.add(new ChromosomeTime());
+//        }
 //        chromosomes.clear();
 //        chromosomes.addAll(elita);
-        chromosomes = elita;
+        chromosomes = new_population;
     }
 
 
