@@ -10,7 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
-import mariogenetic.Conf;
+import mariogenetic.Config;
 import mariogenetic.Global;
 import mariogenetic.Vector;
 
@@ -39,7 +39,7 @@ public class Actor extends WorldObject{
     {
         super.paint(g2);
         Color c = g2.getColor();
-        g2.setColor(Conf.color_actor);
+        g2.setColor(Config.color_actor);
         g2.fillRect((int)position.x, (int)position.y, size.x, size.y);
         g2.setColor(c);
     }
@@ -89,8 +89,7 @@ public class Actor extends WorldObject{
         {
             velocity.y = -3.0;
             falling=true;
-        }
-        
+        }        
     }
     public void setFreefall()
     {

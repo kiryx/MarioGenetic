@@ -5,8 +5,9 @@
 
 package mariogenetic;
 
+import mariogenetic.GUI.PopulationWindow;
+import mariogenetic.game.logic.Logic;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -25,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
 import mariogenetic.game.*;
+import mariogenetic.game.logic.LogicMario;
 import mariogenetic.mapeditor.MapMain;
 
 /**
@@ -41,16 +43,16 @@ public class Main extends JPanel implements Runnable{
         
 	public Main()
 	{
-            this.setSize(Conf.window_main_size);
+            this.setSize(Config.window_main_size);
             this.setDoubleBuffered(true);
-            this.setPreferredSize(Conf.window_main_size);
+            this.setPreferredSize(Config.window_main_size);
             this.setIgnoreRepaint(true);
             
             Graphics2D g2 =(Graphics2D) this.getGraphics();
             Global.main = this;
             
 
-            logic = new LogicHuman_Temporary();
+            logic = new LogicMario();
             resources = new Resources("maps/map1");
 //            controller = new ControllerHuman();
             controller = new ControllerTime();
@@ -92,7 +94,10 @@ public class Main extends JPanel implements Runnable{
         JFrame frame = new JFrame("Platformer Genetic");
         JMenuBar jmb = new JMenuBar();
         JMenu menu = new JMenu("Game");
+        Global.pop_frame = PopulationWindow.getInstance();
         final Main main = new Main();
+
+        
 
         JMenuItem mi_mapedit = new JMenuItem("Open map editor",new ImageIcon("img/globe.png"));
         mi_mapedit.addActionListener(new ActionListener(){
@@ -123,18 +128,30 @@ public class Main extends JPanel implements Runnable{
             }
             
         });
-
         menu.add(mi_loadmap);
 
         JMenuItem mi_settings = new JMenuItem("Settings",new ImageIcon("img/configuration02.png"));
         mi_settings.addActionListener(new ActionListener(){
 
             public void actionPerformed(ActionEvent e) {
-                Conf.main(null);
+                Config.main(null);
             }
 
         });
         menu.add(mi_settings);
+
+
+        JMenuItem mi_populationFrame = new JMenuItem("Population",new ImageIcon("img/lab.png"));
+        mi_populationFrame.addActionListener(new ActionListener(){
+
+            public void actionPerformed(ActionEvent e)
+            {
+                PopulationWindow pw = PopulationWindow.getInstance();
+                pw.setVisible(!pw.isVisible());                
+            }
+
+        });
+        menu.add(mi_populationFrame);
 
         JToolBar toolbar = new JToolBar("Tools", JToolBar.HORIZONTAL);
         toolbar.setFocusable(false);
@@ -164,12 +181,12 @@ public class Main extends JPanel implements Runnable{
                 //Jesli ma przyspieszyc
                 if(Global.SLEEP_TIME>0)
                 {
-                    btn_speed.setBackground(Conf.color_map_selected);
+                    btn_speed.setBackground(Config.color_map_selected);
                     Global.SLEEP_TIME=0;
                 }
                 else
                 {
-                    btn_speed.setBackground(Conf.color_map_not_selected);
+                    btn_speed.setBackground(Config.color_map_not_selected);
                     Global.SLEEP_TIME=10;
                 }
                 main.requestFocus();
@@ -182,11 +199,11 @@ public class Main extends JPanel implements Runnable{
 
             public void actionPerformed(ActionEvent e) {
 
-                Conf.mouse_cam = !Conf.mouse_cam;
+                Config.mouse_cam = !Config.mouse_cam;
 
-                if(Conf.mouse_cam)
+                if(Config.mouse_cam)
                 {
-                    btn_cam.setBackground(Conf.color_map_selected);
+                    btn_cam.setBackground(Config.color_map_selected);
                     main.renderer.getCamera().setFollow(false);
 //                    main.renderer.render();
                     
@@ -194,7 +211,7 @@ public class Main extends JPanel implements Runnable{
                 //follow player
                 else
                 {
-                    btn_cam.setBackground(Conf.color_map_not_selected);
+                    btn_cam.setBackground(Config.color_map_not_selected);
                     main.renderer.getCamera().setFollow(true);
 //                    main.renderer.render();
                     

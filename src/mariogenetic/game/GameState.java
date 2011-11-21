@@ -57,6 +57,7 @@ public class GameState {
         Global.main.resources.reset();
         Global.main.renderer.reset();
     }
+    
     public void updateTime(long d_time)
     {
         now+=d_time;
@@ -85,14 +86,14 @@ public class GameState {
                 case Global.MODE_USER:
                 {
                     // TODO: LogicHuman i LogicTime nie są potrzebne, wystarczy np LogicMario
-                    Global.main.logic=new LogicHuman_Temporary();
+//                    Global.main.logic=new LogicHuman_Temporary();
 //                    Global.main.logic = new LogicTime();
                     Global.main.controller = new ControllerHuman();
                     break;
                 }
                 case Global.MODE_TIME:
                 {
-                    Global.main.logic=new LogicTime();
+//                    Global.main.logic=new LogicMario();
                     Global.main.controller = new ControllerTime();
                     break;
                 }

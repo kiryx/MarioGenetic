@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package mariogenetic;
+package mariogenetic.gene;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,18 +11,28 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
+import mariogenetic.Dbg;
+import mariogenetic.Global;
 import mariogenetic.Global.Keys;
 
 /**
  *
  * @author alice
  */
-public class GeneticsConf {
+public class GeneticsConfig {
 
     public static double move_probability = 0.9;
     public static double right_probability = 0.9;
 
-    public static double modifier_value = 2.5;
+    public static double crossing_parameter = 5.0;
+
+    public static double getCrossing_parameter() {
+        return crossing_parameter;
+    }
+
+    public static void setCrossing_parameter(double crossing_parameter) {
+        GeneticsConfig.crossing_parameter = crossing_parameter;
+    }
 
     private HashMap<Global.Keys,Double> moveProb = new HashMap<Global.Keys,Double>();
     private double totalMove;
@@ -37,7 +47,7 @@ public class GeneticsConf {
 
     public static double jump_probability = 0.45;
 
-    private static GeneticsConf singleton = null;
+    private static GeneticsConfig singleton = null;
     private Random generator = null;
 
     private void reCalcProbabilities()
@@ -55,7 +65,7 @@ public class GeneticsConf {
         }
     }
 
-    public void setKeyProbability(Global.Keys key, Double d)
+    public void setMoveKeyProbability(Global.Keys key, Double d)
     {
         
         d = Math.abs(d);
@@ -63,8 +73,20 @@ public class GeneticsConf {
         if(moveProb.get(key)!=null)
         {
             moveProb.put(key, d);
+        }       
+        else
+        {
+            System.out.println("Key value does not exist in hashmap");
         }
-        else if(specialProb.get(key)!=null)
+        reCalcProbabilities();
+    }
+
+    public void setSpecialKeyProbability(Global.Keys key, Double d)
+    {
+
+        d = Math.abs(d);
+
+        if(specialProb.get(key)!=null)
         {
             specialProb.put(key, d);
         }
@@ -74,8 +96,17 @@ public class GeneticsConf {
         }
         reCalcProbabilities();
     }
+
+    public Double getSpecialKeyProbability(Global.Keys key)
+    {
+        return specialProb.get(key);
+    }
+    public Double getMoveKeyProbability(Global.Keys key)
+    {
+        return moveProb.get(key);
+    }
     
-    private GeneticsConf()
+    private GeneticsConfig()
     {
         generator = new Random();
                 
@@ -84,25 +115,25 @@ public class GeneticsConf {
             moveProb.put(k, 0.0);
         }
         
-        moveProb.put(Global.Keys.LEFT, 0.05);
-        moveProb.put(Global.Keys.RIGHT, 0.8);
-        moveProb.put(Global.Keys.NONE, 0.1);
+        moveProb.put(Global.Keys.LEFT, 0.22);
+        moveProb.put(Global.Keys.RIGHT, 0.78);
+        moveProb.put(Global.Keys.NONE, 0.0);
 
         for(Global.Keys k : Global.specialKeys)
         {
             specialProb.put(k, 0.0);
         }
 
-        specialProb.put(Global.Keys.A, 0.8);
-        specialProb.put(Global.Keys.NONE, 0.2);
+        specialProb.put(Global.Keys.A, 0.2);
+        specialProb.put(Global.Keys.NONE, 0.8);
         reCalcProbabilities();
 
     }
 
-    public static GeneticsConf getInstance()
+    public static GeneticsConfig getInstance()
     {
         if(singleton==null)
-            singleton=new GeneticsConf();
+            singleton=new GeneticsConfig();
         return singleton;
     }
 
@@ -172,7 +203,7 @@ public class GeneticsConf {
 
         for(Global.Keys k : modifiers)
         {
-            Double new_val = map2.get(k)*modifier_value;
+            Double new_val = map2.get(k)*crossing_parameter;
             map2.put(k, new_val);
         }
         

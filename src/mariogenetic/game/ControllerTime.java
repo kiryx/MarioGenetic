@@ -6,8 +6,8 @@
 package mariogenetic.game;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import mariogenetic.GeneticsConf;
+import mariogenetic.GUI.PopulationWindow;
+import mariogenetic.gene.GeneticsConfig;
 import mariogenetic.Global;
 import mariogenetic.gene.Chromosome;
 import mariogenetic.gene.ChromosomeTime;
@@ -22,21 +22,31 @@ import mariogenetic.objects.Actor;
 public class ControllerTime extends Controller{
 
 
-    public Population p;
+    private Population p;
     public int current_chromosome=0;
     //ChromosomeTime c1;
     public ControllerTime()
     {
-        //c1 = new ChromosomeTime();
-        p = new Population();
-        p.generateNew(GeneticsConf.population_size);
+        //c1 = new ChromosomeTime();        
+        this.setPopulation(new Population(GeneticsConfig.population_size));
+        
+        
     }
 
     public void resetPopulation()
     {
-        p = new Population();
-        p.generateNew(GeneticsConf.population_size);
+        this.setPopulation(new Population(GeneticsConfig.population_size));
+        
         current_chromosome=0;
+    }
+    public Population getPopulation()
+    {
+        return p;
+    }
+    public void setPopulation(Population p)
+    {
+        this.p = p;        
+        Global.pop_frame.fillList(this.getPopulation().chromosomes.toArray(new Chromosome[this.getPopulation().chromosomes.size()]));
     }
     public void keyPressed(KeyEvent e) {
         super.keyPressed(e);
@@ -78,12 +88,16 @@ public class ControllerTime extends Controller{
             if(current_chromosome==p.chromosomes.size())
             {
                 Global.shuffling_resources=true;
-                p.nextPopulation();
+                
+                p = p.nextPopulation();
+                PopulationWindow.getInstance().fillList(p.chromosomes);
                 Global.shuffling_resources=false;
                 current_chromosome=0;
             }
             //current_chromosome%=p.chromosomes.size();
             m.gamestate.reset();
+
+            PopulationWindow.getInstance().repaint();
             return;
         }
         if(special==Global.Keys.A)

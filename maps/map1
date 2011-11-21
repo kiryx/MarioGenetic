@@ -9,4 +9,5 @@ Terrain 184 103 7 109
 Terrain 292 213 170 10
 BonusWin 564 102 37 54 50
 BonusCoin 342 164 38 43 50
-BonusCoin 343 245 36 40 -10
+BonusCoin 333 231 20 56 50
+BonusCoin 374 239 14 46 50

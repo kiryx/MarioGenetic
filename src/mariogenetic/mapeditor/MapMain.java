@@ -33,7 +33,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
-import mariogenetic.Conf;
+import mariogenetic.Config;
 import mariogenetic.Global;
 import mariogenetic.Vector;
 import mariogenetic.game.RendererBasic;
@@ -178,7 +178,7 @@ public class MapMain extends JPanel implements KeyListener, MouseListener, Mouse
         
         buttons = new JButton[]{ btn_terrain,btn_kills,btn_coin,btn_win,btn_player};
         for(int i=0;i<buttons.length;++i)
-            buttons[i].setBackground(Conf.color_map_not_selected);
+            buttons[i].setBackground(Config.color_map_not_selected);
         this.setSelected(BlockType.Terrain);        
 
 
@@ -265,7 +265,7 @@ public class MapMain extends JPanel implements KeyListener, MouseListener, Mouse
         for(WorldObject o : world_objects)
             o.paint(g2);
 
-        g2.setColor(Conf.color_map_object_selected);
+        g2.setColor(Config.color_map_object_selected);
         if(selected_object!=null)
             g2.drawRect((int)selected_object.position.x, (int)selected_object.position.y,
                 selected_object.size.x, selected_object.size.y);
@@ -342,7 +342,7 @@ public class MapMain extends JPanel implements KeyListener, MouseListener, Mouse
 
         frame.setJMenuBar(jmb);
         
-        frame.setPreferredSize(Conf.window_editor_size);
+        frame.setPreferredSize(Config.window_editor_size);
         int loc_x = 0;
         if(Global.main!=null)
         {
@@ -367,8 +367,8 @@ public class MapMain extends JPanel implements KeyListener, MouseListener, Mouse
     {
         selected_type = type;        
         for(int i=0 ; i < buttons.length;++i)
-            buttons[i].setBackground(Conf.color_map_not_selected);
-        buttons[type.ordinal()].setBackground(Conf.color_map_selected);
+            buttons[i].setBackground(Config.color_map_not_selected);
+        buttons[type.ordinal()].setBackground(Config.color_map_selected);
         repaint();
     }
     public void keyPressed(KeyEvent e) {        

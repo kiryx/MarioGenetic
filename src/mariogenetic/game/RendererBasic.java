@@ -52,8 +52,8 @@ public class RendererBasic extends Renderer{
 //            Point scr_drag = ((MapMain)panel).getScreenDragTotal();
 
             int cnt=0;
-            Color gridA = Conf.color_grid_light;
-            Color gridB = Conf.color_grid_dark;
+            Color gridA = Config.color_grid_light;
+            Color gridB = Config.color_grid_dark;
             for (double i = -W; i <= W; i+=gap) {
 
                 if(cnt%10==0)

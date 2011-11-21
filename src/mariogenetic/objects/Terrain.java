@@ -7,7 +7,7 @@ package mariogenetic.objects;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
-import mariogenetic.Conf;
+import mariogenetic.Config;
 import mariogenetic.Vector;
 
 /**
@@ -23,7 +23,7 @@ public class Terrain extends WorldObject{
     public void paint(Graphics2D g2)
     {
         super.paint(g2);
-        g2.setColor(Conf.color_terrain);
+        g2.setColor(Config.color_terrain);
         g2.fillRect((int)position.x, (int)position.y, size.x, size.y);
     }
     public void tick()

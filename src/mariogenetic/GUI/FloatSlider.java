@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package mariogenetic;
+package mariogenetic.GUI;
 
 import javax.swing.JSlider;
 

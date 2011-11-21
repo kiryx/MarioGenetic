@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package mariogenetic.game;
+package mariogenetic.game.logic;
 
 import java.awt.Rectangle;
 import java.util.Iterator;
@@ -18,9 +18,9 @@ import mariogenetic.objects.Terrain;
  *
  * @author alice
  */
-public class LogicTime extends Logic{
+public class LogicMario extends Logic{
 
-    public LogicTime(){ }
+    public LogicMario(){ }
 
     public void doLogic() {
         Main m = Global.main;

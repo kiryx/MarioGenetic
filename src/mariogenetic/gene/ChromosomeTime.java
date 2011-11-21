@@ -6,7 +6,6 @@
 package mariogenetic.gene;
 
 import java.util.Random;
-import mariogenetic.GeneticsConf;
 import mariogenetic.Global;
 import mariogenetic.Global.Keys;
 
@@ -21,7 +20,7 @@ public class ChromosomeTime extends Chromosome{
     
     public ChromosomeTime()
     {     
-        GeneticsConf gc = GeneticsConf.getInstance();
+        GeneticsConfig gc = GeneticsConfig.getInstance();
 
         for (int i = 0; i < moves.length; i++) {            
             moves[i] = gc.getRandomMove();
@@ -48,7 +47,7 @@ public class ChromosomeTime extends Chromosome{
 
     public ChromosomeTime(Chromosome[] parents)
     {
-        GeneticsConf gc = GeneticsConf.getInstance();
+        GeneticsConfig gc = GeneticsConfig.getInstance();
 
         for (int i = 0; i < moves.length; i++) {
             Global.Keys[] modifiers = new Global.Keys[parents.length];

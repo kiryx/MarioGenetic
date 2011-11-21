@@ -1,6 +1,6 @@
+Player 63 376 17 35
 Terrain 36 273 16 157
 Terrain 36 431 767 15
-BonusKills 146 413 669 20 -50
 Terrain 151 377 13 12
 Terrain 195 361 10 14
 Terrain 236 344 9 14
@@ -16,14 +16,13 @@ Terrain 673 352 6 20
 Terrain 702 322 19 23
 Terrain 750 302 15 21
 Terrain 789 272 19 15
+BonusKills 146 413 669 20 -50
 BonusWin 805 176 82 147 50
-BonusKills 808 416 268 19 -50
 BonusCoin 167 324 20 23 50
 BonusCoin 213 312 17 20 50
 BonusCoin 244 297 18 16 50
 BonusCoin 291 268 18 26 50
 BonusCoin 332 251 20 22 50
-BonusCoin 395 243 14 19 50
 BonusCoin 470 248 9 20 50
 BonusCoin 505 275 10 21 50
 BonusCoin 553 300 10 26 50
@@ -33,4 +32,6 @@ BonusCoin 724 274 9 17 50
 BonusCoin 763 238 4 19 50
 BonusCoin 799 154 30 177 50
 BonusCoin 792 145 36 186 500
-Player 63 376 17 35
+Terrain 789 286 9 147
+BonusCoin 386 223 14 20 50
+BonusCoin 440 201 12 25 50

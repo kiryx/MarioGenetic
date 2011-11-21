@@ -5,6 +5,7 @@
 
 package mariogenetic;
 
+import mariogenetic.GUI.PopulationWindow;
 import javax.swing.JFrame;
 import mariogenetic.game.Controller;
 
@@ -15,6 +16,7 @@ import mariogenetic.game.Controller;
 public class Global {
     
     public static Main main;
+    public static PopulationWindow pop_frame;
     public static boolean KEY_UP=false;
     public static boolean KEY_DOWN=false;
     public static boolean KEY_LEFT=false;

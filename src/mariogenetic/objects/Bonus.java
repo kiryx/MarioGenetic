@@ -8,7 +8,7 @@ package mariogenetic.objects;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import mariogenetic.Conf;
+import mariogenetic.Config;
 import mariogenetic.Global;
 import mariogenetic.Vector;
 
@@ -21,7 +21,7 @@ public abstract class Bonus extends WorldObject{
     public static final int TYPE_VALUE=0;
     public static final int TYPE_WINS = 1;
     public static final int TYPE_KILLS = 2;
-    public static final Color[] type_colors = {Conf.color_type_value, Conf.color_type_wins, Conf.color_type_kills};
+    public static final Color[] type_colors = {Config.color_type_value, Config.color_type_wins, Config.color_type_kills};
 
     public int value;
     public int type;
