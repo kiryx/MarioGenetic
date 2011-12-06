@@ -13,16 +13,18 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Set;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
 import javax.swing.JToolBar;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import mariogenetic.gene.GeneticsConfig.Param;
 
 /**
  *
@@ -75,11 +77,7 @@ public class Config extends JPanel{
             toolbar.setFloatable(false);
             toolbar.add(btn_coords);
 
-            final LabeledTextBox lbltxt_crossing_param = new LabeledTextBox("Crossing constant",String.valueOf(GeneticsConfig.getInstance().crossing_parameter));
             
-            lbltxt_crossing_param.getJLabel().setPreferredSize(new Dimension(150,20));
-            
-            lbltxt_crossing_param.getText().setPreferredSize(new Dimension(50,20));
 //            toolbar.add(lbltxt_crossing_param);
 
 
@@ -144,6 +142,7 @@ public class Config extends JPanel{
             };
 
             JButton btn_ok = new JButton("Apply");
+
             JPanel move_group = new JPanel();
             move_group.setBorder(BorderFactory.createTitledBorder("Movement key probabilities"));
             container.add(move_group);
@@ -159,7 +158,43 @@ public class Config extends JPanel{
             container.add(genetic_group);
             genetic_group.setLayout(new BoxLayout(genetic_group,BoxLayout.Y_AXIS));
 
-            genetic_group.add(lbltxt_crossing_param);
+            //GENETIC PARAMETES (CROSSING, POPULATION SIZE etc.)
+            Double crossing_parameter = (Double)GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.CROSSING_PARAMETER);
+
+            
+            HashMap<GeneticsConfig.Param,Object> hash_map = gc.getParamsMap();
+            
+                        
+            Param[] param_values = hash_map.keySet().toArray(new Param[hash_map.size()]);
+            
+            ArrayList<Param> arr_par = new ArrayList<Param>();
+            for(Param p : param_values)
+            {
+                arr_par.add(p);
+            }
+            Collections.sort(arr_par, new Comparator<Param>(){
+                public int compare(Param o1, Param o2) {
+                    String s1 = o1.name();
+                    String s2=  o2.name();
+                    return s1.compareTo(s2);
+                }
+            });
+            param_values = arr_par.toArray(new Param[arr_par.size()]);
+            
+            final LabeledTextBox[] lbtx_params = new LabeledTextBox[param_values.length];
+            for(int i=0;i<lbtx_params.length;++i)
+            {
+                lbtx_params[i] = new LabeledTextBox(param_values[i].name(), String.valueOf(gc.get_parameter(param_values[i])));
+                
+                genetic_group.add(lbtx_params[i]);
+
+            }
+
+
+//            lbltxt_crossing_param.getJLabel().setPreferredSize(new Dimension(150,20));
+//
+//            lbltxt_crossing_param.getText().setPreferredSize(new Dimension(50,20));
+//            genetic_group.add(lbltxt_crossing_param);
 
 
             for (int i = 0; i < 5; i++) {
@@ -179,8 +214,13 @@ public class Config extends JPanel{
                     for (int i = 5; i < lbtx.length; i++) {
                         GeneticsConfig.getInstance().setSpecialKeyProbability(lbtx[i].getKey(), Double.valueOf(lbtx[i].getValue()));
                     }
-                    GeneticsConfig.getInstance().setCrossing_parameter(Double.valueOf(lbltxt_crossing_param.getValue()));
+                    for(int i=0;i<lbtx_params.length;i++) {
+                        Param p = GeneticsConfig.Param.valueOf(lbtx_params[i].getLabel());
+                        GeneticsConfig.getInstance().update_parameter(p, lbtx_params[i].getValue());
+                    }
+                    
                     conf_main.repaint();
+                    
                 }
             });
 

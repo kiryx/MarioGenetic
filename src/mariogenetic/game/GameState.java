@@ -55,7 +55,7 @@ public class GameState {
         game_over=false;
         result = RESULT_NONE;
         Global.main.resources.reset();
-        Global.main.renderer.reset();
+        Global.main.renderer.reset();        
     }
     
     public void updateTime(long d_time)

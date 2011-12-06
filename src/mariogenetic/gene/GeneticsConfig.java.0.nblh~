@@ -5,16 +5,12 @@
 
 package mariogenetic.gene;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import mariogenetic.Dbg;
 import mariogenetic.Global;
 import mariogenetic.Global.Keys;
@@ -24,7 +20,11 @@ import mariogenetic.Global.Keys;
  * @author alice
  */
 public class GeneticsConfig {
-   
+
+
+    public static enum Param {
+        CROSSING_PARAM,POPULATION_SIZE
+    }
     private GeneticsConfig()
     {
         generator = new Random();
@@ -47,42 +47,25 @@ public class GeneticsConfig {
         specialProb.put(Global.Keys.NONE, 0.8);
         reCalcProbabilities();
 
+        set_parameter(Param.CROSSING_PARAM, 5.0);
+        set_parameter(Param.POPULATION_SIZE, 10);
 
-        register_parameter(Param.CROSSING_PARAMETER, 5.0, Double.class);
-        register_parameter(Param.POPULATION_SIZE, 10, Integer.class);
-        register_parameter(Param.ELITE_SIZE, 2, Integer.class);
-        register_parameter(Param.PARENT_SET_MIN, 1, Integer.class);
-        register_parameter(Param.PARENT_SET_MAX, 3, Integer.class);
-        register_parameter(Param.OFFSPRING_COUNT, 5, Integer.class);
-        register_parameter(Param.MOVES_MUTATION_PROBABILITY, 0.1, Double.class);
-        register_parameter(Param.MOVES_MUTATION_BREADTH, 0.15, Double.class);
-        register_parameter(Param.SPECIAL_MUTATION_PROBABILITY, 0.05, Double.class);
-        register_parameter(Param.SPECIAL_MUTATION_BREADTH, 0.15, Double.class);
-        register_parameter(Param.ELITE_IS_PARENTS, false, Boolean.class);        
-        register_parameter(Param.MAXIMUM_TIME, 10000, Integer.class); 
-        register_parameter(Param.MOVES_PER_SECOND, 20, Integer.class); 
-        
     }
-    public static enum Param {
-       CROSSING_PARAMETER,POPULATION_SIZE,ELITE_SIZE,
-       OFFSPRING_COUNT,PARENT_SET_MIN, PARENT_SET_MAX,
-       MOVES_MUTATION_PROBABILITY,MOVES_MUTATION_BREADTH,
-       SPECIAL_MUTATION_PROBABILITY, SPECIAL_MUTATION_BREADTH,
-       ELITE_IS_PARENTS,MAXIMUM_TIME,MOVES_PER_SECOND
-    }
+
+   
+
 
     public static GeneticsConfig singleton;
 
     public static GeneticsConfig getInstance()
     {
-        
         if(singleton == null)
             singleton = new GeneticsConfig();
         return singleton;
     }
     
-    private HashMap<Param,Object> genetic_params = new HashMap<Param,Object>();
-    private HashMap<Param,Class> genetic_param_classes = new HashMap<Param,Class>();
+    private HashMap<Param,Class> genetic_params_class = new HashMap<Param,Class>();
+    private HashMap<Param,Number> genetic_params = new HashMap<Param,Number>();
 
     private HashMap<Global.Keys,Double> moveProb = new HashMap<Global.Keys,Double>();
     private double totalMove;
@@ -92,53 +75,24 @@ public class GeneticsConfig {
     
     private Random generator = null;
 
-         
-    private void register_parameter(Param p, Object o, Class c )
+//    public void set_parameter(Param p, Number o )
+//    {
+//        genetic_params.put(p, o);
+//    }
+    public void register_parameter(Param p, Number o, Class c )
     {
         genetic_params.put(p, o);
-        genetic_param_classes.put(p, c);
+        genetic_params_class.put(p, c);
     }
     public void update_parameter(Param p, String s)
     {
-        Class c = (Class)genetic_param_classes.get(p);
-        Method m = null;
-        try {
-            m = c.getMethod("valueOf", new Class[] {String.class});
-        } catch (NoSuchMethodException ex) {
-            Logger.getLogger(GeneticsConfig.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SecurityException ex) {
-            Logger.getLogger(GeneticsConfig.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        Object o = null;
-        try {
-            o = (Object)m.invoke(null,s);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(GeneticsConfig.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalArgumentException ex) {
-            Logger.getLogger(GeneticsConfig.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvocationTargetException ex) {
-            Logger.getLogger(GeneticsConfig.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        genetic_params.put(p, o);
-//        if(c.equals(Double.class))
-//        {
-//            genetic_params.put(p,Double.valueOf(s));
-//        }
-//        else if( c.equals(Integer.class))
-//        {
-//            genetic_params.put(p,Integer.valueOf(s));
-//        }
-//        else
-//        {
-//            System.out.println("Not known data type:"+c.getName()+" in GeneticsConfig:update_parameter");
-//        }
+        
     }
     public Object get_parameter(Param p)
     {
         return genetic_params.get(p);
     }
-    public HashMap<Param,Object> getParamsMap()
+    public HashMap<Param,Number> getParamsMap()
     {
         return genetic_params;
     }
@@ -175,6 +129,7 @@ public class GeneticsConfig {
 
     public void setSpecialKeyProbability(Global.Keys key, Double d)
     {
+
         d = Math.abs(d);
 
         if(specialProb.get(key)!=null)
@@ -197,6 +152,8 @@ public class GeneticsConfig {
         return moveProb.get(key);
     }
     
+    
+
     private Random getGenerator()
     {
         return generator;
@@ -210,6 +167,7 @@ public class GeneticsConfig {
     {
         return getRandom(specialProb,totalSpecial);
     }
+
 
     public Global.Keys getRandomMove(Global.Keys[] modifiers)
     {
@@ -240,6 +198,16 @@ public class GeneticsConfig {
 
         Dbg.o("Had to return NONE! GeneticsConf:getRandom");
         return Global.Keys.NONE;
+
+        //        double real_right = right_probability*move_probability;
+//        double real_left = (1.0-right_probability)*move_probability;
+//
+//        if(d>=real_right+real_left)
+//            return Global.Keys.NONE;
+//        else if(d<real_right+real_left && d>=real_right)
+//            return Global.Keys.LEFT;
+//        else
+//            return Global.Keys.RIGHT;
     }
 
     private Global.Keys getRandom(Global.Keys[] modifiers, HashMap<Global.Keys,Double> map)
@@ -248,10 +216,10 @@ public class GeneticsConfig {
 
         HashMap<Global.Keys,Double> map2 = (HashMap<Global.Keys, Double>) map.clone();
 
-        Double crossing_parameter = (Double)get_parameter(Param.CROSSING_PARAMETER);
+        Double crossing_parameter = (Double)get_parameter(Param.CROSSING_PARAM);
 
         for(Global.Keys k : modifiers)
-        {                     
+        {
             Double new_val = map2.get(k)*crossing_parameter;
             map2.put(k, new_val);
         }

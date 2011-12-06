@@ -39,7 +39,7 @@ public class ResultData {
             final_score += 30;
         }
         final_score += score*2;
-        final_score += 15*((Chromosome.arr_length*100)/time_elapsed);
+        //final_score += 15*((Chromosome.arr_length*100)/time_elapsed);
     }
     public void getDataFromGameState(GameState gs)
     {

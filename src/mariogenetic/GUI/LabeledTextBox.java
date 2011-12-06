@@ -52,10 +52,10 @@ public class LabeledTextBox extends JPanel{
         text = new JTextField(valueText);
 
         label.setSize(50, 50);
-        label.setPreferredSize(new Dimension(80, 20));
+        label.setPreferredSize(new Dimension(150, 20));
 
         text.setSize(50, 50);
-        text.setPreferredSize(new Dimension(80,20));
+        text.setPreferredSize(new Dimension(50,20));
 
         this.setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
         this.add(label);

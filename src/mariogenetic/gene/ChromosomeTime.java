@@ -15,12 +15,20 @@ import mariogenetic.Global.Keys;
  */
 public class ChromosomeTime extends Chromosome{
 
-    public Global.Keys[] moves = new Global.Keys[Chromosome.arr_length]; //30 sekund
-    public Global.Keys[] special = new Global.Keys[Chromosome.arr_length];
+    public Global.Keys[] moves; //30 sekund
+    public Global.Keys[] special;
     
     public ChromosomeTime()
     {     
         GeneticsConfig gc = GeneticsConfig.getInstance();
+        Integer moves_per_sec = (Integer) GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.MOVES_PER_SECOND);
+        Integer max_time = (Integer) GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.MAXIMUM_TIME);
+        Integer size = (max_time*moves_per_sec)/1000;        
+        
+        //this.arr_length = size;
+        arr_length = 100;
+        moves = new Global.Keys[arr_length]; 
+        special = new Global.Keys[arr_length];
 
         for (int i = 0; i < moves.length; i++) {            
             moves[i] = gc.getRandomMove();
@@ -44,11 +52,34 @@ public class ChromosomeTime extends Chromosome{
             System.out.print(k+" ");
     }
 
+    public void mutateMoves(Double breadth)
+    {
+        Random rand = new Random();        
+        for (int i = 0; i < moves.length; i++) {
+            Double d = rand.nextDouble();
+            if(d<breadth)
+            {
+                moves[i]=GeneticsConfig.getInstance().getRandomMove();
+            }            
+        }
+        
+    }
+    public void mutateSpecial(Double breadth)
+    {
+        Random rand = new Random();  
+        for (int i = 0; i < moves.length; i++) {
+            Double d = rand.nextDouble();
+            if(d<breadth)
+            {
+                moves[i]=GeneticsConfig.getInstance().getRandomSpecial();
+            }            
+        }
+    }    
 
     public ChromosomeTime(Chromosome[] parents)
     {
-        GeneticsConfig gc = GeneticsConfig.getInstance();
-
+        this();
+        GeneticsConfig gc = GeneticsConfig.getInstance();        
         for (int i = 0; i < moves.length; i++) {
             Global.Keys[] modifiers = new Global.Keys[parents.length];
             for (int j = 0; j < modifiers.length; j++) {

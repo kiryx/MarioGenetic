@@ -168,6 +168,7 @@ public class Main extends JPanel implements Runnable{
 //                main.resources.reset();
                 main.controller.resetPopulation();
                 main.requestFocus();
+                Global.global_result_counter = 0;
             }
         });
         toolbar.add(btn_restart);

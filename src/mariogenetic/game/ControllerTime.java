@@ -27,15 +27,17 @@ public class ControllerTime extends Controller{
     //ChromosomeTime c1;
     public ControllerTime()
     {
-        //c1 = new ChromosomeTime();        
-        this.setPopulation(new Population(GeneticsConfig.population_size));
+        //c1 = new ChromosomeTime();
+        Integer population_size = (Integer)GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.POPULATION_SIZE);
+        this.setPopulation(new Population(population_size));
         
         
     }
 
     public void resetPopulation()
     {
-        this.setPopulation(new Population(GeneticsConfig.population_size));
+        Integer population_size = (Integer)GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.POPULATION_SIZE);
+        this.setPopulation(new Population(population_size));
         
         current_chromosome=0;
     }

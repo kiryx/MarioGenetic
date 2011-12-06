@@ -8,8 +8,10 @@ package mariogenetic.gene;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Random;
 import mariogenetic.Global;
 import mariogenetic.game.GameState;
+import mariogenetic.gene.Chromosome;
 
 /**
  *
@@ -36,6 +38,41 @@ public class Population {
         }
     }
 
+    public static Chromosome[] getParents(int min, int max, ArrayList<Chromosome> population )
+    {
+        Random rand = new Random();
+        Integer size = rand.nextInt((max-min)+1)+min;        
+        
+        double d = rand.nextDouble();
+
+        
+        double total = 0;
+        for(Chromosome e : population)
+        {
+            total+=e.resultData.getFinalScore();
+        }
+        
+        d*=total; //normalize random value
+
+        double sum = 0.0;
+
+        //Iterate over whole move set to determine random Key
+        Chromosome[] parents = new Chromosome[size];
+        for (int i = 0; i < parents.length; i++) {
+            
+            for(Chromosome e : population)
+            {
+                if(d>=sum && d<(sum+e.resultData.getFinalScore()))
+                {
+                    parents[i]=e;
+                    break;
+                }
+                sum+=e.resultData.getFinalScore();
+            }
+        }
+        return parents;        
+    }
+    
     public Population nextPopulation() {
         Collections.sort(chromosomes);
 
@@ -45,22 +82,66 @@ public class Population {
 //        for (int i = 0; i < chromosomes.size()/2; i++) {
 //            elita.add(chromosomes.get(i));
 //        }
-        for (int i = 0; i < chromosomes.size() && (i<3); i++) {
-            if(chromosomes.get(i).resultData.final_state==GameState.RESULT_WON)
-                new_population.add(chromosomes.get(i));
-
-        }
+        GeneticsConfig gc = GeneticsConfig.getInstance();
         
-        Chromosome[] parents = (Chromosome[]) new_population.toArray(new Chromosome[new_population.size()]);
-        while(new_population.size()<GeneticsConfig.population_size-3)
+        Integer population_size = (Integer)gc.get_parameter(GeneticsConfig.Param.POPULATION_SIZE);
+        Integer elite_size = (Integer) gc.get_parameter(GeneticsConfig.Param.ELITE_SIZE);
+        Integer offspring_count = (Integer)gc.get_parameter(GeneticsConfig.Param.OFFSPRING_COUNT);
+        Integer remaining = population_size-(elite_size+offspring_count);
+        Boolean elite_parents = (Boolean)gc.get_parameter(GeneticsConfig.Param.ELITE_IS_PARENTS);
+                
+        for (int i = 0; i < elite_size; i++) {
+            new_population.add(chromosomes.get(i));
+        }     
+
+        
+        //naraize elita == rodzice
+        Chromosome[] parents=null;
+        if(elite_parents)
+            parents = (Chromosome[]) new_population.toArray(new Chromosome[new_population.size()]);
+        else
         {
+            Integer min = (Integer)gc.get_parameter(GeneticsConfig.Param.PARENT_SET_MIN);
+            Integer max = (Integer)gc.get_parameter(GeneticsConfig.Param.PARENT_SET_MAX);
+            parents = (Chromosome[]) Population.getParents(min, max, chromosomes);
+        }        
+        
+        while(new_population.size()<remaining) 
+        {
+//            System.out.println(parents);
+//            for (int i = 0; i < parents.length; i++) {
+//                System.out.println(parents[i]);
+//                
+//            }
             new_population.add(new ChromosomeTime(parents));
+            
+            //new_population.add(new ChromosomeTime());
         }
-        while(new_population.size()<GeneticsConfig.population_size)
+        while(new_population.size()<population_size)
         {
             new_population.add(new ChromosomeTime());
         }
+        
+        //krzyzowanie
 
+        Double mut_prob = (Double)gc.get_parameter(GeneticsConfig.Param.MOVES_MUTATION_PROBABILITY);
+        Double spec_mut_prob = (Double)gc.get_parameter(GeneticsConfig.Param.SPECIAL_MUTATION_PROBABILITY);
+        Double mut_breadth = (Double)gc.get_parameter(GeneticsConfig.Param.MOVES_MUTATION_BREADTH);
+        Double spec_mut_breadth = (Double)gc.get_parameter(GeneticsConfig.Param.SPECIAL_MUTATION_BREADTH);
+        Random rand = new Random();
+        for (int i = 0; i < new_population.size(); i++) {
+            Double d = rand.nextDouble();
+            if(d<mut_prob)
+            {
+                ((ChromosomeTime)new_population.get(i)).mutateMoves(mut_breadth);
+            }
+            d = rand.nextDouble();
+            if(d<spec_mut_prob)
+            {
+                ((ChromosomeTime)new_population.get(i)).mutateSpecial(spec_mut_breadth);
+            }
+            
+        }
 
 //        while(new_population.size()<GeneticsConf.population_size)
 //        {
