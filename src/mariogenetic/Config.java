@@ -32,6 +32,7 @@ import mariogenetic.gene.GeneticsConfig.Param;
  */
 public class Config extends JPanel{
         public static final Dimension window_main_size = new Dimension(500,500);
+        public static final Dimension window_settings_size = new Dimension(380,700);
         public static final Dimension window_editor_size = new Dimension(700,500);
 	public static final int TILE_SIZE = 30;
         public static final Color color_grid_light = new Color(210,210,210);
@@ -57,7 +58,7 @@ public class Config extends JPanel{
             frame.getContentPane().add(conf_main);
             frame.setLayout(new BorderLayout());
             frame.pack();
-            frame.setSize(Config.window_main_size);
+            frame.setSize(Config.window_settings_size);
             frame.setVisible(true);
 
             JToolBar toolbar = new JToolBar("Tools", JToolBar.HORIZONTAL);

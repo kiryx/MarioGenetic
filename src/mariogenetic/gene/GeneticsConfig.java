@@ -251,8 +251,9 @@ public class GeneticsConfig {
         Double crossing_parameter = (Double)get_parameter(Param.CROSSING_PARAMETER);
 
         for(Global.Keys k : modifiers)
-        {                     
-            Double new_val = map2.get(k)*crossing_parameter;
+        {
+            Double new_val= map2.get(k)*crossing_parameter;
+            
             map2.put(k, new_val);
         }
         

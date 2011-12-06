@@ -114,6 +114,7 @@ public class Population {
 //                
 //            }
             new_population.add(new ChromosomeTime(parents));
+
             
             //new_population.add(new ChromosomeTime());
         }

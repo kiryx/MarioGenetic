@@ -67,11 +67,11 @@ public class ChromosomeTime extends Chromosome{
     public void mutateSpecial(Double breadth)
     {
         Random rand = new Random();  
-        for (int i = 0; i < moves.length; i++) {
+        for (int i = 0; i < special.length; i++) {
             Double d = rand.nextDouble();
             if(d<breadth)
             {
-                moves[i]=GeneticsConfig.getInstance().getRandomSpecial();
+                special[i]=GeneticsConfig.getInstance().getRandomSpecial();
             }            
         }
     }    
