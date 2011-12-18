@@ -38,4 +38,20 @@ public abstract class WorldObject {
     {
         return new Rectangle((int)position.x,(int)position.y,size.x,size.y);
     }
+//    public boolean intersects(WorldObject o)
+//    {
+//        double this_right = this.position.x+this.size.x;
+//        double o_right = o.position.x+o.size.x;
+//
+//        if(this_right >= o.position.x && position.x <= o_right)
+//        {
+//            double this_down = this.position.y+this.size.y;
+//            double o_down = o.position.y+o.size.y;
+//            if(position.y<=o_down && this_down >= o.position.y)
+//            {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 }

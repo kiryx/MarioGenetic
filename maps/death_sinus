@@ -16,7 +16,7 @@ Terrain 673 352 6 20
 Terrain 702 322 19 23
 Terrain 750 302 15 21
 Terrain 789 272 19 15
-BonusKills 146 413 669 20 -50
+Terrain 789 286 9 147
 BonusWin 805 176 82 147 50
 BonusCoin 167 324 20 23 50
 BonusCoin 213 312 17 20 50
@@ -32,6 +32,6 @@ BonusCoin 724 274 9 17 50
 BonusCoin 763 238 4 19 50
 BonusCoin 799 154 30 177 50
 BonusCoin 792 145 36 186 500
-Terrain 789 286 9 147
 BonusCoin 386 223 14 20 50
 BonusCoin 440 201 12 25 50
+BonusKills 161 405 628 12 0

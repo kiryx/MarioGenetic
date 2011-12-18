@@ -49,26 +49,32 @@ public class GeneticsConfig {
 
 
         register_parameter(Param.CROSSING_PARAMETER, 5.0, Double.class);
-        register_parameter(Param.POPULATION_SIZE, 10, Integer.class);
-        register_parameter(Param.ELITE_SIZE, 2, Integer.class);
-        register_parameter(Param.PARENT_SET_MIN, 1, Integer.class);
-        register_parameter(Param.PARENT_SET_MAX, 3, Integer.class);
-        register_parameter(Param.OFFSPRING_COUNT, 5, Integer.class);
-        register_parameter(Param.MOVES_MUTATION_PROBABILITY, 0.1, Double.class);
-        register_parameter(Param.MOVES_MUTATION_BREADTH, 0.15, Double.class);
-        register_parameter(Param.SPECIAL_MUTATION_PROBABILITY, 0.05, Double.class);
-        register_parameter(Param.SPECIAL_MUTATION_BREADTH, 0.15, Double.class);
-        register_parameter(Param.ELITE_IS_PARENTS, false, Boolean.class);        
+        register_parameter(Param.POPULATION_SIZE, 15, Integer.class);
+        register_parameter(Param.CROSSING_ELITE_SIZE, 2, Integer.class);
+        register_parameter(Param.CROSSING_PARENT_SET_MIN, 1, Integer.class);
+        register_parameter(Param.CROSSING_PARENT_SET_MAX, 3, Integer.class);
+        register_parameter(Param.CROSSING_OFFSPRING_COUNT, 5, Integer.class);
+        register_parameter(Param.MUTATION_MOVES_PROBABILITY, 0.02, Double.class);
+        register_parameter(Param.MUTATION_MOVES_BREADTH, 0.015, Double.class);
+        register_parameter(Param.MUTATION_SPECIAL_PROBABILITY, 0.02, Double.class);
+        register_parameter(Param.MUTATION_SPECIAL_BREADTH, 0.015, Double.class);
+        register_parameter(Param.CROSSING_ELITE_IS_PARENTS, false, Boolean.class);
         register_parameter(Param.MAXIMUM_TIME, 10000, Integer.class); 
-        register_parameter(Param.MOVES_PER_SECOND, 20, Integer.class); 
+        register_parameter(Param.MOVES_PER_SECOND, 20, Integer.class);
+        register_parameter(Param.FUNCTION_DEAD_MULTIPLIER, 0.5, Double.class);
+        register_parameter(Param.FUNCTION_WON_MULTIPLIER, 2.0, Double.class);
+        register_parameter(Param.FUNCTION_TIMEOUT_MULTIPLIER, 1.0, Double.class);
+        register_parameter(Param.FUNCTION_TIME_MULTIPLIER, 50.0, Double.class);
         
     }
     public static enum Param {
-       CROSSING_PARAMETER,POPULATION_SIZE,ELITE_SIZE,
-       OFFSPRING_COUNT,PARENT_SET_MIN, PARENT_SET_MAX,
-       MOVES_MUTATION_PROBABILITY,MOVES_MUTATION_BREADTH,
-       SPECIAL_MUTATION_PROBABILITY, SPECIAL_MUTATION_BREADTH,
-       ELITE_IS_PARENTS,MAXIMUM_TIME,MOVES_PER_SECOND
+       CROSSING_PARAMETER,POPULATION_SIZE,CROSSING_ELITE_SIZE,
+       CROSSING_OFFSPRING_COUNT,CROSSING_PARENT_SET_MIN, CROSSING_PARENT_SET_MAX,
+       MUTATION_MOVES_PROBABILITY,MUTATION_MOVES_BREADTH,
+       MUTATION_SPECIAL_PROBABILITY, MUTATION_SPECIAL_BREADTH,
+       CROSSING_ELITE_IS_PARENTS,MAXIMUM_TIME,MOVES_PER_SECOND,
+       FUNCTION_TIMEOUT_MULTIPLIER, FUNCTION_WON_MULTIPLIER, FUNCTION_DEAD_MULTIPLIER,
+       FUNCTION_TIME_MULTIPLIER
     }
 
     public static GeneticsConfig singleton;

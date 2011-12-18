@@ -39,8 +39,7 @@ public class Global {
     public static long SLEEP_TIME = 10;
 
     public static final int MODE_USER = 0;
-    public static final int MODE_TIME = 1;
-    public static final int MODE_POS = 2;
+    public static final int MODE_TIME = 1;    
     public static int MODE_CURRENT = 1;
     public static int MODE_NEXT = 1;
 

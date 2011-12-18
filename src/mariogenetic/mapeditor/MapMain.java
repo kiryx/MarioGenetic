@@ -36,11 +36,12 @@ import javax.swing.JToolBar;
 import mariogenetic.Config;
 import mariogenetic.Global;
 import mariogenetic.Vector;
+import mariogenetic.game.Camera;
 import mariogenetic.game.RendererBasic;
 import mariogenetic.game.Resources;
 import mariogenetic.objects.Bonus;
 import mariogenetic.objects.BonusCoin;
-import mariogenetic.objects.BonusKills;
+import mariogenetic.objects.BonusLose;
 import mariogenetic.objects.BonusWin;
 import mariogenetic.objects.Player;
 import mariogenetic.objects.Terrain;
@@ -216,27 +217,7 @@ public class MapMain extends JPanel implements KeyListener, MouseListener, Mouse
         } catch (IOException e) {
         }
     }
-    public void translateDiff(Graphics2D g2, Rectangle box)
-    {
-        if(box!=null)
-            g2.translate(box.width-box.x,box.height-box.y);
-    }
-    public void translateDiff(Graphics2D g2, Point box)
-    {
-        if(box!=null)
-            g2.translate(box.x,box.y);
-    }
-    public void translateDiffNeg(Graphics2D g2, Point box)
-    {
-        if(box!=null)
-            g2.translate(-box.x,-box.y);
-    }
-    public void translateDiffNeg(Graphics2D g2, Rectangle box)
-    {
-        if(box!=null)
-            g2.translate(box.x-box.width,box.y-box.height);
-            
-    }
+    
     public Point getScreenDragTotal()
     {
         if(screenDrag_tmp==null)
@@ -249,8 +230,8 @@ public class MapMain extends JPanel implements KeyListener, MouseListener, Mouse
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        translateDiff(g2, screenDrag);
-        translateDiff(g2, screenDrag_tmp);
+        Camera.translateDiff(g2, screenDrag);
+        Camera.translateDiff(g2, screenDrag_tmp);
         RendererBasic.drawGrid(g2, this);
         if(selection!=null)
         {
@@ -270,8 +251,8 @@ public class MapMain extends JPanel implements KeyListener, MouseListener, Mouse
             g2.drawRect((int)selected_object.position.x, (int)selected_object.position.y,
                 selected_object.size.x, selected_object.size.y);
 
-        translateDiffNeg(g2, screenDrag_tmp);
-        translateDiffNeg(g2, screenDrag);
+        Camera.translateDiffNeg(g2, screenDrag_tmp);
+        Camera.translateDiffNeg(g2, screenDrag);
     
     }
 
@@ -486,12 +467,23 @@ public class MapMain extends JPanel implements KeyListener, MouseListener, Mouse
                 }
                 case BonusKills:
                 {
-                    world_objects.add(new BonusKills(new Vector(new_sel.x,new_sel.y),new Point(new_sel.width,new_sel.height),-50));
+                    world_objects.add(new BonusLose(new Vector(new_sel.x,new_sel.y),new Point(new_sel.width,new_sel.height),0));
                     break;
                 }
                 case BonusWin:
                 {
-                    world_objects.add(new BonusWin(new Vector(new_sel.x,new_sel.y),new Point(new_sel.width,new_sel.height),50));
+                    Integer val;
+                    try
+                    {
+                        val = Integer.parseInt(txt_value_field.getText());
+                    }
+                    catch (NumberFormatException ex)
+                    {
+                        val = 50;
+                        txt_value_field.setText(String.valueOf(val));
+                    }
+                    
+                    world_objects.add(new BonusWin(new Vector(new_sel.x,new_sel.y),new Point(new_sel.width,new_sel.height),val));
                     break;
                 }
                 case Player:

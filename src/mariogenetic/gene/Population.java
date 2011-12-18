@@ -42,7 +42,7 @@ public class Population {
     {
         Random rand = new Random();
         Integer size = rand.nextInt((max-min)+1)+min;        
-        
+        Chromosome[] parents = new Chromosome[size];
         double d = rand.nextDouble();
 
         
@@ -51,18 +51,27 @@ public class Population {
         {
             total+=e.resultData.getFinalScore();
         }
+
+        if(total==0)
+        {
+            for (int i = 0; i <size ; i++) {
+                parents[i]=population.get(i);
+
+            }
+            return parents;
+        }
         
         d*=total; //normalize random value
 
         double sum = 0.0;
 
         //Iterate over whole move set to determine random Key
-        Chromosome[] parents = new Chromosome[size];
+        
         for (int i = 0; i < parents.length; i++) {
             
             for(Chromosome e : population)
             {
-                if(d>=sum && d<(sum+e.resultData.getFinalScore()))
+                if(d>=sum && d<=(sum+e.resultData.getFinalScore()))
                 {
                     parents[i]=e;
                     break;
@@ -85,10 +94,10 @@ public class Population {
         GeneticsConfig gc = GeneticsConfig.getInstance();
         
         Integer population_size = (Integer)gc.get_parameter(GeneticsConfig.Param.POPULATION_SIZE);
-        Integer elite_size = (Integer) gc.get_parameter(GeneticsConfig.Param.ELITE_SIZE);
-        Integer offspring_count = (Integer)gc.get_parameter(GeneticsConfig.Param.OFFSPRING_COUNT);
+        Integer elite_size = (Integer) gc.get_parameter(GeneticsConfig.Param.CROSSING_ELITE_SIZE);
+        Integer offspring_count = (Integer)gc.get_parameter(GeneticsConfig.Param.CROSSING_OFFSPRING_COUNT);
         Integer remaining = population_size-(elite_size+offspring_count);
-        Boolean elite_parents = (Boolean)gc.get_parameter(GeneticsConfig.Param.ELITE_IS_PARENTS);
+        Boolean elite_parents = (Boolean)gc.get_parameter(GeneticsConfig.Param.CROSSING_ELITE_IS_PARENTS);
                 
         for (int i = 0; i < elite_size; i++) {
             new_population.add(chromosomes.get(i));
@@ -101,8 +110,8 @@ public class Population {
             parents = (Chromosome[]) new_population.toArray(new Chromosome[new_population.size()]);
         else
         {
-            Integer min = (Integer)gc.get_parameter(GeneticsConfig.Param.PARENT_SET_MIN);
-            Integer max = (Integer)gc.get_parameter(GeneticsConfig.Param.PARENT_SET_MAX);
+            Integer min = (Integer)gc.get_parameter(GeneticsConfig.Param.CROSSING_PARENT_SET_MIN);
+            Integer max = (Integer)gc.get_parameter(GeneticsConfig.Param.CROSSING_PARENT_SET_MAX);
             parents = (Chromosome[]) Population.getParents(min, max, chromosomes);
         }        
         
@@ -125,10 +134,10 @@ public class Population {
         
         //krzyzowanie
 
-        Double mut_prob = (Double)gc.get_parameter(GeneticsConfig.Param.MOVES_MUTATION_PROBABILITY);
-        Double spec_mut_prob = (Double)gc.get_parameter(GeneticsConfig.Param.SPECIAL_MUTATION_PROBABILITY);
-        Double mut_breadth = (Double)gc.get_parameter(GeneticsConfig.Param.MOVES_MUTATION_BREADTH);
-        Double spec_mut_breadth = (Double)gc.get_parameter(GeneticsConfig.Param.SPECIAL_MUTATION_BREADTH);
+        Double mut_prob = (Double)gc.get_parameter(GeneticsConfig.Param.MUTATION_MOVES_PROBABILITY);
+        Double spec_mut_prob = (Double)gc.get_parameter(GeneticsConfig.Param.MUTATION_SPECIAL_PROBABILITY);
+        Double mut_breadth = (Double)gc.get_parameter(GeneticsConfig.Param.MUTATION_MOVES_BREADTH);
+        Double spec_mut_breadth = (Double)gc.get_parameter(GeneticsConfig.Param.MUTATION_SPECIAL_BREADTH);
         Random rand = new Random();
         for (int i = 0; i < new_population.size(); i++) {
             Double d = rand.nextDouble();

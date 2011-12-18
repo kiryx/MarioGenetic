@@ -46,7 +46,8 @@ public class ControllerHuman extends Controller{
     {
         if(Global.KEY_UP)
         {
-            m.resources.actors.get(0).jump();
+            m.logic.executeSpecialAction(Global.Keys.A);
+//            m.resources.actors.get(0).jump();
         }
 //        else
 //        {

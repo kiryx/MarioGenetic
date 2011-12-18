@@ -29,17 +29,28 @@ public class ResultData {
     }
     public void calcFunc()
     {
+        GeneticsConfig gc = GeneticsConfig.getInstance();
         final_score=0;
-        if(final_state==GameState.RESULT_DEAD)
+        double multiplier = 1.0;
+        if(final_state==GameState.RESULT_TIMEOUT)
         {
-            final_score -= 40;
+            multiplier = (Double)gc.get_parameter(GeneticsConfig.Param.FUNCTION_TIMEOUT_MULTIPLIER);
         }
-        else if(final_state==GameState.RESULT_WON)
+        else if(final_state == GameState.RESULT_WON)
         {
-            final_score += 30;
+            multiplier = (Double)gc.get_parameter(GeneticsConfig.Param.FUNCTION_WON_MULTIPLIER);
         }
-        final_score += score*2;
-        //final_score += 15*((Chromosome.arr_length*100)/time_elapsed);
+        else if(final_state == GameState.RESULT_LOST)
+        {
+            multiplier = (Double)gc.get_parameter(GeneticsConfig.Param.FUNCTION_DEAD_MULTIPLIER);
+        }
+        final_score += score;
+        Integer max_time =(Integer)gc.get_parameter(GeneticsConfig.Param.MAXIMUM_TIME);
+        Double time_mult = (Double) gc.get_parameter(GeneticsConfig.Param.FUNCTION_TIME_MULTIPLIER);
+        final_score += ((double)max_time/((double)time_elapsed)*time_mult);
+        
+        final_score = (int)(final_score*multiplier);
+        
     }
     public void getDataFromGameState(GameState gs)
     {

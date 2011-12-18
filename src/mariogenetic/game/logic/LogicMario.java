@@ -20,12 +20,14 @@ import mariogenetic.objects.Terrain;
  */
 public class LogicMario extends Logic{
 
-    public LogicMario(){ }
+    private boolean actor_falling;
+    public LogicMario(){actor_falling=true; }
 
     public void doLogic() {
+        if(Global.shuffling_resources)
+            return;
         Main m = Global.main;
-        synchronized(m.resources.actors)
-        {
+        
             for(Actor a : m.resources.actors )
             {
                 //Sprawdzanie kolizji ze scianami
@@ -35,8 +37,7 @@ public class LogicMario extends Logic{
                     Rectangle nextX = a.previewX();
                     Rectangle nextY = a.previewY();
                     Vector difference = new Vector(10.0,10.0);
-                    synchronized(m.resources.terrain)
-                    {
+
                     for(Terrain t : m.resources.terrain)
                     {
                         Rectangle tR = t.getRectangle();
@@ -74,7 +75,7 @@ public class LogicMario extends Logic{
                             }
                         }
                     }
-                    }
+                    
 
                     if((collision & COL_X)==0)
                     {
@@ -88,9 +89,15 @@ public class LogicMario extends Logic{
                     if((collision & COL_Y)==0)
                     {
                         a.tickY();
-                        if(!a.falling)
+                        if(actor_falling)
                         {
-                            a.setFreefall();
+                            a.position.y+=a.velocity.y;
+                            a.velocity.y+=0.05;
+                        }
+                        else
+                        {
+                            actor_falling = true;
+                            a.velocity.y = 0.0;
                         }
                     }
                     else
@@ -99,17 +106,17 @@ public class LogicMario extends Logic{
                         {
         //                    a.jumping=false;
                             a.velocity.y=0;
-                            a.falling=true;
+                            actor_falling=true;
 
                         }
                         if((collision & COL_DOWN) != 0)
                         {
         //                    a.jumping=false;
-                            a.falling=false;
+                            actor_falling=false;
                         }
                         else
                         {
-                            a.falling=true;
+                            actor_falling=true;
                         }
                         a.position.y+=difference.y;
                     }
@@ -118,8 +125,7 @@ public class LogicMario extends Logic{
                 }
                 //kolizja z bonusami
 
-                synchronized (m.resources.bonus)
-                {
+               
                     Iterator it = m.resources.bonus.iterator();
                     while(it.hasNext())
                     {
@@ -130,8 +136,22 @@ public class LogicMario extends Logic{
                             it.remove();
                         }
                     }
-                }
+                
 
+            }
+        
+    }
+
+    public void executeMoveAction(Global.Keys key){
+    }
+    public void executeSpecialAction(Global.Keys key){
+        if(key==Global.Keys.A)
+        {
+            Actor a = Global.main.resources.actors.get(0);
+            if(!actor_falling)
+            {
+                a.velocity.y = -3.0;
+                actor_falling=true;
             }
         }
     }

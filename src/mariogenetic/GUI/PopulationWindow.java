@@ -20,6 +20,7 @@ import mariogenetic.Config;
 import mariogenetic.Global;
 import mariogenetic.game.ControllerTime;
 import mariogenetic.gene.Chromosome;
+import mariogenetic.gene.ChromosomeTime;
 
 /**
  *
@@ -29,6 +30,7 @@ public class PopulationWindow extends JFrame{
 
     JList list = new JList();
     JButton run_gene = new JButton("Run selected gene");
+    JButton details_gene = new JButton("Show details");
     JPanel container = new JPanel();
     private static PopulationWindow singleton;
     private PopulationWindow()
@@ -44,6 +46,7 @@ public class PopulationWindow extends JFrame{
         JToolBar toolbar = new JToolBar("Tools", JToolBar.HORIZONTAL);
         toolbar.setFocusable(false);
         toolbar.add(run_gene);
+        toolbar.add(details_gene);
         this.add(toolbar,BorderLayout.SOUTH);
 
         run_gene.addActionListener(new ActionListener(){
@@ -65,6 +68,22 @@ public class PopulationWindow extends JFrame{
                             JOptionPane.showMessageDialog(container, "The chromosome must complete it's run first.");
                         }
 //                        ct.getPopulation().chromosomes.get(list.getSelectedIndex());
+                    }
+                }
+            }
+        });
+
+        details_gene.addActionListener(new ActionListener(){
+
+            public void actionPerformed(ActionEvent e) {
+
+                if(list.getSelectedIndex()!=-1)
+                {
+                    if(Global.main.controller instanceof ControllerTime)
+                    {
+                        ControllerTime ct = (ControllerTime)Global.main.controller;
+                        Chromosome c = ct.getPopulation().chromosomes.get(list.getSelectedIndex());
+                        new GeneDetailsWindow((ChromosomeTime)c);
                     }
                 }
             }

@@ -12,9 +12,9 @@ import mariogenetic.game.GameState;
  *
  * @author alice
  */
-public class BonusKills extends Bonus {
+public class BonusLose extends Bonus {
 
-    public BonusKills(Vector position, Point size,int value) {
+    public BonusLose(Vector position, Point size,int value) {
         super(position,size,value);
      
         this.type = Bonus.TYPE_KILLS;
@@ -29,7 +29,7 @@ public class BonusKills extends Bonus {
     public void evalCollision()
     {
         super.evalCollision();
-        Global.main.gamestate.result=GameState.RESULT_DEAD;
+        Global.main.gamestate.result=GameState.RESULT_LOST;
     }
 
 }

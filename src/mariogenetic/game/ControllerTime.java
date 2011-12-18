@@ -56,20 +56,21 @@ public class ControllerTime extends Controller{
 
     public void generateEvent()
     {
-        long time = Global.main.gamestate.timeElapsed();
+        if(Global.shuffling_resources)
+            return;
+        long time = Global.main.gamestate.timeElapsed(); //time elapsed in millis
 
-        long time10 = time/100; //10 razy na sek
+        //long time10 = time/100; //10 razy na sek
+        
 
         Actor a = m.resources.actors.get(0);
 //        System.out.println(p.chromosomes.size());
         ChromosomeTime c1 = (ChromosomeTime) p.chromosomes.get(current_chromosome);
 
-        Global.Keys move = c1.getCurrentMove(time10);
-        Global.Keys special = c1.getSpecial(time10);
 
 
         //jesli koniec czasu lub wczesniejszy koniec
-        if(c1.isEnd(time10) || m.gamestate.result!=GameState.RESULT_NONE)
+        if(c1.isEnd(time) || m.gamestate.result!=GameState.RESULT_NONE)
         {
 //            System.out.println("XX "+current_chromosome);
 //            for (int i = 0; i < p.chromosomes.size(); i++) {
@@ -78,13 +79,14 @@ public class ControllerTime extends Controller{
 //
 //            }
 //            System.out.println("XX");
-            if(c1.isEnd(time10))
+            if(c1.isEnd(time))
             {
                 m.gamestate.result = GameState.RESULT_TIMEOUT;
             }
             c1.setResultData(new ResultData(m.gamestate));
             c1.resultData.calcFunc();
-            System.out.print(Global.global_result_counter+++" ");
+            System.out.print(Global.global_result_counter+" ");
+            Global.global_result_counter++;
             System.out.println(c1);
             current_chromosome++;
             if(current_chromosome==p.chromosomes.size())
@@ -102,13 +104,17 @@ public class ControllerTime extends Controller{
             PopulationWindow.getInstance().repaint();
             return;
         }
+        Global.Keys move = c1.getCurrentMove(time);
+        Global.Keys special = c1.getSpecial(time);
         if(special==Global.Keys.A)
         {
-            a.jump();
+            m.logic.executeSpecialAction(Global.Keys.A);
+//            a.jump();
         }
         //poruszanie sie
         if(move==Global.Keys.LEFT)
         {
+            //TODO zamienic metody aktora na metody logiki!!
             a.left();
         }
         else if(move==Global.Keys.RIGHT)

@@ -5,6 +5,7 @@
 
 package mariogenetic;
 
+import java.awt.event.MouseEvent;
 import mariogenetic.GUI.PopulationWindow;
 import mariogenetic.game.logic.Logic;
 import java.awt.BorderLayout;
@@ -14,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -69,13 +72,43 @@ public class Main extends JPanel implements Runnable{
                     public void keyPressed(KeyEvent e) {
 
                         controller.keyPressed(e);
-
                     }
 
                     public void keyReleased(KeyEvent e) {
                         controller.keyReleased(e);
                     }
             });
+            this.addMouseMotionListener(new MouseMotionListener() {
+                public void mouseDragged(MouseEvent e) {
+                    controller.mouseDragged(e);
+                }
+
+                public void mouseMoved(MouseEvent e) {
+                    controller.mouseMoved(e);
+                }
+            });
+            this.addMouseListener(new MouseListener() {
+
+            public void mouseClicked(MouseEvent e) {
+                controller.mouseClicked(e);
+            }
+
+            public void mousePressed(MouseEvent e) {
+                controller.mousePressed(e);
+            }
+
+            public void mouseReleased(MouseEvent e) {
+                controller.mouseReleased(e);
+            }
+
+            public void mouseEntered(MouseEvent e) {
+                controller.mouseEntered(e);
+            }
+
+            public void mouseExited(MouseEvent e) {
+                controller.mouseExited(e);
+            }
+        });
 
             new Thread(this).start();
 	}
@@ -83,6 +116,13 @@ public class Main extends JPanel implements Runnable{
     /**
      * @param args the command line arguments
      */
+        public void resetAll()
+        {
+            this.gamestate.reset();
+            this.controller.resetPopulation();
+            this.requestFocus();
+            Global.global_result_counter = 0;
+        }
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
@@ -164,11 +204,7 @@ public class Main extends JPanel implements Runnable{
         btn_restart.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                main.gamestate.reset();
-//                main.resources.reset();
-                main.controller.resetPopulation();
-                main.requestFocus();
-                Global.global_result_counter = 0;
+                main.resetAll();
             }
         });
         toolbar.add(btn_restart);

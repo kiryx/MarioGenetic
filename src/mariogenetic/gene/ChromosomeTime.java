@@ -25,8 +25,8 @@ public class ChromosomeTime extends Chromosome{
         Integer max_time = (Integer) GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.MAXIMUM_TIME);
         Integer size = (max_time*moves_per_sec)/1000;        
         
-        //this.arr_length = size;
-        arr_length = 100;
+        this.arr_length = size;
+        //arr_length = 100;
         moves = new Global.Keys[arr_length]; 
         special = new Global.Keys[arr_length];
 
@@ -79,10 +79,15 @@ public class ChromosomeTime extends Chromosome{
     public ChromosomeTime(Chromosome[] parents)
     {
         this();
+
         GeneticsConfig gc = GeneticsConfig.getInstance();        
         for (int i = 0; i < moves.length; i++) {
             Global.Keys[] modifiers = new Global.Keys[parents.length];
             for (int j = 0; j < modifiers.length; j++) {
+//                System.out.println("list:"+parents);
+//                System.out.println("par [j]"+parents[j]+" j="+j+" par.size="+parents.length);
+//                System.out.println(parents[j].getMovesArray());
+//                System.out.println(parents[j].getMovesArray()[i]);
                 modifiers[j]=parents[j].getMovesArray()[i];
             }
             moves[i] = gc.getRandomMove(modifiers);
@@ -106,15 +111,18 @@ public class ChromosomeTime extends Chromosome{
 
     public boolean isEnd(long time)
     {
-        return time>=moves.length;
+        int index = (int) (time * moves.length / (Integer) GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.MAXIMUM_TIME));
+        return index>=moves.length;
     }
     public Global.Keys getCurrentMove(long time)
     {
-        return moves[(int)time%moves.length];
+        int index = (int) (time * moves.length / (Integer) GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.MAXIMUM_TIME));
+        return moves[index];
     }
     public Global.Keys getSpecial(long time)
     {
-        return special[(int)time%special.length];
+        int index = (int) (time * special.length / (Integer) GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.MAXIMUM_TIME));
+        return special[index];
     }
 //    public void calcFunc()
 //    {

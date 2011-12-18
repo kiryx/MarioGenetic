@@ -5,6 +5,8 @@
 
 package mariogenetic.game;
 
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -26,9 +28,7 @@ public abstract class Controller implements KeyListener,MouseMotionListener,Mous
     {
         m = Global.main;
     }
-
-   
-
+    
     public void keyTyped(KeyEvent e) { }
 
     public void keyPressed(KeyEvent e) {
@@ -51,13 +51,14 @@ public abstract class Controller implements KeyListener,MouseMotionListener,Mous
     public void keyReleased(KeyEvent e) { }
 
     public void mouseDragged(MouseEvent e) {
-        if(e.getButton()==e.BUTTON3)
-        {
+        
+        if((e.getModifiers() | e.BUTTON3_DOWN_MASK) > 0)
+        {            
             if(!m.renderer.camera.follow && m.renderer.camera.tmp_drag!=null)
             {
                 m.renderer.camera.tmp_drag.width=e.getX();
                 m.renderer.camera.tmp_drag.height=e.getY();
-                System.out.println("hi");
+              
 //                if(screenDrag_tmp!=null)
 //                {
 //                    screenDrag_tmp.width=e.getX();
@@ -69,9 +70,8 @@ public abstract class Controller implements KeyListener,MouseMotionListener,Mous
 
     public void mousePressed(MouseEvent e) {
 
-        //TODO sie nie wypisuje to nizej
-        System.out.println("hi");
-        if(e.getButton() == e.BUTTON3)
+
+        if((e.getModifiers() | e.BUTTON3_DOWN_MASK) > 0)
         {
             if(!m.renderer.camera.follow)
             {
@@ -82,14 +82,18 @@ public abstract class Controller implements KeyListener,MouseMotionListener,Mous
     }
 
     public void mouseReleased(MouseEvent e) {
-        if(e.getButton() == e.BUTTON3)
+        
+        if((e.getModifiers() | e.BUTTON3_DOWN_MASK) > 0)
         {
+
             if(!m.renderer.camera.follow)
             {
+                
                 m.renderer.camera.setPosition(new Vector(
-                        m.renderer.camera.getPosition().x+(m.renderer.camera.tmp_drag.width-m.renderer.camera.tmp_drag.x),
-                        m.renderer.camera.getPosition().y+(m.renderer.camera.tmp_drag.height-m.renderer.camera.tmp_drag.y)
+                        m.renderer.camera.getPosition().x-(m.renderer.camera.tmp_drag.width-m.renderer.camera.tmp_drag.x),
+                        m.renderer.camera.getPosition().y-(m.renderer.camera.tmp_drag.height-m.renderer.camera.tmp_drag.y)
                         ));
+                m.renderer.camera.tmp_drag=null;
             }
 //            screenDrag=getScreenDragTotal();
 //            screenDrag_tmp=null;
@@ -105,7 +109,8 @@ public abstract class Controller implements KeyListener,MouseMotionListener,Mous
     public void mouseExited(MouseEvent e) {
         
     }
-        public void mouseMoved(MouseEvent e) {
+
+    public void mouseMoved(MouseEvent e) {
 
     }
 

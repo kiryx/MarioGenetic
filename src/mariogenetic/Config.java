@@ -22,6 +22,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import mariogenetic.gene.GeneticsConfig.Param;
@@ -30,11 +31,11 @@ import mariogenetic.gene.GeneticsConfig.Param;
  *
  * @author alice
  */
-public class Config extends JPanel{
+public class Config extends JPanel {
         public static final Dimension window_main_size = new Dimension(500,500);
-        public static final Dimension window_settings_size = new Dimension(380,700);
+        public static final Dimension window_settings_size = new Dimension(380,730);
         public static final Dimension window_editor_size = new Dimension(700,500);
-	public static final int TILE_SIZE = 30;
+//	public static final int TILE_SIZE = 30;
         public static final Color color_grid_light = new Color(210,210,210);
         public static final Color color_grid_dark = new Color(170,170,170);
 
@@ -47,9 +48,67 @@ public class Config extends JPanel{
         public static final Color color_map_selected = Color.GREEN;
         public static final Color color_map_not_selected = (new JButton()).getBackground();
         public static final Color color_map_object_selected = Color.MAGENTA;
-        public static boolean show_coords = true;
-        public static boolean mouse_cam = false;
 
+        public static boolean show_coords = false;
+        public static boolean mouse_cam = false;
+        public static boolean show_debug = false;
+
+        private static String coords_yes = "Coordinates:ON";
+        private static String coords_no = "Coordinates:OFF";
+
+        private static String debug_yes = "Debug:ON";
+        private static String debug_no = "Debug:OFF";
+        
+
+        private void revertBack(ArrayList<Param> params,LabeledTextBox[] ltb_tab)
+        {
+            GeneticsConfig gc = GeneticsConfig.getInstance();
+            ArrayList<Param> needs_reset = this.needsReset(ltb_tab);
+            for(LabeledTextBox label : ltb_tab)
+            {
+                Param p = Param.valueOf(label.getLabel());
+                if (p == Param.MAXIMUM_TIME)
+                {
+                    label.setValue(String.valueOf((Integer)gc.get_parameter(p)));
+                }
+                else if (p == Param.MOVES_PER_SECOND)
+                {
+                    label.setValue(String.valueOf((Integer)gc.get_parameter(p)));
+                }
+            }
+        }
+
+        private ArrayList<Param> needsReset(LabeledTextBox[] ltb_tab)
+        {
+//            Param[] resetingParams = {Param.MAXIMUM_TIME,Param.MOVES_PER_SECOND};
+
+            GeneticsConfig gc = GeneticsConfig.getInstance();
+            ArrayList<Param> out_params = new ArrayList<Param>();
+            for(LabeledTextBox label : ltb_tab)
+            {
+                Param p = Param.valueOf(label.getLabel());
+                if(p==Param.MAXIMUM_TIME)
+                {
+                    Integer max_time = (Integer) gc.get_parameter(p);
+                    Integer max_time2 = Integer.valueOf(label.getValue());                    
+                    if(!max_time.equals(max_time2))
+                    {                        
+                        out_params.add(p);
+                    }
+                }
+                else if (p == Param.MOVES_PER_SECOND)
+                {
+                    Integer val1 = (Integer) gc.get_parameter(p);
+                    Integer val2 = Integer.valueOf(label.getValue());
+                    if(!val1.equals(val2))
+                    {
+                        out_params.add(p);
+                    }
+                }
+            }
+
+            return out_params;
+        }
 
         public static void main(String[] args) {
             JFrame frame = new JFrame("Settings");
@@ -63,70 +122,35 @@ public class Config extends JPanel{
 
             JToolBar toolbar = new JToolBar("Tools", JToolBar.HORIZONTAL);
 
-            final JButton btn_coords = new JButton("Coords:ON");
+
+            final JButton btn_coords = new JButton(show_coords?coords_yes:coords_no);
             btn_coords.addActionListener(new ActionListener(){
 
             public void actionPerformed(ActionEvent e) {
-                String txt = "Coords:OFF";
-                Config.show_coords = !Config.show_coords;
-                if(Config.show_coords==true)
-                {
-                    txt = "Coords:ON";
+                
+                Config.show_coords = !Config.show_coords;                
+                btn_coords.setText(show_coords?coords_yes:coords_no);
                 }
-                btn_coords.setText(txt);}
             });
+
+            final JButton btn_debug = new JButton(show_debug?debug_yes:debug_no);
+            btn_debug.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                
+                Config.show_debug = !Config.show_debug;
+                btn_debug.setText(show_debug?debug_yes:debug_no);}            
+            });
+
             toolbar.setFloatable(false);
             toolbar.add(btn_coords);
-
-            
-//            toolbar.add(lbltxt_crossing_param);
-
+            toolbar.add(btn_debug);
 
             JPanel container = new JPanel();
 
-//            final FloatSlider sli_jmp = new FloatSlider(1.0);
-//            sli_jmp.setValue(GeneticsConf.jump_probability);
-//            final JLabel txt_jmp = new JLabel(String.format("Jump probability:%.2f", sli_jmp.getFloatValue()));
-//
-//            final FloatSlider sli_move = new FloatSlider(1.0);
-//            sli_move.setValue(GeneticsConf.move_probability);
-//            final JLabel txt_move = new JLabel(String.format("Move probability:%.2f", sli_move.getFloatValue()));
-//
-//            final FloatSlider sli_lr = new FloatSlider(1.0);
-//            sli_lr.setValue(GeneticsConf.right_probability);
-//            final JLabel txt_lr = new JLabel(String.format("Right probability:%.2f (left:%.2f)", sli_lr.getFloatValue(),1-sli_lr.getFloatValue()));
-//
-//            sli_jmp.addChangeListener(new ChangeListener() {
-//            public void stateChanged(ChangeEvent e) {
-//                GeneticsConf.jump_probability = sli_jmp.getFloatValue();
-//                txt_jmp.setText(String.format("Jump probability:%.2f", GeneticsConf.jump_probability));
-//            }
-//            });
-//
-//            sli_move.addChangeListener(new ChangeListener() {
-//            public void stateChanged(ChangeEvent e) {
-//                GeneticsConf.move_probability = sli_move.getFloatValue();
-//                txt_move.setText(String.format("Move probability:%.2f", GeneticsConf.move_probability));
-//            }
-//            });
-//
-//            sli_lr.addChangeListener(new ChangeListener() {
-//            public void stateChanged(ChangeEvent e) {
-//                GeneticsConf.right_probability = sli_lr.getFloatValue();
-////                GeneticsConf.left_probability = 1-sli_lr.getFloatValue();
-//                txt_lr.setText(String.format("Right probability:%.2f (left:%.2f)", GeneticsConf.right_probability,1-GeneticsConf.right_probability));
-//            }
-//            });
+
 
             container.setLayout(new FlowLayout(FlowLayout.CENTER,3,3));
-//            container.add(txt_jmp);
-//            container.add(sli_jmp);
-//
-//            container.add(txt_move);
-//            container.add(sli_move);
-//
-//            container.add(txt_lr);
-//            container.add(sli_lr);
+
 
             GeneticsConfig gc = GeneticsConfig.getInstance();
             final LabeledTextBox[] lbtx = {
@@ -159,7 +183,6 @@ public class Config extends JPanel{
             container.add(genetic_group);
             genetic_group.setLayout(new BoxLayout(genetic_group,BoxLayout.Y_AXIS));
 
-            //GENETIC PARAMETES (CROSSING, POPULATION SIZE etc.)
             Double crossing_parameter = (Double)GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.CROSSING_PARAMETER);
 
             
@@ -191,13 +214,6 @@ public class Config extends JPanel{
 
             }
 
-
-//            lbltxt_crossing_param.getJLabel().setPreferredSize(new Dimension(150,20));
-//
-//            lbltxt_crossing_param.getText().setPreferredSize(new Dimension(50,20));
-//            genetic_group.add(lbltxt_crossing_param);
-
-
             for (int i = 0; i < 5; i++) {
                 move_group.add(lbtx[i]);
             }
@@ -215,9 +231,35 @@ public class Config extends JPanel{
                     for (int i = 5; i < lbtx.length; i++) {
                         GeneticsConfig.getInstance().setSpecialKeyProbability(lbtx[i].getKey(), Double.valueOf(lbtx[i].getValue()));
                     }
-                    for(int i=0;i<lbtx_params.length;i++) {
-                        Param p = GeneticsConfig.Param.valueOf(lbtx_params[i].getLabel());
-                        GeneticsConfig.getInstance().update_parameter(p, lbtx_params[i].getValue());
+                    ArrayList<Param> modified = conf_main.needsReset(lbtx_params);
+                    if(modified.size()>0)
+                    {
+                        String params = "";
+                        for(Param p : modified)
+                        {
+                            params+= p.name()+" ";
+                        }
+                        String msg = String.format("Some parameters need to reset the population\nin order to apply the changes: %s\n\nPress YES to reset the population.\nPress NO to revert the values and do nothing.\n\n",params);
+
+                        int chosen = JOptionPane.showConfirmDialog(conf_main,msg , "Population reset is needed in order to apply." , JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE);
+                        if(chosen==JOptionPane.YES_OPTION)
+                        {
+                            for(int i=0;i<lbtx_params.length;i++) {
+                                    Param p = GeneticsConfig.Param.valueOf(lbtx_params[i].getLabel());
+                                    GeneticsConfig.getInstance().update_parameter(p, lbtx_params[i].getValue());
+                                }
+                            Global.main.resetAll();
+                        }
+                        else if(chosen == JOptionPane.NO_OPTION)
+                        {
+                            conf_main.revertBack(modified, lbtx_params);
+                            conf_main.repaint();
+                        }
+                        else if(chosen == JOptionPane.CANCEL_OPTION)
+                        {
+
+                        }
+
                     }
                     
                     conf_main.repaint();

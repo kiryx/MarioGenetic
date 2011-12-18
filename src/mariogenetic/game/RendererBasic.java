@@ -89,60 +89,65 @@ public class RendererBasic extends Renderer{
         if(Global.main.resources.actors.size()==0)
             return;
         Actor a = Global.main.resources.actors.get(0);
-        g2.drawString(String.format("falling: %s, sleep: %d",a.falling,Global.SLEEP_TIME), 30, 30);
-        g2.drawString(String.format("x:%.2f y:%.2f",a.position.x,a.position.y ),30,40);
-        g2.drawString(String.format("vx:%.2f vy:%.2f",a.velocity.x,a.velocity.y),30,50);
-        if(Global.main.controller instanceof ControllerTime)
+        if(Config.show_debug)
         {
-            ControllerTime cont = (ControllerTime) Global.main.controller;
-            g2.drawString(String.format("Chromosome: %d",cont.current_chromosome),30,70);
-        }
-        g2.drawString(Global.main.gamestate.toString(), 30, 60);
 
+            g2.drawString(String.format("sleep: %d",Global.SLEEP_TIME), 30, 30);
+            g2.drawString(String.format("x:%.2f y:%.2f",a.position.x,a.position.y ),30,40);
+            g2.drawString(String.format("vx:%.2f vy:%.2f",a.velocity.x,a.velocity.y),30,50);
+        
+            if(Global.main.controller instanceof ControllerTime)
+            {
+                ControllerTime cont = (ControllerTime) Global.main.controller;
+                g2.drawString(String.format("Chromosome: %d",cont.current_chromosome),30,70);
+            }
+            g2.drawString(Global.main.gamestate.toString(), 30, 60);
+        }
 
         camera.update();
-        g2.translate(-camera.getPosition().x, -camera.getPosition().y);
-
+        Camera.translateDiffNeg(g2, camera.getPosition());
+        //g2.translate(-camera.getPosition().x, -camera.getPosition().y);
         
         Main m = Global.main;
         g2.translate(m.getWidth()/2, m.getHeight()/2);
+        if(!camera.follow && camera.tmp_drag!=null)
+        {
+            Camera.translateDiff(g2, camera.tmp_drag);
+        }
 //        drawGrid(g2, m);
 
         Iterator it;
         if(!Global.shuffling_resources)
         {
-//            synchronized(m.resources.actors)
-//            {
+            Global.shuffling_resources=true;
+
                 it = m.resources.actors.iterator();
                 while(it.hasNext())
                 {
                     Actor ac = (Actor)it.next();
                     ac.paint(g2);
                 }
-//            }
-//
-//            synchronized(m.resources.terrain)
-//            {
+
                 it = m.resources.terrain.iterator();
                 while(it.hasNext())
                 {
                     Terrain t = (Terrain)it.next();
                     t.paint(g2);
                 }
-//            }
-//
-//            synchronized(m.resources.bonus)
-//            {
+
                 it = m.resources.bonus.iterator();
                 while(it.hasNext())
                 {
                     Bonus b = (Bonus)it.next();
                     b.paint(g2);
                 }
-//            }
+            Global.shuffling_resources=false;
         }
 
-
+        if(!camera.follow && camera.tmp_drag!=null)
+        {
+            Camera.translateDiffNeg(g2, camera.tmp_drag);
+        }
 
 //        for(Actor ac : m.resources.actors)
 //        {

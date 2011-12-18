@@ -1,13 +1,37 @@
-Player 137 118 18 39
-Terrain 118 289 576 8
-Terrain 675 6 16 282
-Terrain 618 243 32 41
-Terrain 575 164 32 32
-Terrain 106 18 20 264
-Terrain 111 7 571 11
-Terrain 184 103 7 109
-Terrain 292 213 170 10
-BonusWin 564 102 37 54 50
-BonusCoin 342 164 38 43 50
-BonusCoin 333 231 20 56 50
-BonusCoin 374 239 14 46 50
+Player 63 376 17 35
+Terrain 36 273 16 157
+Terrain 36 431 767 15
+Terrain 151 377 13 12
+Terrain 195 361 10 14
+Terrain 236 344 9 14
+Terrain 284 323 7 21
+Terrain 319 301 15 22
+Terrain 378 285 13 20
+Terrain 443 267 18 29
+Terrain 479 298 16 27
+Terrain 518 331 22 23
+Terrain 576 359 10 16
+Terrain 620 371 22 15
+Terrain 673 352 6 20
+Terrain 702 322 19 23
+Terrain 750 302 15 21
+Terrain 789 272 19 15
+Terrain 789 286 9 147
+BonusWin 805 176 82 147 50
+BonusCoin 167 324 20 23 50
+BonusCoin 213 312 17 20 50
+BonusCoin 244 297 18 16 50
+BonusCoin 291 268 18 26 50
+BonusCoin 332 251 20 22 50
+BonusCoin 470 248 9 20 50
+BonusCoin 505 275 10 21 50
+BonusCoin 553 300 10 26 50
+BonusCoin 596 312 21 25 50
+BonusCoin 654 318 8 20 50
+BonusCoin 724 274 9 17 50
+BonusCoin 763 238 4 19 50
+BonusCoin 799 154 30 177 50
+BonusCoin 792 145 36 186 500
+BonusCoin 386 223 14 20 50
+BonusCoin 440 201 12 25 50
+BonusKills 161 405 628 12 0

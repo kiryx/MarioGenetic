@@ -20,7 +20,7 @@ import mariogenetic.Vector;
  */
 public class Actor extends WorldObject{
 	
-    public boolean falling;
+//    public boolean falling;
 //    public boolean jumping;
 
     public Vector velocity;
@@ -30,7 +30,7 @@ public class Actor extends WorldObject{
     public Actor(Vector position, Point size)
     {
         super(position,size);
-        falling = true;
+//        falling = true;
 //        jumping = false;        
         previous_pos = position;
         velocity = new Vector(0.0,0.0);       
@@ -59,12 +59,7 @@ public class Actor extends WorldObject{
     public void tickY()
     {
         previous_pos.y = position.y;
-        
-        if(falling)
-        {
-            position.y+=velocity.y;
-            velocity.y+=0.05;
-        }
+                
     }
     public void left()
     {
@@ -74,35 +69,28 @@ public class Actor extends WorldObject{
     {
         velocity.x = 1.5;
     }
-    public void jump()
-    {
-        if(falling)
-        {
-//            if(!jumping && can_double_jump)
-//            {
-//                velocity.y = -3.0;
-//                jumping=true;
-//                can_double_jump=false;
-//            }
-        }
-        else
-        {
-            velocity.y = -3.0;
-            falling=true;
-        }        
-    }
+//    public void jump()
+//    {
+//        if(falling)
+//        {
+////            if(!jumping && can_double_jump)
+////            {
+////                velocity.y = -3.0;
+////                jumping=true;
+////                can_double_jump=false;
+////            }
+//        }
+//        else
+//        {
+//            velocity.y = -3.0;
+//            falling=true;
+//        }
+//    }
     public void setFreefall()
     {
-        falling = true;
-        velocity.y = 0.0;
-    }
-
-    public void crouch()
-    {
-      return;
-        //velocity.y = 0.5;
         
     }
+
     public void stopX()
     {
         velocity.x=0;

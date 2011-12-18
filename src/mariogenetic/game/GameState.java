@@ -22,7 +22,7 @@ public class GameState {
     public static int RESULT_NONE = 0;
     public static int RESULT_TIMEOUT = 1;
     public static int RESULT_WON = 2;
-    public static int RESULT_DEAD = 3;
+    public static int RESULT_LOST = 3;
     public static String[] result_strings = {"No result","Timeout","Won","Death"};
 
     public long started;
@@ -85,7 +85,7 @@ public class GameState {
             {
                 case Global.MODE_USER:
                 {
-                    // TODO: LogicHuman i LogicTime nie są potrzebne, wystarczy np LogicMario
+                    
 //                    Global.main.logic=new LogicHuman_Temporary();
 //                    Global.main.logic = new LogicTime();
                     Global.main.controller = new ControllerHuman();
@@ -109,7 +109,7 @@ public class GameState {
             }
             else if(Global.MODE_CURRENT == Global.MODE_TIME)
             {
-                // TODO moze dodac reset()? jak wyzej
+
             }
         }
     }

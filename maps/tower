@@ -1,16 +1,7 @@
 Player 458 482 17 36
-Terrain 331 151 9 373
 Terrain 332 525 229 9
-Terrain 562 147 9 386
-Terrain 364 476 40 14
-Terrain 456 440 34 12
 Terrain 531 385 29 13
-Terrain 455 335 43 18
-Terrain 359 284 54 18
-Terrain 450 232 51 18
 Terrain 532 178 29 15
-BonusWin 563 43 32 103 50
-BonusWin 329 41 12 107 50
 BonusCoin 360 448 39 24 100
 BonusCoin 461 408 22 24 100
 BonusCoin 538 356 20 24 100
@@ -18,3 +9,25 @@ BonusCoin 463 303 29 28 100
 BonusCoin 370 248 23 28 100
 BonusCoin 463 197 23 27 100
 BonusCoin 538 144 17 27 100
+Terrain 321 -207 12 737
+Terrain 562 -266 11 799
+Terrain 329 476 79 48
+Terrain 463 438 111 15
+Terrain 329 333 162 22
+Terrain 329 277 86 55
+Terrain 461 229 105 17
+Terrain 333 106 137 18
+Terrain 332 52 65 54
+BonusCoin 408 73 39 32 100
+BonusCoin 335 9 29 34 100
+BonusCoin 425 -56 34 33 100
+BonusCoin 523 -126 29 34 100
+BonusCoin 433 -192 33 47 100
+BonusCoin 338 -256 36 58 100
+Terrain 429 -21 134 22
+Terrain 489 -77 74 59
+Terrain 324 -142 138 9
+Terrain 320 -348 12 141
+Terrain 328 -194 66 52
+Terrain 398 -278 175 11
+BonusWin 337 -373 232 92 50

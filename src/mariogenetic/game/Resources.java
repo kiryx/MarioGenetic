@@ -11,6 +11,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mariogenetic.*;
 import mariogenetic.objects.*;
 
@@ -39,19 +41,16 @@ public class Resources {
     }
     public void loadResources(String file)
     {
+        if(Global.shuffling_resources)
+        {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Resources.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         Global.shuffling_resources=true;
-//        synchronized(actors)
-//        {
-//            actors.clear();
-//        }
-//        synchronized(terrain)
-//        {
-//            terrain.clear();
-//        }
-//        synchronized(bonus)
-//        {
-//            bonus.clear();
-//        }
+
         actors = new ArrayList<Actor>();
         terrain = new ArrayList<Terrain>();
         bonus = new ArrayList<Bonus>();
@@ -98,9 +97,9 @@ public class Resources {
                                       Integer.parseInt(arr[4])),Integer.parseInt(arr[5])));
                 }
 
-                else if(arr[0].equals(BonusKills.class.getSimpleName()))
+                else if(arr[0].equals(BonusLose.class.getSimpleName()))
                 {
-                    bonus.add(new BonusKills(
+                    bonus.add(new BonusLose(
                             new Vector(Integer.parseInt(arr[1]),
                                        Integer.parseInt(arr[2])),
                             new Point(Integer.parseInt(arr[3]),
