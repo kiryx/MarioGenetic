@@ -29,7 +29,9 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
 import mariogenetic.game.*;
+import mariogenetic.game.logic.LogicLabyrynth;
 import mariogenetic.game.logic.LogicMario;
+import mariogenetic.game.logic.LogicSuperMeatBoy;
 import mariogenetic.mapeditor.MapMain;
 
 /**
@@ -55,7 +57,9 @@ public class Main extends JPanel implements Runnable{
             Global.main = this;
             
 
-            logic = new LogicMario();
+            //logic = new LogicLabyrynth();
+            //logic = new LogicMario();
+            logic = new LogicSuperMeatBoy();
             resources = new Resources("maps/map1");
 //            controller = new ControllerHuman();
             controller = new ControllerTime();

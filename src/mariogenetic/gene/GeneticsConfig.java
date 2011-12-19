@@ -34,8 +34,8 @@ public class GeneticsConfig {
             moveProb.put(k, 0.0);
         }
 
-        moveProb.put(Global.Keys.LEFT, 0.22);
-        moveProb.put(Global.Keys.RIGHT, 0.78);
+        moveProb.put(Global.Keys.LEFT, 0.4);
+        moveProb.put(Global.Keys.RIGHT, 0.7);
         moveProb.put(Global.Keys.NONE, 0.0);
 
         for(Global.Keys k : Global.specialKeys)

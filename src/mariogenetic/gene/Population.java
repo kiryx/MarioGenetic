@@ -160,6 +160,10 @@ public class Population {
 //        chromosomes.clear();
 //        chromosomes.addAll(elita);
 
+        for(Chromosome c : new_population)
+        {
+            c.resultData=null;
+        }
         return new Population(new_population);
     }
 

@@ -39,6 +39,14 @@ public class Resources {
         resourceName = file;
         loadResources(file);
     }
+    public Actor getMainActor()
+    {
+        if(actors.size()>0)
+        {
+            return actors.get(0);
+        }
+        return null;
+    }
     public void loadResources(String file)
     {
         if(Global.shuffling_resources)

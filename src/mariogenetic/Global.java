@@ -17,11 +17,16 @@ public class Global {
     
     public static Main main;
     public static PopulationWindow pop_frame;
-    public static boolean KEY_UP=false;
-    public static boolean KEY_DOWN=false;
-    public static boolean KEY_LEFT=false;
-    public static boolean KEY_RIGHT=false;
-    public static boolean KEY_DOUBLE_JUMP=false;
+    public static int KEYS_MASK;
+    public static int KEY_UP=1;
+    public static int KEY_DOWN=2;
+    public static int KEY_LEFT=4;
+    public static int KEY_RIGHT=8;
+    public static int KEY_A=16;
+    public static int KEY_B=32;
+    public static int KEY_C=64;
+    public static int KEY_D=128;
+    
 
 
     public enum Keys

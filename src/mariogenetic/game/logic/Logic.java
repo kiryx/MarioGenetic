@@ -27,5 +27,6 @@ public abstract class Logic {
     public void doLogic(){}
     public void executeMoveAction(Global.Keys key){}
     public void executeSpecialAction(Global.Keys key){}
+    public String getDebugString(){ return "none";}
 
 }

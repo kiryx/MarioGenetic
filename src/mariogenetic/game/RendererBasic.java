@@ -86,22 +86,24 @@ public class RendererBasic extends Renderer{
     {
         
         //g2.setRenderingHint(Graphics2D.ANTIALIASING, Graphics2D.ANTIALIAS_ON);
-        if(Global.main.resources.actors.size()==0)
+        if(Global.main.resources.getMainActor()==null)
             return;
-        Actor a = Global.main.resources.actors.get(0);
+        Actor a = Global.main.resources.getMainActor();
         if(Config.show_debug)
         {
 
+
             g2.drawString(String.format("sleep: %d",Global.SLEEP_TIME), 30, 30);
-            g2.drawString(String.format("x:%.2f y:%.2f",a.position.x,a.position.y ),30,40);
-            g2.drawString(String.format("vx:%.2f vy:%.2f",a.velocity.x,a.velocity.y),30,50);
+            g2.drawString(Global.main.logic.getDebugString(), 30, 40);
+            g2.drawString(String.format("x:%.2f y:%.2f",a.position.x,a.position.y ),30,50);
+            g2.drawString(String.format("vx:%.2f vy:%.2f",a.velocity.x,a.velocity.y),30,60);
         
             if(Global.main.controller instanceof ControllerTime)
             {
                 ControllerTime cont = (ControllerTime) Global.main.controller;
-                g2.drawString(String.format("Chromosome: %d",cont.current_chromosome),30,70);
+                g2.drawString(String.format("Chromosome: %d",cont.current_chromosome),30,80);
             }
-            g2.drawString(Global.main.gamestate.toString(), 30, 60);
+            g2.drawString(Global.main.gamestate.toString(), 30, 70);
         }
 
         camera.update();
@@ -165,7 +167,7 @@ public class RendererBasic extends Renderer{
     }
     public void reset()
     {
-        camera.setTarget(Global.main.resources.actors.get(Global.camera_actor));
+        camera.setTarget(Global.main.resources.getMainActor());
     }
 
 }

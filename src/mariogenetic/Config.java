@@ -261,6 +261,12 @@ public class Config extends JPanel {
                         }
 
                     }
+                     else{
+                        for(int i=0;i<lbtx_params.length;i++) {
+                                    Param p = GeneticsConfig.Param.valueOf(lbtx_params[i].getLabel());
+                                    GeneticsConfig.getInstance().update_parameter(p, lbtx_params[i].getValue());
+                                }
+                     }
                     
                     conf_main.repaint();
                     

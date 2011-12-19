@@ -18,11 +18,13 @@ import mariogenetic.objects.Terrain;
  *
  * @author alice
  */
-public class LogicMario extends Logic{
+public class LogicSuperMeatBoy extends Logic{
 
     private boolean actor_falling;
-    double velocity_X = 1.5;
-    public LogicMario(){actor_falling=true; }
+    private boolean actor_collides_X;
+    
+    double velocity_X = 2.5;
+    public LogicSuperMeatBoy(){actor_falling=true;actor_collides_X=false; }
 
     public void doLogic() {
         if(Global.shuffling_resources)
@@ -39,11 +41,13 @@ public class LogicMario extends Logic{
                     Rectangle nextY = a.previewY();
                     Vector difference = new Vector(10.0,10.0);
 
+                    actor_collides_X=false;
                     for(Terrain t : m.resources.terrain)
                     {
                         Rectangle tR = t.getRectangle();
                         if(nextX.intersects(tR))
                         {
+                            actor_collides_X=true;
                             collision|=COL_X;
                             if(nowR.x<tR.x)
                             {
@@ -53,9 +57,11 @@ public class LogicMario extends Logic{
                             if(nowR.x>tR.x)
                             {
                                 collision|=COL_LEFT;
+                                
                                 difference.x = -(a.position.x - (t.position.x+t.size.x));
                             }
                         }
+                     
                         if(nextY.intersects(tR))
                         {
                             collision|=COL_Y;
@@ -144,6 +150,11 @@ public class LogicMario extends Logic{
         
     }
 
+    public String getDebugString()
+    {
+        return String.format("actor falling: %s actor_col_x: %s", actor_falling, actor_collides_X);
+    }
+
     public void executeMoveAction(Global.Keys key){
 
         Actor a = Global.main.resources.getMainActor();
@@ -162,15 +173,14 @@ public class LogicMario extends Logic{
             a.stopX();
         }
     }
-    public String getDebugString(){ return String.format("actor_falling: %s", actor_falling);}
     public void executeSpecialAction(Global.Keys key){
         Actor a = Global.main.resources.getMainActor();
         if(a==null)return;
         if(key==Global.Keys.A)
         {            
-            if(!actor_falling)
+            if(!actor_falling || actor_collides_X)
             {
-                a.velocity.y = -3.0;
+                a.velocity.y = -3.5;
                 actor_falling=true;
             }
         }

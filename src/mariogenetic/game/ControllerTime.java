@@ -63,7 +63,7 @@ public class ControllerTime extends Controller{
         //long time10 = time/100; //10 razy na sek
         
 
-        Actor a = m.resources.actors.get(0);
+        Actor a = m.resources.getMainActor();
 //        System.out.println(p.chromosomes.size());
         ChromosomeTime c1 = (ChromosomeTime) p.chromosomes.get(current_chromosome);
 
@@ -106,25 +106,26 @@ public class ControllerTime extends Controller{
         }
         Global.Keys move = c1.getCurrentMove(time);
         Global.Keys special = c1.getSpecial(time);
-        if(special==Global.Keys.A)
-        {
-            m.logic.executeSpecialAction(Global.Keys.A);
+//        if(special==Global.Keys.A)
+//        {
+        m.logic.executeSpecialAction(special);
 //            a.jump();
-        }
+//        }
         //poruszanie sie
-        if(move==Global.Keys.LEFT)
-        {
-            //TODO zamienic metody aktora na metody logiki!!
-            a.left();
-        }
-        else if(move==Global.Keys.RIGHT)
-        {
-            a.right();
-        }
-        else if(move==Global.Keys.NONE)
-        {
-            a.stopX();
-        }
+        m.logic.executeMoveAction(move);
+//        if(move==Global.Keys.LEFT)
+//        {
+//            //TODO zamienic metody aktora na metody logiki!!
+//            a.left();
+//        }
+//        else if(move==Global.Keys.RIGHT)
+//        {
+//            a.right();
+//        }
+//        else if(move==Global.Keys.NONE)
+//        {
+//            a.stopX();
+//        }
 
     }
 

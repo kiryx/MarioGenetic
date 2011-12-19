@@ -18,11 +18,12 @@ import mariogenetic.objects.Terrain;
  *
  * @author alice
  */
-public class LogicMario extends Logic{
+public class LogicLabyrynth extends Logic{
 
-    private boolean actor_falling;
+    
     double velocity_X = 1.5;
-    public LogicMario(){actor_falling=true; }
+    double velocity_Y = 1.5;
+    public LogicLabyrynth(){ }
 
     public void doLogic() {
         if(Global.shuffling_resources)
@@ -89,45 +90,17 @@ public class LogicMario extends Logic{
 
                     if((collision & COL_Y)==0)
                     {
-                        a.tickY();
-                        if(actor_falling)
-                        {
-
-                            
-                            a.velocity.y+=0.05;
-                        }
-                        else
-                        {
-                            actor_falling = true;
-                            a.velocity.y = 0.0;
-                        }
+                        a.tickY();                       
                     }
                     else
-                    {
-                        if((collision & COL_UP) != 0)
-                        {
-        //                    a.jumping=false;
-                            a.velocity.y=0;
-                            actor_falling=true;
-
-                        }
-                        if((collision & COL_DOWN) != 0)
-                        {
-        //                    a.jumping=false;
-                            actor_falling=false;
-                        }
-                        else
-                        {
-                            actor_falling=true;
-                        }
+                    {                       
                         a.position.y+=difference.y;
                     }
 
 
                 }
-                //kolizja z bonusami
-
-               
+                
+           
                     Iterator it = m.resources.bonus.iterator();
                     while(it.hasNext())
                     {
@@ -155,24 +128,29 @@ public class LogicMario extends Logic{
         }
         else if(key==Global.Keys.RIGHT)
         {
-            a.right(velocity_X);
+            a.right(velocity_X);            
+        }
+        else if(key==Global.Keys.UP)
+        {
+            a.up(velocity_Y);
+        }
+        else if(key==Global.Keys.DOWN)
+        {
+            a.down(velocity_Y);
         }
         else if(key==Global.Keys.NONE)
         {
             a.stopX();
+            a.stopY();
         }
     }
-    public String getDebugString(){ return String.format("actor_falling: %s", actor_falling);}
+    public String getDebugString(){ return String.format("");}
     public void executeSpecialAction(Global.Keys key){
         Actor a = Global.main.resources.getMainActor();
         if(a==null)return;
         if(key==Global.Keys.A)
         {            
-            if(!actor_falling)
-            {
-                a.velocity.y = -3.0;
-                actor_falling=true;
-            }
+            
         }
     }
 }

@@ -25,7 +25,6 @@ public class Actor extends WorldObject{
 
     public Vector velocity;
     public Vector previous_pos;
-    private boolean can_double_jump;
     
     public Actor(Vector position, Point size)
     {
@@ -59,36 +58,23 @@ public class Actor extends WorldObject{
     public void tickY()
     {
         previous_pos.y = position.y;
-                
+        position.y+=velocity.y;                
     }
-    public void left()
+    public void left(double vx)
     {
-        velocity.x = -1.5;
+        velocity.x = -vx;
     }
-    public void right()
+    public void right(double vx)
     {
-        velocity.x = 1.5;
+        velocity.x = vx;
     }
-//    public void jump()
-//    {
-//        if(falling)
-//        {
-////            if(!jumping && can_double_jump)
-////            {
-////                velocity.y = -3.0;
-////                jumping=true;
-////                can_double_jump=false;
-////            }
-//        }
-//        else
-//        {
-//            velocity.y = -3.0;
-//            falling=true;
-//        }
-//    }
-    public void setFreefall()
+    public void down(double vy)
     {
-        
+        velocity.y = vy;
+    }
+    public void up(double vy)
+    {
+        velocity.y = -vy;
     }
 
     public void stopX()
