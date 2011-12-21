@@ -7,7 +7,7 @@ package mariogenetic.game;
 
 import java.sql.Time;
 import java.util.Date;
-import mariogenetic.Global;
+import mariogenetic.main.GlobalVariables;
 import mariogenetic.gene.ResultData;
 
 
@@ -23,7 +23,7 @@ public class GameState {
     public static int RESULT_TIMEOUT = 1;
     public static int RESULT_WON = 2;
     public static int RESULT_LOST = 3;
-    public static String[] result_strings = {"No result","Timeout","Won","Death"};
+    public static String[] result_strings = {"No result","Timeout","Won","Lost"};
 
     public long started;
     public long now;
@@ -54,8 +54,8 @@ public class GameState {
         score = 0;
         game_over=false;
         result = RESULT_NONE;
-        Global.main.resources.reset();
-        Global.main.renderer.reset();        
+        GlobalVariables.main.resources.reset();
+        GlobalVariables.main.renderer.reset();
     }
     
     public void updateTime(long d_time)
@@ -72,42 +72,42 @@ public class GameState {
     public String toString()
     {
 //        long now = new Date().getTime();
-        return String.format("Result: %s Score: %d Time: %d Cam %s",result_strings[result] ,score,(now-started),Global.main.renderer.camera);
+        return String.format("Result: %s, Score: %d, Time: %d Cam %s",result_strings[result] ,score,(now-started),GlobalVariables.main.renderer.camera);
     }
 
     public void check() {
 
         //zmiana trybu
-        if(Global.MODE_CURRENT!=Global.MODE_NEXT)
+        if(GlobalVariables.MODE_CURRENT!=GlobalVariables.MODE_NEXT)
         {
-            Global.MODE_CURRENT = Global.MODE_NEXT;
-            switch(Global.MODE_CURRENT)
+            GlobalVariables.MODE_CURRENT = GlobalVariables.MODE_NEXT;
+            switch(GlobalVariables.MODE_CURRENT)
             {
-                case Global.MODE_USER:
+                case GlobalVariables.MODE_USER:
                 {
                     
 //                    Global.main.logic=new LogicHuman_Temporary();
 //                    Global.main.logic = new LogicTime();
-                    Global.main.controller = new ControllerHuman();
+                    GlobalVariables.main.controller = new ControllerHuman();
                     break;
                 }
-                case Global.MODE_TIME:
+                case GlobalVariables.MODE_TIME:
                 {
 //                    Global.main.logic=new LogicMario();
-                    Global.main.controller = new ControllerTime();
+                    GlobalVariables.main.controller = new ControllerTime();
                     break;
                 }
             }
         }
         else if(result != RESULT_NONE)
         {
-            if(Global.MODE_CURRENT == Global.MODE_USER)
+            if(GlobalVariables.MODE_CURRENT == GlobalVariables.MODE_USER)
             {
-                System.out.print(Global.global_result_counter+++" ");
+                System.out.print(GlobalVariables.global_result_counter+++" ");
                 System.out.println("(H):"+new ResultData(this));
                 reset();
             }
-            else if(Global.MODE_CURRENT == Global.MODE_TIME)
+            else if(GlobalVariables.MODE_CURRENT == GlobalVariables.MODE_TIME)
             {
 
             }

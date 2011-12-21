@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
-import mariogenetic.Global;
+import mariogenetic.main.GlobalVariables;
 import mariogenetic.game.GameState;
 import mariogenetic.gene.Chromosome;
 

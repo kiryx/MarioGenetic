@@ -9,7 +9,7 @@ package mariogenetic.game;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import mariogenetic.Vector;
+import mariogenetic.main.Vector;
 import mariogenetic.objects.WorldObject;
 
 /**

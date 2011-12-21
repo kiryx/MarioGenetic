@@ -8,7 +8,7 @@ package mariogenetic.game;
 import java.awt.event.KeyEvent;
 import mariogenetic.GUI.PopulationWindow;
 import mariogenetic.gene.GeneticsConfig;
-import mariogenetic.Global;
+import mariogenetic.main.GlobalVariables;
 import mariogenetic.gene.Chromosome;
 import mariogenetic.gene.ChromosomeTime;
 import mariogenetic.gene.Population;
@@ -48,7 +48,7 @@ public class ControllerTime extends Controller{
     public void setPopulation(Population p)
     {
         this.p = p;        
-        Global.pop_frame.fillList(this.getPopulation().chromosomes.toArray(new Chromosome[this.getPopulation().chromosomes.size()]));
+        GlobalVariables.pop_frame.fillList(this.getPopulation().chromosomes.toArray(new Chromosome[this.getPopulation().chromosomes.size()]));
     }
     public void keyPressed(KeyEvent e) {
         super.keyPressed(e);
@@ -56,9 +56,9 @@ public class ControllerTime extends Controller{
 
     public void generateEvent()
     {
-        if(Global.shuffling_resources)
+        if(GlobalVariables.shuffling_resources)
             return;
-        long time = Global.main.gamestate.timeElapsed(); //time elapsed in millis
+        long time = GlobalVariables.main.gamestate.timeElapsed(); //time elapsed in millis
 
         //long time10 = time/100; //10 razy na sek
         
@@ -85,17 +85,17 @@ public class ControllerTime extends Controller{
             }
             c1.setResultData(new ResultData(m.gamestate));
             c1.resultData.calcFunc();
-            System.out.print(Global.global_result_counter+" ");
-            Global.global_result_counter++;
+            System.out.print(GlobalVariables.global_result_counter+" ");
+            GlobalVariables.global_result_counter++;
             System.out.println(c1);
             current_chromosome++;
             if(current_chromosome==p.chromosomes.size())
             {
-                Global.shuffling_resources=true;
+                GlobalVariables.shuffling_resources=true;
                 
                 p = p.nextPopulation();
                 PopulationWindow.getInstance().fillList(p.chromosomes);
-                Global.shuffling_resources=false;
+                GlobalVariables.shuffling_resources=false;
                 current_chromosome=0;
             }
             //current_chromosome%=p.chromosomes.size();
@@ -104,8 +104,8 @@ public class ControllerTime extends Controller{
             PopulationWindow.getInstance().repaint();
             return;
         }
-        Global.Keys move = c1.getCurrentMove(time);
-        Global.Keys special = c1.getSpecial(time);
+        GlobalVariables.Keys move = c1.getCurrentMove(time);
+        GlobalVariables.Keys special = c1.getSpecial(time);
 //        if(special==Global.Keys.A)
 //        {
         m.logic.executeSpecialAction(special);

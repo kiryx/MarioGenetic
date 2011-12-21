@@ -6,8 +6,8 @@
 package mariogenetic.gene;
 
 import java.util.Random;
-import mariogenetic.Global;
-import mariogenetic.Global.Keys;
+import mariogenetic.main.GlobalVariables;
+import mariogenetic.main.GlobalVariables.Keys;
 import mariogenetic.game.GameState;
 
 /**
@@ -26,7 +26,7 @@ public abstract class Chromosome implements Comparable{
     {
         arr_length = 100;
     }
-    public Global.Keys getCurrentMove()
+    public GlobalVariables.Keys getCurrentMove()
     {
         return null;
     }

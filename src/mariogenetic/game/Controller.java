@@ -13,9 +13,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import mariogenetic.Global;
-import mariogenetic.Main;
-import mariogenetic.Vector;
+import mariogenetic.main.GlobalVariables;
+import mariogenetic.main.Vector;
 
 /**
  *
@@ -26,7 +25,7 @@ public abstract class Controller implements KeyListener,MouseMotionListener,Mous
     Main m;
     public Controller()
     {
-        m = Global.main;
+        m = GlobalVariables.main;
     }
     
     public void keyTyped(KeyEvent e) { }
@@ -34,15 +33,15 @@ public abstract class Controller implements KeyListener,MouseMotionListener,Mous
     public void keyPressed(KeyEvent e) {
           switch(e.getKeyCode())
         {
-            case KeyEvent.VK_I: {Global.SLEEP_TIME++; break; }
+            case KeyEvent.VK_I: {GlobalVariables.SLEEP_TIME++; break; }
             case KeyEvent.VK_K: {
-                if (Global.SLEEP_TIME > 0){
-                    --Global.SLEEP_TIME;
+                if (GlobalVariables.SLEEP_TIME > 0){
+                    --GlobalVariables.SLEEP_TIME;
                 }
                 break;
             }
-            case KeyEvent.VK_H: {Global.MODE_NEXT=Global.MODE_USER; break;}
-            case KeyEvent.VK_T: {Global.MODE_NEXT=Global.MODE_TIME; break;}
+            case KeyEvent.VK_H: {GlobalVariables.MODE_NEXT=GlobalVariables.MODE_USER; break;}
+            case KeyEvent.VK_T: {GlobalVariables.MODE_NEXT=GlobalVariables.MODE_TIME; break;}
 
 
 //            case KeyEvent.VK_DOWN: {m.resources.actors.get(0).crouch(); break;}

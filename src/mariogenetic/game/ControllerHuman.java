@@ -8,7 +8,7 @@ package mariogenetic.game;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import mariogenetic.Global;
+import mariogenetic.main.GlobalVariables;
 
 /**
  *
@@ -24,93 +24,93 @@ public class ControllerHuman extends Controller{
         super.keyPressed(e);
         switch(e.getKeyCode())
         {
-            case KeyEvent.VK_LEFT: {Global.KEYS_MASK|=Global.KEY_LEFT; break; }
-            case KeyEvent.VK_RIGHT: {Global.KEYS_MASK|=Global.KEY_RIGHT; break;}
-            case KeyEvent.VK_UP: {Global.KEYS_MASK|=Global.KEY_UP; break;}
-            case KeyEvent.VK_DOWN: {Global.KEYS_MASK|=Global.KEY_DOWN; break;}
-            case KeyEvent.VK_F: { Global.KEYS_MASK|=Global.KEY_A;break;}
-            case KeyEvent.VK_D: { Global.KEYS_MASK|=Global.KEY_B;break;}
-            case KeyEvent.VK_S: { Global.KEYS_MASK|=Global.KEY_C;break;}
-            case KeyEvent.VK_A: { Global.KEYS_MASK|=Global.KEY_D;break;}
+            case KeyEvent.VK_LEFT: {GlobalVariables.KEYS_MASK|=GlobalVariables.KEY_LEFT; break; }
+            case KeyEvent.VK_RIGHT: {GlobalVariables.KEYS_MASK|=GlobalVariables.KEY_RIGHT; break;}
+            case KeyEvent.VK_UP: {GlobalVariables.KEYS_MASK|=GlobalVariables.KEY_UP; break;}
+            case KeyEvent.VK_DOWN: {GlobalVariables.KEYS_MASK|=GlobalVariables.KEY_DOWN; break;}
+            case KeyEvent.VK_F: { GlobalVariables.KEYS_MASK|=GlobalVariables.KEY_A;break;}
+            case KeyEvent.VK_D: { GlobalVariables.KEYS_MASK|=GlobalVariables.KEY_B;break;}
+            case KeyEvent.VK_S: { GlobalVariables.KEYS_MASK|=GlobalVariables.KEY_C;break;}
+            case KeyEvent.VK_A: { GlobalVariables.KEYS_MASK|=GlobalVariables.KEY_D;break;}
         }
     }
 
     public void keyReleased(KeyEvent e) {
         switch(e.getKeyCode())
         {
-            case KeyEvent.VK_LEFT: {Global.KEYS_MASK&=~Global.KEY_LEFT; break; }
-            case KeyEvent.VK_RIGHT: {Global.KEYS_MASK&=~Global.KEY_RIGHT; break;}
-            case KeyEvent.VK_UP: {Global.KEYS_MASK&=~Global.KEY_UP; break;}
-            case KeyEvent.VK_DOWN: {Global.KEYS_MASK&=~Global.KEY_DOWN; break;}
-            case KeyEvent.VK_F: { Global.KEYS_MASK&=~Global.KEY_A;break;}
-            case KeyEvent.VK_D: { Global.KEYS_MASK&=~Global.KEY_B;break;}
-            case KeyEvent.VK_S: { Global.KEYS_MASK&=~Global.KEY_C;break;}
-            case KeyEvent.VK_A: { Global.KEYS_MASK&=~Global.KEY_D;break;}
+            case KeyEvent.VK_LEFT: {GlobalVariables.KEYS_MASK&=~GlobalVariables.KEY_LEFT; break; }
+            case KeyEvent.VK_RIGHT: {GlobalVariables.KEYS_MASK&=~GlobalVariables.KEY_RIGHT; break;}
+            case KeyEvent.VK_UP: {GlobalVariables.KEYS_MASK&=~GlobalVariables.KEY_UP; break;}
+            case KeyEvent.VK_DOWN: {GlobalVariables.KEYS_MASK&=~GlobalVariables.KEY_DOWN; break;}
+            case KeyEvent.VK_F: { GlobalVariables.KEYS_MASK&=~GlobalVariables.KEY_A;break;}
+            case KeyEvent.VK_D: { GlobalVariables.KEYS_MASK&=~GlobalVariables.KEY_B;break;}
+            case KeyEvent.VK_S: { GlobalVariables.KEYS_MASK&=~GlobalVariables.KEY_C;break;}
+            case KeyEvent.VK_A: { GlobalVariables.KEYS_MASK&=~GlobalVariables.KEY_D;break;}
 //            case KeyEvent.VK_DOWN: {m.resources.actors.get(0).stopY(); break;}
         }
     }
     public boolean down(int key)
     {
-        return (Global.KEYS_MASK&key)>0;
+        return (GlobalVariables.KEYS_MASK&key)>0;
     }
     public void generateEvent()
     {
-        Global.Keys X = Global.Keys.NONE;
-        Global.Keys Y = Global.Keys.NONE;
-        boolean UP = down(Global.KEY_UP);
-        boolean DOWN = down(Global.KEY_DOWN);
-        boolean LEFT = down(Global.KEY_LEFT);
-        boolean RIGHT = down(Global.KEY_RIGHT);
+        GlobalVariables.Keys X = GlobalVariables.Keys.NONE;
+        GlobalVariables.Keys Y = GlobalVariables.Keys.NONE;
+        boolean UP = down(GlobalVariables.KEY_UP);
+        boolean DOWN = down(GlobalVariables.KEY_DOWN);
+        boolean LEFT = down(GlobalVariables.KEY_LEFT);
+        boolean RIGHT = down(GlobalVariables.KEY_RIGHT);
         if(UP && !DOWN)
         {
-            Y = Global.Keys.UP;
+            Y = GlobalVariables.Keys.UP;
         }
         else if(DOWN && !UP)
         {
-            Y = Global.Keys.DOWN;
+            Y = GlobalVariables.Keys.DOWN;
         }
         else
         {
-            Y = Global.Keys.NONE;
+            Y = GlobalVariables.Keys.NONE;
         }
 
         if(LEFT && !RIGHT)
         {
-            X = Global.Keys.LEFT;
+            X = GlobalVariables.Keys.LEFT;
         }
         else if(!LEFT && RIGHT)
         {
-            X = Global.Keys.RIGHT;
+            X = GlobalVariables.Keys.RIGHT;
         }
         else{
-            X = Global.Keys.NONE;
+            X = GlobalVariables.Keys.NONE;
         }
-        m.logic.executeMoveAction(Global.Keys.NONE);
-        if(X!=Global.Keys.NONE)
+        m.logic.executeMoveAction(GlobalVariables.Keys.NONE);
+        if(X!=GlobalVariables.Keys.NONE)
         {
             m.logic.executeMoveAction(X);
         }
-        if(Y!=Global.Keys.NONE)
+        if(Y!=GlobalVariables.Keys.NONE)
         {
             m.logic.executeMoveAction(Y);
         }
 
-        if(down(Global.KEY_A))
+        if(down(GlobalVariables.KEY_A))
         {
-            m.logic.executeSpecialAction(Global.Keys.A);
+            m.logic.executeSpecialAction(GlobalVariables.Keys.A);
             
         }
-        if(down(Global.KEY_B))
+        if(down(GlobalVariables.KEY_B))
         {
-            m.logic.executeSpecialAction(Global.Keys.B);
+            m.logic.executeSpecialAction(GlobalVariables.Keys.B);
         }
-        if(down(Global.KEY_C))
+        if(down(GlobalVariables.KEY_C))
         {
-            m.logic.executeSpecialAction(Global.Keys.C);
+            m.logic.executeSpecialAction(GlobalVariables.Keys.C);
         }
-        if(down(Global.KEY_D))
+        if(down(GlobalVariables.KEY_D))
         {
-            m.logic.executeSpecialAction(Global.Keys.D);
+            m.logic.executeSpecialAction(GlobalVariables.Keys.D);
         }
         
     }

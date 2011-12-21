@@ -7,9 +7,9 @@ package mariogenetic.game.logic;
 
 import java.awt.Rectangle;
 import java.util.Iterator;
-import mariogenetic.Global;
-import mariogenetic.Main;
-import mariogenetic.Vector;
+import mariogenetic.main.GlobalVariables;
+import mariogenetic.game.Main;
+import mariogenetic.main.Vector;
 import mariogenetic.objects.Actor;
 import mariogenetic.objects.Bonus;
 import mariogenetic.objects.Terrain;
@@ -26,9 +26,9 @@ public class LogicLabyrynth extends Logic{
     public LogicLabyrynth(){ }
 
     public void doLogic() {
-        if(Global.shuffling_resources)
+        if(GlobalVariables.shuffling_resources)
             return;
-        Main m = Global.main;
+        Main m = GlobalVariables.main;
         
             for(Actor a : m.resources.actors )
             {
@@ -117,38 +117,38 @@ public class LogicLabyrynth extends Logic{
         
     }
 
-    public void executeMoveAction(Global.Keys key){
+    public void executeMoveAction(GlobalVariables.Keys key){
 
-        Actor a = Global.main.resources.getMainActor();
+        Actor a = GlobalVariables.main.resources.getMainActor();
         if(a==null)
             return;
-        if(key==Global.Keys.LEFT)
+        if(key==GlobalVariables.Keys.LEFT)
         {
             a.left(velocity_X);
         }
-        else if(key==Global.Keys.RIGHT)
+        else if(key==GlobalVariables.Keys.RIGHT)
         {
             a.right(velocity_X);            
         }
-        else if(key==Global.Keys.UP)
+        else if(key==GlobalVariables.Keys.UP)
         {
             a.up(velocity_Y);
         }
-        else if(key==Global.Keys.DOWN)
+        else if(key==GlobalVariables.Keys.DOWN)
         {
             a.down(velocity_Y);
         }
-        else if(key==Global.Keys.NONE)
+        else if(key==GlobalVariables.Keys.NONE)
         {
             a.stopX();
             a.stopY();
         }
     }
     public String getDebugString(){ return String.format("");}
-    public void executeSpecialAction(Global.Keys key){
-        Actor a = Global.main.resources.getMainActor();
+    public void executeSpecialAction(GlobalVariables.Keys key){
+        Actor a = GlobalVariables.main.resources.getMainActor();
         if(a==null)return;
-        if(key==Global.Keys.A)
+        if(key==GlobalVariables.Keys.A)
         {            
             
         }

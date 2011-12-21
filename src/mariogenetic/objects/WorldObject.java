@@ -9,8 +9,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import mariogenetic.Config;
-import mariogenetic.Vector;
+import mariogenetic.main.Config;
+import mariogenetic.main.Vector;
 
 /**
  *
@@ -37,6 +37,10 @@ public abstract class WorldObject {
     public Rectangle getRectangle()
     {
         return new Rectangle((int)position.x,(int)position.y,size.x,size.y);
+    }
+    public void evalCollision()
+    {
+        
     }
 //    public boolean intersects(WorldObject o)
 //    {

@@ -5,8 +5,8 @@
 
 package mariogenetic.objects;
 import java.awt.Point;
-import mariogenetic.Global;
-import mariogenetic.Vector;
+import mariogenetic.main.GlobalVariables;
+import mariogenetic.main.Vector;
 import mariogenetic.game.GameState;
 /**
  *
@@ -29,7 +29,7 @@ public class BonusLose extends Bonus {
     public void evalCollision()
     {
         super.evalCollision();
-        Global.main.gamestate.result=GameState.RESULT_LOST;
+        GlobalVariables.main.gamestate.result=GameState.RESULT_LOST;
     }
 
 }

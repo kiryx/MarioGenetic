@@ -5,7 +5,7 @@
 
 package mariogenetic.game.logic;
 
-import mariogenetic.Global;
+import mariogenetic.main.GlobalVariables;
 import mariogenetic.game.Controller;
 
 /**
@@ -25,8 +25,8 @@ public abstract class Logic {
     public Controller parent;
     public Logic(){}
     public void doLogic(){}
-    public void executeMoveAction(Global.Keys key){}
-    public void executeSpecialAction(Global.Keys key){}
+    public void executeMoveAction(GlobalVariables.Keys key){}
+    public void executeSpecialAction(GlobalVariables.Keys key){}
     public String getDebugString(){ return "none";}
 
 }

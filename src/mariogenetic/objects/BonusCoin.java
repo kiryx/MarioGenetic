@@ -8,8 +8,8 @@ package mariogenetic.objects;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import mariogenetic.Global;
-import mariogenetic.Vector;
+import mariogenetic.main.GlobalVariables;
+import mariogenetic.main.Vector;
 
 /**
  *

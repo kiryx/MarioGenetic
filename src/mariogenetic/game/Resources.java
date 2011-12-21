@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import mariogenetic.*;
+import mariogenetic.main.*;
 import mariogenetic.objects.*;
 
 
@@ -27,16 +27,16 @@ public class Resources {
     public ArrayList<Actor> actors;
     public ArrayList<Terrain> terrain;
     public ArrayList<Bonus> bonus;
-    public String resourceName;
+    public String current_map_file;
 //    public Actor main_actor;
 
     public Resources(String file){
-        Global.shuffling_resources=true;
+        GlobalVariables.shuffling_resources=true;
         actors = new ArrayList<Actor>();
         terrain = new ArrayList<Terrain>();
         bonus = new ArrayList<Bonus>();
-        Global.shuffling_resources=false;
-        resourceName = file;
+        GlobalVariables.shuffling_resources=false;
+        current_map_file = file;
         loadResources(file);
     }
     public Actor getMainActor()
@@ -49,7 +49,7 @@ public class Resources {
     }
     public void loadResources(String file)
     {
-        if(Global.shuffling_resources)
+        if(GlobalVariables.shuffling_resources)
         {
             try {
                 Thread.sleep(1);
@@ -57,21 +57,21 @@ public class Resources {
                 Logger.getLogger(Resources.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        Global.shuffling_resources=true;
+        GlobalVariables.shuffling_resources=true;
 
         actors = new ArrayList<Actor>();
         terrain = new ArrayList<Terrain>();
         bonus = new ArrayList<Bonus>();
         
-        this.resourceName = file;
+        this.current_map_file = file;
            try {
             BufferedReader in = new BufferedReader(new FileReader(file));
             String str;
             while ((str = in.readLine()) != null) {
                 String[] arr = str.split(" ");
-                if(arr[0].equals(Player.class.getSimpleName()))
+                if(arr[0].equals(Actor.class.getSimpleName()))
                 {
-                    actors.add(new Player(
+                    actors.add(new Actor(
                             new Vector(Integer.parseInt(arr[1]),
                                        Integer.parseInt(arr[2])),
                             new Point(Integer.parseInt(arr[3]),
@@ -119,12 +119,12 @@ public class Resources {
         } catch (IOException e) {
         }
 
-        Global.shuffling_resources=false;
+        GlobalVariables.shuffling_resources=false;
     }
 
     public ArrayList<WorldObject> getReopenedResource()
     {
-        Resources r = new Resources(resourceName);
+        Resources r = new Resources(current_map_file);
         return r.getAsWorldObjects();
     }
 
@@ -138,7 +138,7 @@ public class Resources {
     }
     public void reset()
     {
-        loadResources(resourceName);        
+        loadResources(current_map_file);
     }
 
 }

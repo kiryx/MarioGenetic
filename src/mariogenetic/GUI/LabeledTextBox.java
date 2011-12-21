@@ -11,8 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import mariogenetic.Dbg;
-import mariogenetic.Global;
+import mariogenetic.main.Dbg;
+import mariogenetic.main.GlobalVariables;
 
 /**
  *
@@ -22,9 +22,9 @@ public class LabeledTextBox extends JPanel{
 
     JLabel label;
     JTextField text;
-    Global.Keys key;
+    GlobalVariables.Keys key;
 
-    public LabeledTextBox(Global.Keys key, String valueText)
+    public LabeledTextBox(GlobalVariables.Keys key, String valueText)
     {
         this(key.toString(),valueText);
         this.key = key;
@@ -78,12 +78,12 @@ public class LabeledTextBox extends JPanel{
     {
         text.setText(value);
     }
-    public Global.Keys getKey()
+    public GlobalVariables.Keys getKey()
     {
         if(key==null)
         {
             Dbg.o("Error, key is not defined (LabeledTextBox)");
-            return Global.Keys.NONE;
+            return GlobalVariables.Keys.NONE;
         }
         return key;
     }

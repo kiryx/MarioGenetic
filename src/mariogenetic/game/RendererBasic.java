@@ -11,8 +11,8 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.Iterator;
 import javax.swing.JPanel;
-import mariogenetic.*;
-import mariogenetic.mapeditor.MapMain;
+import mariogenetic.main.*;
+import mariogenetic.mapeditor.MapEditor;
 import mariogenetic.objects.Bonus;
 import mariogenetic.objects.Terrain;
 
@@ -27,7 +27,7 @@ public class RendererBasic extends Renderer{
     private RendererBasic()
     {       
         camera = new Camera();
-        camera.setTarget(Global.main.resources.actors.get(Global.camera_actor));
+        camera.setTarget(GlobalVariables.main.resources.actors.get(GlobalVariables.camera_actor));
     }
     
     public static Renderer getInstance()
@@ -86,31 +86,31 @@ public class RendererBasic extends Renderer{
     {
         
         //g2.setRenderingHint(Graphics2D.ANTIALIASING, Graphics2D.ANTIALIAS_ON);
-        if(Global.main.resources.getMainActor()==null)
+        if(GlobalVariables.main.resources.getMainActor()==null)
             return;
-        Actor a = Global.main.resources.getMainActor();
+        Actor a = GlobalVariables.main.resources.getMainActor();
         if(Config.show_debug)
         {
 
 
-            g2.drawString(String.format("sleep: %d",Global.SLEEP_TIME), 30, 30);
-            g2.drawString(Global.main.logic.getDebugString(), 30, 40);
+            g2.drawString(String.format("sleep: %d",GlobalVariables.SLEEP_TIME), 30, 30);
+            g2.drawString(GlobalVariables.main.logic.getDebugString(), 30, 40);
             g2.drawString(String.format("x:%.2f y:%.2f",a.position.x,a.position.y ),30,50);
             g2.drawString(String.format("vx:%.2f vy:%.2f",a.velocity.x,a.velocity.y),30,60);
         
-            if(Global.main.controller instanceof ControllerTime)
+            if(GlobalVariables.main.controller instanceof ControllerTime)
             {
-                ControllerTime cont = (ControllerTime) Global.main.controller;
+                ControllerTime cont = (ControllerTime) GlobalVariables.main.controller;
                 g2.drawString(String.format("Chromosome: %d",cont.current_chromosome),30,80);
             }
-            g2.drawString(Global.main.gamestate.toString(), 30, 70);
+            g2.drawString(GlobalVariables.main.gamestate.toString(), 30, 70);
         }
 
         camera.update();
         Camera.translateDiffNeg(g2, camera.getPosition());
         //g2.translate(-camera.getPosition().x, -camera.getPosition().y);
         
-        Main m = Global.main;
+        Main m = GlobalVariables.main;
         g2.translate(m.getWidth()/2, m.getHeight()/2);
         if(!camera.follow && camera.tmp_drag!=null)
         {
@@ -119,9 +119,9 @@ public class RendererBasic extends Renderer{
 //        drawGrid(g2, m);
 
         Iterator it;
-        if(!Global.shuffling_resources)
+        if(!GlobalVariables.shuffling_resources)
         {
-            Global.shuffling_resources=true;
+            GlobalVariables.shuffling_resources=true;
 
                 it = m.resources.actors.iterator();
                 while(it.hasNext())
@@ -143,7 +143,7 @@ public class RendererBasic extends Renderer{
                     Bonus b = (Bonus)it.next();
                     b.paint(g2);
                 }
-            Global.shuffling_resources=false;
+            GlobalVariables.shuffling_resources=false;
         }
 
         if(!camera.follow && camera.tmp_drag!=null)
@@ -167,7 +167,7 @@ public class RendererBasic extends Renderer{
     }
     public void reset()
     {
-        camera.setTarget(Global.main.resources.getMainActor());
+        camera.setTarget(GlobalVariables.main.resources.getMainActor());
     }
 
 }

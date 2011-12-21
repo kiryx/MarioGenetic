@@ -10,9 +10,9 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
-import mariogenetic.Config;
-import mariogenetic.Global;
-import mariogenetic.Vector;
+import mariogenetic.main.Config;
+import mariogenetic.main.GlobalVariables;
+import mariogenetic.main.Vector;
 
 /**
  *

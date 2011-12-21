@@ -8,9 +8,9 @@ package mariogenetic.objects;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import mariogenetic.Config;
-import mariogenetic.Global;
-import mariogenetic.Vector;
+import mariogenetic.main.Config;
+import mariogenetic.main.GlobalVariables;
+import mariogenetic.main.Vector;
 
 /**
  *
@@ -45,7 +45,7 @@ public abstract class Bonus extends WorldObject{
     }
     public void evalCollision()
     {
-        Global.main.gamestate.score+=value;
+        GlobalVariables.main.gamestate.score+=value;
     }
 
 }

@@ -61,6 +61,6 @@ public class ResultData {
     public String toString()
     {
 //        long now = new Date().getTime();
-        return String.format("Result: %s Score: %d Time: %d Final Score %d",GameState.result_strings[final_state] ,score,time_elapsed,this.getFinalScore());
+        return String.format("Result: %s, Score: %d, Time: %d, Final Score %d",GameState.result_strings[final_state] ,score,time_elapsed,this.getFinalScore());
     }
 }

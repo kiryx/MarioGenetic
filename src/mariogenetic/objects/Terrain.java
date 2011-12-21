@@ -7,8 +7,8 @@ package mariogenetic.objects;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
-import mariogenetic.Config;
-import mariogenetic.Vector;
+import mariogenetic.main.Config;
+import mariogenetic.main.Vector;
 
 /**
  *

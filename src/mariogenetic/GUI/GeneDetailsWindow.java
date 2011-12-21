@@ -12,8 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import mariogenetic.Config;
-import mariogenetic.Global;
+import mariogenetic.main.Config;
+import mariogenetic.main.GlobalVariables;
 import mariogenetic.gene.ChromosomeTime;
 
 /**
@@ -28,22 +28,22 @@ public class GeneDetailsWindow extends JFrame{
     
     public static String[] strings = null;
     
-    public String keyToString(Global.Keys k)
+    public String keyToString(GlobalVariables.Keys k)
     {
         return GeneDetailsWindow.getArray()[k.ordinal()];
     }
     public static String[] initArray()
     {
           String[] strings = new String[9];
-        strings[Global.Keys.A.ordinal()] = "A";
-        strings[Global.Keys.B.ordinal()] = "B";
-        strings[Global.Keys.C.ordinal()] = "C";
-        strings[Global.Keys.D.ordinal()] = "D";
-        strings[Global.Keys.NONE.ordinal()] = "N";
-        strings[Global.Keys.UP.ordinal()] = "U";
-        strings[Global.Keys.DOWN.ordinal()] = "D";
-        strings[Global.Keys.LEFT.ordinal()] = "L";
-        strings[Global.Keys.RIGHT.ordinal()] = "R";
+        strings[GlobalVariables.Keys.A.ordinal()] = "A";
+        strings[GlobalVariables.Keys.B.ordinal()] = "B";
+        strings[GlobalVariables.Keys.C.ordinal()] = "C";
+        strings[GlobalVariables.Keys.D.ordinal()] = "D";
+        strings[GlobalVariables.Keys.NONE.ordinal()] = "N";
+        strings[GlobalVariables.Keys.UP.ordinal()] = "U";
+        strings[GlobalVariables.Keys.DOWN.ordinal()] = "D";
+        strings[GlobalVariables.Keys.LEFT.ordinal()] = "L";
+        strings[GlobalVariables.Keys.RIGHT.ordinal()] = "R";
         return strings;
     }
     public static String[] getArray()
@@ -64,13 +64,13 @@ public class GeneDetailsWindow extends JFrame{
         s+=c.toString()+"\n";
 
 
-        String k = String.format("Array Length: %d\nMoves genotype:\n",c.arr_length);
-        for(Global.Keys key : c.moves)
+        String k = String.format("Chromosome array length: %d\nMoves genotype:\n",c.arr_length);
+        for(GlobalVariables.Keys key : c.moves)
             k+=keyToString(key)+" ";
         
         s+=k+"\n";
         k = "Special genotype:\n";
-        for(Global.Keys key : c.special)
+        for(GlobalVariables.Keys key : c.special)
             k+=keyToString(key)+" ";
         s+=k+"\n";
 
