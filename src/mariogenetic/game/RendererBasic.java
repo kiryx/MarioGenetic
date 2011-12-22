@@ -119,9 +119,9 @@ public class RendererBasic extends Renderer{
 //        drawGrid(g2, m);
 
         Iterator it;
-        if(!GlobalVariables.shuffling_resources)
+        if(!GlobalVariables.resources_mutex)
         {
-            GlobalVariables.shuffling_resources=true;
+            GlobalVariables.resources_mutex=true;
 
                 it = m.resources.actors.iterator();
                 while(it.hasNext())
@@ -143,7 +143,7 @@ public class RendererBasic extends Renderer{
                     Bonus b = (Bonus)it.next();
                     b.paint(g2);
                 }
-            GlobalVariables.shuffling_resources=false;
+            GlobalVariables.resources_mutex=false;
         }
 
         if(!camera.follow && camera.tmp_drag!=null)

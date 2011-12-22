@@ -9,10 +9,9 @@ import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import mariogenetic.gene.GeneticsConfig;
 import mariogenetic.main.Dbg;
-import mariogenetic.main.GlobalVariables;
 
 /**
  *
@@ -22,9 +21,9 @@ public class LabeledTextBox extends JPanel{
 
     JLabel label;
     JTextField text;
-    GlobalVariables.Keys key;
+    GeneticsConfig.Keys key;
 
-    public LabeledTextBox(GlobalVariables.Keys key, String valueText)
+    public LabeledTextBox(GeneticsConfig.Keys key, String valueText)
     {
         this(key.toString(),valueText);
         this.key = key;
@@ -78,12 +77,12 @@ public class LabeledTextBox extends JPanel{
     {
         text.setText(value);
     }
-    public GlobalVariables.Keys getKey()
+    public GeneticsConfig.Keys getKey()
     {
         if(key==null)
         {
             Dbg.o("Error, key is not defined (LabeledTextBox)");
-            return GlobalVariables.Keys.NONE;
+            return GeneticsConfig.Keys.NONE;
         }
         return key;
     }

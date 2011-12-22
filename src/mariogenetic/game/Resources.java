@@ -31,11 +31,11 @@ public class Resources {
 //    public Actor main_actor;
 
     public Resources(String file){
-        GlobalVariables.shuffling_resources=true;
+        GlobalVariables.resources_mutex=true;
         actors = new ArrayList<Actor>();
         terrain = new ArrayList<Terrain>();
         bonus = new ArrayList<Bonus>();
-        GlobalVariables.shuffling_resources=false;
+        GlobalVariables.resources_mutex=false;
         current_map_file = file;
         loadResources(file);
     }
@@ -49,7 +49,7 @@ public class Resources {
     }
     public void loadResources(String file)
     {
-        if(GlobalVariables.shuffling_resources)
+        if(GlobalVariables.resources_mutex)
         {
             try {
                 Thread.sleep(1);
@@ -57,7 +57,7 @@ public class Resources {
                 Logger.getLogger(Resources.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        GlobalVariables.shuffling_resources=true;
+        GlobalVariables.resources_mutex=true;
 
         actors = new ArrayList<Actor>();
         terrain = new ArrayList<Terrain>();
@@ -119,7 +119,7 @@ public class Resources {
         } catch (IOException e) {
         }
 
-        GlobalVariables.shuffling_resources=false;
+        GlobalVariables.resources_mutex=false;
     }
 
     public ArrayList<WorldObject> getReopenedResource()

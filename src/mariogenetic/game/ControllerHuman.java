@@ -6,9 +6,9 @@
 package mariogenetic.game;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import mariogenetic.main.GlobalVariables;
+import mariogenetic.gene.GeneticsConfig;
+import mariogenetic.gene.GeneticsConfig.Keys;
+
 
 /**
  *
@@ -24,93 +24,93 @@ public class ControllerHuman extends Controller{
         super.keyPressed(e);
         switch(e.getKeyCode())
         {
-            case KeyEvent.VK_LEFT: {GlobalVariables.KEYS_MASK|=GlobalVariables.KEY_LEFT; break; }
-            case KeyEvent.VK_RIGHT: {GlobalVariables.KEYS_MASK|=GlobalVariables.KEY_RIGHT; break;}
-            case KeyEvent.VK_UP: {GlobalVariables.KEYS_MASK|=GlobalVariables.KEY_UP; break;}
-            case KeyEvent.VK_DOWN: {GlobalVariables.KEYS_MASK|=GlobalVariables.KEY_DOWN; break;}
-            case KeyEvent.VK_F: { GlobalVariables.KEYS_MASK|=GlobalVariables.KEY_A;break;}
-            case KeyEvent.VK_D: { GlobalVariables.KEYS_MASK|=GlobalVariables.KEY_B;break;}
-            case KeyEvent.VK_S: { GlobalVariables.KEYS_MASK|=GlobalVariables.KEY_C;break;}
-            case KeyEvent.VK_A: { GlobalVariables.KEYS_MASK|=GlobalVariables.KEY_D;break;}
+            case KeyEvent.VK_LEFT: {Controller.KEYS_MASK|=Controller.KEY_LEFT; break; }
+            case KeyEvent.VK_RIGHT: {Controller.KEYS_MASK|=Controller.KEY_RIGHT; break;}
+            case KeyEvent.VK_UP: {Controller.KEYS_MASK|=Controller.KEY_UP; break;}
+            case KeyEvent.VK_DOWN: {Controller.KEYS_MASK|=Controller.KEY_DOWN; break;}
+            case KeyEvent.VK_F: { Controller.KEYS_MASK|=Controller.KEY_A;break;}
+            case KeyEvent.VK_D: { Controller.KEYS_MASK|=Controller.KEY_B;break;}
+            case KeyEvent.VK_S: { Controller.KEYS_MASK|=Controller.KEY_C;break;}
+            case KeyEvent.VK_A: { Controller.KEYS_MASK|=Controller.KEY_D;break;}
         }
     }
 
     public void keyReleased(KeyEvent e) {
         switch(e.getKeyCode())
         {
-            case KeyEvent.VK_LEFT: {GlobalVariables.KEYS_MASK&=~GlobalVariables.KEY_LEFT; break; }
-            case KeyEvent.VK_RIGHT: {GlobalVariables.KEYS_MASK&=~GlobalVariables.KEY_RIGHT; break;}
-            case KeyEvent.VK_UP: {GlobalVariables.KEYS_MASK&=~GlobalVariables.KEY_UP; break;}
-            case KeyEvent.VK_DOWN: {GlobalVariables.KEYS_MASK&=~GlobalVariables.KEY_DOWN; break;}
-            case KeyEvent.VK_F: { GlobalVariables.KEYS_MASK&=~GlobalVariables.KEY_A;break;}
-            case KeyEvent.VK_D: { GlobalVariables.KEYS_MASK&=~GlobalVariables.KEY_B;break;}
-            case KeyEvent.VK_S: { GlobalVariables.KEYS_MASK&=~GlobalVariables.KEY_C;break;}
-            case KeyEvent.VK_A: { GlobalVariables.KEYS_MASK&=~GlobalVariables.KEY_D;break;}
+            case KeyEvent.VK_LEFT: {Controller.KEYS_MASK&=~Controller.KEY_LEFT; break; }
+            case KeyEvent.VK_RIGHT: {Controller.KEYS_MASK&=~Controller.KEY_RIGHT; break;}
+            case KeyEvent.VK_UP: {Controller.KEYS_MASK&=~Controller.KEY_UP; break;}
+            case KeyEvent.VK_DOWN: {Controller.KEYS_MASK&=~Controller.KEY_DOWN; break;}
+            case KeyEvent.VK_F: { Controller.KEYS_MASK&=~Controller.KEY_A;break;}
+            case KeyEvent.VK_D: { Controller.KEYS_MASK&=~Controller.KEY_B;break;}
+            case KeyEvent.VK_S: { Controller.KEYS_MASK&=~Controller.KEY_C;break;}
+            case KeyEvent.VK_A: { Controller.KEYS_MASK&=~Controller.KEY_D;break;}
 //            case KeyEvent.VK_DOWN: {m.resources.actors.get(0).stopY(); break;}
         }
     }
     public boolean down(int key)
     {
-        return (GlobalVariables.KEYS_MASK&key)>0;
+        return (Controller.KEYS_MASK&key)>0;
     }
     public void generateEvent()
     {
-        GlobalVariables.Keys X = GlobalVariables.Keys.NONE;
-        GlobalVariables.Keys Y = GlobalVariables.Keys.NONE;
-        boolean UP = down(GlobalVariables.KEY_UP);
-        boolean DOWN = down(GlobalVariables.KEY_DOWN);
-        boolean LEFT = down(GlobalVariables.KEY_LEFT);
-        boolean RIGHT = down(GlobalVariables.KEY_RIGHT);
+        GeneticsConfig.Keys X = GeneticsConfig.Keys.NONE;
+        GeneticsConfig.Keys Y = GeneticsConfig.Keys.NONE;
+        boolean UP = down(Controller.KEY_UP);
+        boolean DOWN = down(Controller.KEY_DOWN);
+        boolean LEFT = down(Controller.KEY_LEFT);
+        boolean RIGHT = down(Controller.KEY_RIGHT);
         if(UP && !DOWN)
         {
-            Y = GlobalVariables.Keys.UP;
+            Y = GeneticsConfig.Keys.UP;
         }
         else if(DOWN && !UP)
         {
-            Y = GlobalVariables.Keys.DOWN;
+            Y = GeneticsConfig.Keys.DOWN;
         }
         else
         {
-            Y = GlobalVariables.Keys.NONE;
+            Y = GeneticsConfig.Keys.NONE;
         }
 
         if(LEFT && !RIGHT)
         {
-            X = GlobalVariables.Keys.LEFT;
+            X = GeneticsConfig.Keys.LEFT;
         }
         else if(!LEFT && RIGHT)
         {
-            X = GlobalVariables.Keys.RIGHT;
+            X = GeneticsConfig.Keys.RIGHT;
         }
         else{
-            X = GlobalVariables.Keys.NONE;
+            X = GeneticsConfig.Keys.NONE;
         }
-        m.logic.executeMoveAction(GlobalVariables.Keys.NONE);
-        if(X!=GlobalVariables.Keys.NONE)
+        m.logic.executeMoveAction(GeneticsConfig.Keys.NONE);
+        if(X!=GeneticsConfig.Keys.NONE)
         {
             m.logic.executeMoveAction(X);
         }
-        if(Y!=GlobalVariables.Keys.NONE)
+        if(Y!=GeneticsConfig.Keys.NONE)
         {
             m.logic.executeMoveAction(Y);
         }
 
-        if(down(GlobalVariables.KEY_A))
+        if(down(Controller.KEY_A))
         {
-            m.logic.executeSpecialAction(GlobalVariables.Keys.A);
+            m.logic.executeSpecialAction(GeneticsConfig.Keys.A);
             
         }
-        if(down(GlobalVariables.KEY_B))
+        if(down(Controller.KEY_B))
         {
-            m.logic.executeSpecialAction(GlobalVariables.Keys.B);
+            m.logic.executeSpecialAction(GeneticsConfig.Keys.B);
         }
-        if(down(GlobalVariables.KEY_C))
+        if(down(Controller.KEY_C))
         {
-            m.logic.executeSpecialAction(GlobalVariables.Keys.C);
+            m.logic.executeSpecialAction(GeneticsConfig.Keys.C);
         }
-        if(down(GlobalVariables.KEY_D))
+        if(down(Controller.KEY_D))
         {
-            m.logic.executeSpecialAction(GlobalVariables.Keys.D);
+            m.logic.executeSpecialAction(GeneticsConfig.Keys.D);
         }
         
     }

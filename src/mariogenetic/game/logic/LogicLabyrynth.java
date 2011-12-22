@@ -7,8 +7,9 @@ package mariogenetic.game.logic;
 
 import java.awt.Rectangle;
 import java.util.Iterator;
-import mariogenetic.main.GlobalVariables;
 import mariogenetic.game.Main;
+import mariogenetic.gene.GeneticsConfig;
+import mariogenetic.main.GlobalVariables;
 import mariogenetic.main.Vector;
 import mariogenetic.objects.Actor;
 import mariogenetic.objects.Bonus;
@@ -26,7 +27,7 @@ public class LogicLabyrynth extends Logic{
     public LogicLabyrynth(){ }
 
     public void doLogic() {
-        if(GlobalVariables.shuffling_resources)
+        if(GlobalVariables.resources_mutex)
             return;
         Main m = GlobalVariables.main;
         
@@ -117,38 +118,38 @@ public class LogicLabyrynth extends Logic{
         
     }
 
-    public void executeMoveAction(GlobalVariables.Keys key){
+    public void executeMoveAction(GeneticsConfig.Keys key){
 
         Actor a = GlobalVariables.main.resources.getMainActor();
         if(a==null)
             return;
-        if(key==GlobalVariables.Keys.LEFT)
+        if(key==GeneticsConfig.Keys.LEFT)
         {
             a.left(velocity_X);
         }
-        else if(key==GlobalVariables.Keys.RIGHT)
+        else if(key==GeneticsConfig.Keys.RIGHT)
         {
             a.right(velocity_X);            
         }
-        else if(key==GlobalVariables.Keys.UP)
+        else if(key==GeneticsConfig.Keys.UP)
         {
             a.up(velocity_Y);
         }
-        else if(key==GlobalVariables.Keys.DOWN)
+        else if(key==GeneticsConfig.Keys.DOWN)
         {
             a.down(velocity_Y);
         }
-        else if(key==GlobalVariables.Keys.NONE)
+        else if(key==GeneticsConfig.Keys.NONE)
         {
             a.stopX();
             a.stopY();
         }
     }
     public String getDebugString(){ return String.format("");}
-    public void executeSpecialAction(GlobalVariables.Keys key){
+    public void executeSpecialAction(GeneticsConfig.Keys key){
         Actor a = GlobalVariables.main.resources.getMainActor();
         if(a==null)return;
-        if(key==GlobalVariables.Keys.A)
+        if(key==GeneticsConfig.Keys.A)
         {            
             
         }

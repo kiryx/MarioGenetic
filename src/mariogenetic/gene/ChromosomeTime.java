@@ -6,8 +6,8 @@
 package mariogenetic.gene;
 
 import java.util.Random;
-import mariogenetic.main.GlobalVariables;
-import mariogenetic.main.GlobalVariables.Keys;
+import mariogenetic.gene.GeneticsConfig.Keys;
+
 
 /**
  *
@@ -15,8 +15,8 @@ import mariogenetic.main.GlobalVariables.Keys;
  */
 public class ChromosomeTime extends Chromosome{
 
-    public GlobalVariables.Keys[] moves; //30 sekund
-    public GlobalVariables.Keys[] special;
+    public GeneticsConfig.Keys[] moves; //30 sekund
+    public GeneticsConfig.Keys[] special;
     
     public ChromosomeTime()
     {     
@@ -27,8 +27,8 @@ public class ChromosomeTime extends Chromosome{
         
         this.arr_length = size;
         //arr_length = 100;
-        moves = new GlobalVariables.Keys[arr_length];
-        special = new GlobalVariables.Keys[arr_length];
+        moves = new GeneticsConfig.Keys[arr_length];
+        special = new GeneticsConfig.Keys[arr_length];
 
         for (int i = 0; i < moves.length; i++) {            
             moves[i] = gc.getRandomMove();
@@ -82,7 +82,7 @@ public class ChromosomeTime extends Chromosome{
 
         GeneticsConfig gc = GeneticsConfig.getInstance();        
         for (int i = 0; i < moves.length; i++) {
-            GlobalVariables.Keys[] modifiers = new GlobalVariables.Keys[parents.length];
+            GeneticsConfig.Keys[] modifiers = new GeneticsConfig.Keys[parents.length];
             for (int j = 0; j < modifiers.length; j++) {
 //                System.out.println("list:"+parents);
 //                System.out.println("par [j]"+parents[j]+" j="+j+" par.size="+parents.length);
@@ -94,7 +94,7 @@ public class ChromosomeTime extends Chromosome{
         }
 
         for (int i = 0; i < special.length; i++) {
-            GlobalVariables.Keys[] modifiers = new GlobalVariables.Keys[parents.length];
+            GeneticsConfig.Keys[] modifiers = new GeneticsConfig.Keys[parents.length];
             for (int j = 0; j < modifiers.length; j++) {
                 modifiers[j]=parents[j].getSpecialArray()[i];
             }
@@ -114,12 +114,12 @@ public class ChromosomeTime extends Chromosome{
         int index = (int) (time * moves.length / (Integer) GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.MAXIMUM_TIME));
         return index>=moves.length;
     }
-    public GlobalVariables.Keys getCurrentMove(long time)
+    public GeneticsConfig.Keys getCurrentMove(long time)
     {
         int index = (int) (time * moves.length / (Integer) GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.MAXIMUM_TIME));
         return moves[index];
     }
-    public GlobalVariables.Keys getSpecial(long time)
+    public GeneticsConfig.Keys getSpecial(long time)
     {
         int index = (int) (time * special.length / (Integer) GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.MAXIMUM_TIME));
         return special[index];

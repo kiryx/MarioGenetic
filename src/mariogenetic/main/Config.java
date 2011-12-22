@@ -154,16 +154,16 @@ public class Config extends JPanel {
 
             GeneticsConfig gc = GeneticsConfig.getInstance();
             final LabeledTextBox[] lbtx = {
-                new LabeledTextBox(GlobalVariables.Keys.UP, String.valueOf(gc.getMoveKeyProbability(GlobalVariables.Keys.UP))),
-                new LabeledTextBox(GlobalVariables.Keys.DOWN, String.valueOf(gc.getMoveKeyProbability(GlobalVariables.Keys.DOWN))),
-                new LabeledTextBox(GlobalVariables.Keys.LEFT, String.valueOf(gc.getMoveKeyProbability(GlobalVariables.Keys.LEFT))),
-                new LabeledTextBox(GlobalVariables.Keys.RIGHT, String.valueOf(gc.getMoveKeyProbability(GlobalVariables.Keys.RIGHT))),
-                new LabeledTextBox(GlobalVariables.Keys.NONE, String.valueOf(gc.getMoveKeyProbability(GlobalVariables.Keys.NONE))),
-                new LabeledTextBox(GlobalVariables.Keys.A, String.valueOf(gc.getSpecialKeyProbability(GlobalVariables.Keys.A))),
-                new LabeledTextBox(GlobalVariables.Keys.B, String.valueOf(gc.getSpecialKeyProbability(GlobalVariables.Keys.B))),
-                new LabeledTextBox(GlobalVariables.Keys.C, String.valueOf(gc.getSpecialKeyProbability(GlobalVariables.Keys.C))),
-                new LabeledTextBox(GlobalVariables.Keys.D, String.valueOf(gc.getSpecialKeyProbability(GlobalVariables.Keys.D))),
-                new LabeledTextBox(GlobalVariables.Keys.NONE, String.valueOf(gc.getSpecialKeyProbability(GlobalVariables.Keys.NONE)))
+                new LabeledTextBox(GeneticsConfig.Keys.UP, String.valueOf(gc.getMoveKeyProbability(GeneticsConfig.Keys.UP))),
+                new LabeledTextBox(GeneticsConfig.Keys.DOWN, String.valueOf(gc.getMoveKeyProbability(GeneticsConfig.Keys.DOWN))),
+                new LabeledTextBox(GeneticsConfig.Keys.LEFT, String.valueOf(gc.getMoveKeyProbability(GeneticsConfig.Keys.LEFT))),
+                new LabeledTextBox(GeneticsConfig.Keys.RIGHT, String.valueOf(gc.getMoveKeyProbability(GeneticsConfig.Keys.RIGHT))),
+                new LabeledTextBox(GeneticsConfig.Keys.NONE, String.valueOf(gc.getMoveKeyProbability(GeneticsConfig.Keys.NONE))),
+                new LabeledTextBox(GeneticsConfig.Keys.A, String.valueOf(gc.getSpecialKeyProbability(GeneticsConfig.Keys.A))),
+                new LabeledTextBox(GeneticsConfig.Keys.B, String.valueOf(gc.getSpecialKeyProbability(GeneticsConfig.Keys.B))),
+                new LabeledTextBox(GeneticsConfig.Keys.C, String.valueOf(gc.getSpecialKeyProbability(GeneticsConfig.Keys.C))),
+                new LabeledTextBox(GeneticsConfig.Keys.D, String.valueOf(gc.getSpecialKeyProbability(GeneticsConfig.Keys.D))),
+                new LabeledTextBox(GeneticsConfig.Keys.NONE, String.valueOf(gc.getSpecialKeyProbability(GeneticsConfig.Keys.NONE)))
             };
 
             JButton btn_ok = new JButton("Apply");

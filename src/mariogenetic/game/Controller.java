@@ -23,6 +23,15 @@ import mariogenetic.main.Vector;
 public abstract class Controller implements KeyListener,MouseMotionListener,MouseListener{
 
     Main m;
+    public static int KEYS_MASK;
+    public static int KEY_UP=1;
+    public static int KEY_DOWN=2;
+    public static int KEY_LEFT=4;
+    public static int KEY_RIGHT=8;
+    public static int KEY_A=16;
+    public static int KEY_B=32;
+    public static int KEY_C=64;
+    public static int KEY_D=128;
     public Controller()
     {
         m = GlobalVariables.main;

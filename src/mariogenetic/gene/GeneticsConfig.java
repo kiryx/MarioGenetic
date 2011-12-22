@@ -7,44 +7,46 @@ package mariogenetic.gene;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Random;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mariogenetic.main.Dbg;
 import mariogenetic.main.GlobalVariables;
-import mariogenetic.main.GlobalVariables.Keys;
 
 /**
  *
  * @author alice
  */
 public class GeneticsConfig {
-   
+
+    public enum Keys
+    {
+        NONE,UP,DOWN,LEFT,RIGHT,A,B,C,D
+    }
+    public static Keys moveKeys[] = {Keys.UP, Keys.DOWN, Keys.LEFT, Keys.RIGHT, Keys.NONE};
+    public static Keys specialKeys[] = {Keys.A, Keys.B, Keys.C, Keys.D, Keys.NONE};
     private GeneticsConfig()
     {
         generator = new Random();
 
-        for(GlobalVariables.Keys k : GlobalVariables.moveKeys)
+        for(GeneticsConfig.Keys k : GeneticsConfig.moveKeys)
         {
             moveProb.put(k, 0.0);
         }
 
-        moveProb.put(GlobalVariables.Keys.LEFT, 0.4);
-        moveProb.put(GlobalVariables.Keys.RIGHT, 0.7);
-        moveProb.put(GlobalVariables.Keys.NONE, 0.0);
+        moveProb.put(GeneticsConfig.Keys.LEFT, 0.4);
+        moveProb.put(GeneticsConfig.Keys.RIGHT, 0.7);
+        moveProb.put(GeneticsConfig.Keys.NONE, 0.0);
 
-        for(GlobalVariables.Keys k : GlobalVariables.specialKeys)
+        for(GeneticsConfig.Keys k : GeneticsConfig.specialKeys)
         {
             specialProb.put(k, 0.0);
         }
 
-        specialProb.put(GlobalVariables.Keys.A, 0.2);
-        specialProb.put(GlobalVariables.Keys.NONE, 0.8);
+        specialProb.put(GeneticsConfig.Keys.A, 0.2);
+        specialProb.put(GeneticsConfig.Keys.NONE, 0.8);
         reCalcProbabilities();
 
 
@@ -90,10 +92,10 @@ public class GeneticsConfig {
     private HashMap<Param,Object> genetic_params = new HashMap<Param,Object>();
     private HashMap<Param,Class> genetic_param_classes = new HashMap<Param,Class>();
 
-    private HashMap<GlobalVariables.Keys,Double> moveProb = new HashMap<GlobalVariables.Keys,Double>();
+    private HashMap<GeneticsConfig.Keys,Double> moveProb = new HashMap<GeneticsConfig.Keys,Double>();
     private double totalMove;
     
-    private HashMap<GlobalVariables.Keys,Double> specialProb = new HashMap<GlobalVariables.Keys,Double>();
+    private HashMap<GeneticsConfig.Keys,Double> specialProb = new HashMap<GeneticsConfig.Keys,Double>();
     private double totalSpecial;
     
     private Random generator = null;
@@ -163,7 +165,7 @@ public class GeneticsConfig {
         }
     }
 
-    public void setMoveKeyProbability(GlobalVariables.Keys key, Double d)
+    public void setMoveKeyProbability(GeneticsConfig.Keys key, Double d)
     {
         
         d = Math.abs(d);
@@ -179,7 +181,7 @@ public class GeneticsConfig {
         reCalcProbabilities();
     }
 
-    public void setSpecialKeyProbability(GlobalVariables.Keys key, Double d)
+    public void setSpecialKeyProbability(GeneticsConfig.Keys key, Double d)
     {
         d = Math.abs(d);
 
@@ -194,11 +196,11 @@ public class GeneticsConfig {
         reCalcProbabilities();
     }
 
-    public Double getSpecialKeyProbability(GlobalVariables.Keys key)
+    public Double getSpecialKeyProbability(GeneticsConfig.Keys key)
     {
         return specialProb.get(key);
     }
-    public Double getMoveKeyProbability(GlobalVariables.Keys key)
+    public Double getMoveKeyProbability(GeneticsConfig.Keys key)
     {
         return moveProb.get(key);
     }
@@ -208,25 +210,25 @@ public class GeneticsConfig {
         return generator;
     }
 
-    public GlobalVariables.Keys getRandomMove()
+    public GeneticsConfig.Keys getRandomMove()
     {
         return getRandom(moveProb,totalMove);
     }
-    public GlobalVariables.Keys getRandomSpecial()
+    public GeneticsConfig.Keys getRandomSpecial()
     {
         return getRandom(specialProb,totalSpecial);
     }
 
-    public GlobalVariables.Keys getRandomMove(GlobalVariables.Keys[] modifiers)
+    public GeneticsConfig.Keys getRandomMove(GeneticsConfig.Keys[] modifiers)
     {
         return getRandom(modifiers, moveProb);
     }
-    public GlobalVariables.Keys getRandomSpecial(GlobalVariables.Keys[] modifiers)
+    public GeneticsConfig.Keys getRandomSpecial(GeneticsConfig.Keys[] modifiers)
     {
         return getRandom(modifiers,specialProb);
     }
 
-    private GlobalVariables.Keys getRandom(HashMap<GlobalVariables.Keys,Double> map, double total)
+    private GeneticsConfig.Keys getRandom(HashMap<GeneticsConfig.Keys,Double> map, double total)
     {
         double d = getGenerator().nextDouble();
 
@@ -235,7 +237,7 @@ public class GeneticsConfig {
         double sum = 0.0;
 
         //Iterate over whole move set to determine random Key
-        for(Map.Entry<GlobalVariables.Keys,Double> e : map.entrySet())
+        for(Map.Entry<GeneticsConfig.Keys,Double> e : map.entrySet())
         {
             if(d>=sum && d<(sum+e.getValue()))
             {
@@ -245,18 +247,18 @@ public class GeneticsConfig {
         }
 
         Dbg.o("Had to return NONE! GeneticsConf:getRandom");
-        return GlobalVariables.Keys.NONE;
+        return GeneticsConfig.Keys.NONE;
     }
 
-    private GlobalVariables.Keys getRandom(GlobalVariables.Keys[] modifiers, HashMap<GlobalVariables.Keys,Double> map)
+    private GeneticsConfig.Keys getRandom(GeneticsConfig.Keys[] modifiers, HashMap<GeneticsConfig.Keys,Double> map)
     {
         double d = getGenerator().nextDouble();        
 
-        HashMap<GlobalVariables.Keys,Double> map2 = (HashMap<GlobalVariables.Keys, Double>) map.clone();
+        HashMap<GeneticsConfig.Keys,Double> map2 = (HashMap<GeneticsConfig.Keys, Double>) map.clone();
 
         Double crossing_parameter = (Double)get_parameter(Param.CROSSING_PARAMETER);
 
-        for(GlobalVariables.Keys k : modifiers)
+        for(GeneticsConfig.Keys k : modifiers)
         {
             Double new_val= map2.get(k)*crossing_parameter;
             
@@ -273,7 +275,7 @@ public class GeneticsConfig {
         
         double sum = 0.0;
         
-        for(Map.Entry<GlobalVariables.Keys,Double> e : map2.entrySet())
+        for(Map.Entry<GeneticsConfig.Keys,Double> e : map2.entrySet())
         {
             if(d>=sum && d<(sum+e.getValue()))
             {                
@@ -282,7 +284,7 @@ public class GeneticsConfig {
             sum+=e.getValue();
         }
         
-        return GlobalVariables.Keys.NONE;
+        return GeneticsConfig.Keys.NONE;
     }
 
     

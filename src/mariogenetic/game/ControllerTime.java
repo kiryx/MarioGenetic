@@ -8,11 +8,11 @@ package mariogenetic.game;
 import java.awt.event.KeyEvent;
 import mariogenetic.GUI.PopulationWindow;
 import mariogenetic.gene.GeneticsConfig;
-import mariogenetic.main.GlobalVariables;
 import mariogenetic.gene.Chromosome;
 import mariogenetic.gene.ChromosomeTime;
 import mariogenetic.gene.Population;
 import mariogenetic.gene.ResultData;
+import mariogenetic.main.GlobalVariables;
 import mariogenetic.objects.Actor;
 
 /**
@@ -56,7 +56,7 @@ public class ControllerTime extends Controller{
 
     public void generateEvent()
     {
-        if(GlobalVariables.shuffling_resources)
+        if(GlobalVariables.resources_mutex)
             return;
         long time = GlobalVariables.main.gamestate.timeElapsed(); //time elapsed in millis
 
@@ -91,11 +91,11 @@ public class ControllerTime extends Controller{
             current_chromosome++;
             if(current_chromosome==p.chromosomes.size())
             {
-                GlobalVariables.shuffling_resources=true;
+                GlobalVariables.resources_mutex=true;
                 
                 p = p.nextPopulation();
                 PopulationWindow.getInstance().fillList(p.chromosomes);
-                GlobalVariables.shuffling_resources=false;
+                GlobalVariables.resources_mutex=false;
                 current_chromosome=0;
             }
             //current_chromosome%=p.chromosomes.size();
@@ -104,8 +104,8 @@ public class ControllerTime extends Controller{
             PopulationWindow.getInstance().repaint();
             return;
         }
-        GlobalVariables.Keys move = c1.getCurrentMove(time);
-        GlobalVariables.Keys special = c1.getSpecial(time);
+        GeneticsConfig.Keys move = c1.getCurrentMove(time);
+        GeneticsConfig.Keys special = c1.getSpecial(time);
 //        if(special==Global.Keys.A)
 //        {
         m.logic.executeSpecialAction(special);
