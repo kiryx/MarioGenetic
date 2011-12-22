@@ -20,7 +20,7 @@ import mariogenetic.main.Config;
 import mariogenetic.main.GlobalVariables;
 import mariogenetic.game.ControllerTime;
 import mariogenetic.gene.Chromosome;
-import mariogenetic.gene.ChromosomeTime;
+import mariogenetic.gene.Chromosome;
 
 /**
  *
@@ -83,7 +83,7 @@ public class PopulationWindow extends JFrame{
                     {
                         ControllerTime ct = (ControllerTime)GlobalVariables.main.controller;
                         Chromosome c = ct.getPopulation().chromosomes.get(list.getSelectedIndex());
-                        new GeneDetailsWindow((ChromosomeTime)c);
+                        new GeneDetailsWindow((Chromosome)c);
                     }
                 }
             }

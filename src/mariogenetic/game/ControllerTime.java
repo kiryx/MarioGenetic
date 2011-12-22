@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 import mariogenetic.GUI.PopulationWindow;
 import mariogenetic.gene.GeneticsConfig;
 import mariogenetic.gene.Chromosome;
-import mariogenetic.gene.ChromosomeTime;
+import mariogenetic.gene.Chromosome;
 import mariogenetic.gene.Population;
 import mariogenetic.gene.ResultData;
 import mariogenetic.main.GlobalVariables;
@@ -65,7 +65,7 @@ public class ControllerTime extends Controller{
 
         Actor a = m.resources.getMainActor();
 //        System.out.println(p.chromosomes.size());
-        ChromosomeTime c1 = (ChromosomeTime) p.chromosomes.get(current_chromosome);
+        Chromosome c1 = (Chromosome) p.chromosomes.get(current_chromosome);
 
 
 
@@ -93,7 +93,7 @@ public class ControllerTime extends Controller{
             {
                 GlobalVariables.resources_mutex=true;
                 
-                p = p.nextPopulation();
+                p = p.getNextPopulation();
                 PopulationWindow.getInstance().fillList(p.chromosomes);
                 GlobalVariables.resources_mutex=false;
                 current_chromosome=0;

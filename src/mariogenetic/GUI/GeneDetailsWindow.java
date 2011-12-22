@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import mariogenetic.main.Config;
-import mariogenetic.gene.ChromosomeTime;
+import mariogenetic.gene.Chromosome;
 import mariogenetic.gene.GeneticsConfig;
 
 /**
@@ -53,7 +53,7 @@ public class GeneDetailsWindow extends JFrame{
         }
         return strings;
     }
-    public GeneDetailsWindow(ChromosomeTime c)
+    public GeneDetailsWindow(Chromosome c)
     {
         this.setPreferredSize(Config.window_main_size);
         this.setSize(Config.window_main_size);

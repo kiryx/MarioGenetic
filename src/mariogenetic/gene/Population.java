@@ -34,7 +34,7 @@ public class Population {
     {
         chromosomes.clear();
         for (int i = 0; i < count; i++) {
-            chromosomes.add(new ChromosomeTime());
+            chromosomes.add(new Chromosome());
         }
     }
 
@@ -82,7 +82,7 @@ public class Population {
         return parents;        
     }
     
-    public Population nextPopulation() {
+    public Population getNextPopulation() {
         Collections.sort(chromosomes);
 
         Collections.reverse(chromosomes);
@@ -122,14 +122,14 @@ public class Population {
 //                System.out.println(parents[i]);
 //                
 //            }
-            new_population.add(new ChromosomeTime(parents));
+            new_population.add(new Chromosome(parents));
 
             
             //new_population.add(new ChromosomeTime());
         }
         while(new_population.size()<population_size)
         {
-            new_population.add(new ChromosomeTime());
+            new_population.add(new Chromosome());
         }
         
         //krzyzowanie
@@ -143,12 +143,12 @@ public class Population {
             Double d = rand.nextDouble();
             if(d<mut_prob)
             {
-                ((ChromosomeTime)new_population.get(i)).mutateMoves(mut_breadth);
+                ((Chromosome)new_population.get(i)).mutateMoves(mut_breadth);
             }
             d = rand.nextDouble();
             if(d<spec_mut_prob)
             {
-                ((ChromosomeTime)new_population.get(i)).mutateSpecial(spec_mut_breadth);
+                ((Chromosome)new_population.get(i)).mutateSpecial(spec_mut_breadth);
             }
             
         }
