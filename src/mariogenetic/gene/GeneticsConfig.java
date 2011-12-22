@@ -50,26 +50,26 @@ public class GeneticsConfig {
         reCalcProbabilities();
 
 
-        register_parameter(Param.CROSSING_PARAMETER, 5.0, Double.class);
-        register_parameter(Param.POPULATION_SIZE, 15, Integer.class);
-        register_parameter(Param.CROSSING_ELITE_SIZE, 2, Integer.class);
-        register_parameter(Param.CROSSING_PARENT_SET_MIN, 1, Integer.class);
-        register_parameter(Param.CROSSING_PARENT_SET_MAX, 3, Integer.class);
-        register_parameter(Param.CROSSING_OFFSPRING_COUNT, 5, Integer.class);
-        register_parameter(Param.MUTATION_MOVES_PROBABILITY, 0.02, Double.class);
-        register_parameter(Param.MUTATION_MOVES_BREADTH, 0.015, Double.class);
-        register_parameter(Param.MUTATION_SPECIAL_PROBABILITY, 0.02, Double.class);
-        register_parameter(Param.MUTATION_SPECIAL_BREADTH, 0.015, Double.class);
-        register_parameter(Param.CROSSING_ELITE_IS_PARENTS, false, Boolean.class);
-        register_parameter(Param.MAXIMUM_TIME, 10000, Integer.class); 
-        register_parameter(Param.MOVES_PER_SECOND, 20, Integer.class);
-        register_parameter(Param.FUNCTION_DEAD_MULTIPLIER, 0.5, Double.class);
-        register_parameter(Param.FUNCTION_WON_MULTIPLIER, 2.0, Double.class);
-        register_parameter(Param.FUNCTION_TIMEOUT_MULTIPLIER, 1.0, Double.class);
-        register_parameter(Param.FUNCTION_TIME_MULTIPLIER, 50.0, Double.class);
+        registerParameter(Parameter.CROSSING_PARAMETER, 5.0, Double.class);
+        registerParameter(Parameter.POPULATION_SIZE, 15, Integer.class);
+        registerParameter(Parameter.CROSSING_ELITE_SIZE, 2, Integer.class);
+        registerParameter(Parameter.CROSSING_PARENT_SET_MIN, 1, Integer.class);
+        registerParameter(Parameter.CROSSING_PARENT_SET_MAX, 3, Integer.class);
+        registerParameter(Parameter.CROSSING_OFFSPRING_COUNT, 5, Integer.class);
+        registerParameter(Parameter.MUTATION_MOVES_PROBABILITY, 0.02, Double.class);
+        registerParameter(Parameter.MUTATION_MOVES_BREADTH, 0.015, Double.class);
+        registerParameter(Parameter.MUTATION_SPECIAL_PROBABILITY, 0.02, Double.class);
+        registerParameter(Parameter.MUTATION_SPECIAL_BREADTH, 0.015, Double.class);
+        registerParameter(Parameter.CROSSING_ELITE_IS_PARENTS, false, Boolean.class);
+        registerParameter(Parameter.MAXIMUM_TIME, 10000, Integer.class);
+        registerParameter(Parameter.MOVES_PER_SECOND, 20, Integer.class);
+        registerParameter(Parameter.FUNCTION_DEAD_MULTIPLIER, 0.5, Double.class);
+        registerParameter(Parameter.FUNCTION_WON_MULTIPLIER, 2.0, Double.class);
+        registerParameter(Parameter.FUNCTION_TIMEOUT_MULTIPLIER, 1.0, Double.class);
+        registerParameter(Parameter.FUNCTION_TIME_MULTIPLIER, 50.0, Double.class);
         
     }
-    public static enum Param {
+    public static enum Parameter {
        CROSSING_PARAMETER,POPULATION_SIZE,CROSSING_ELITE_SIZE,
        CROSSING_OFFSPRING_COUNT,CROSSING_PARENT_SET_MIN, CROSSING_PARENT_SET_MAX,
        MUTATION_MOVES_PROBABILITY,MUTATION_MOVES_BREADTH,
@@ -89,8 +89,8 @@ public class GeneticsConfig {
         return singleton;
     }
     
-    private HashMap<Param,Object> genetic_params = new HashMap<Param,Object>();
-    private HashMap<Param,Class> genetic_param_classes = new HashMap<Param,Class>();
+    private HashMap<Parameter,Object> genetic_params = new HashMap<Parameter,Object>();
+    private HashMap<Parameter,Class> genetic_param_classes = new HashMap<Parameter,Class>();
 
     private HashMap<GeneticsConfig.Keys,Double> moveProb = new HashMap<GeneticsConfig.Keys,Double>();
     private double totalMove;
@@ -101,12 +101,12 @@ public class GeneticsConfig {
     private Random generator = null;
 
          
-    private void register_parameter(Param p, Object o, Class c )
+    private void registerParameter(Parameter p, Object o, Class c )
     {
         genetic_params.put(p, o);
         genetic_param_classes.put(p, c);
     }
-    public void update_parameter(Param p, String s)
+    public void updateParameter(Parameter p, String s)
     {
         Class c = (Class)genetic_param_classes.get(p);
         Method m = null;
@@ -142,11 +142,11 @@ public class GeneticsConfig {
 //            System.out.println("Not known data type:"+c.getName()+" in GeneticsConfig:update_parameter");
 //        }
     }
-    public Object get_parameter(Param p)
+    public Object getParameter(Parameter p)
     {
         return genetic_params.get(p);
     }
-    public HashMap<Param,Object> getParamsMap()
+    public HashMap<Parameter,Object> getParamsMap()
     {
         return genetic_params;
     }
@@ -256,7 +256,7 @@ public class GeneticsConfig {
 
         HashMap<GeneticsConfig.Keys,Double> map2 = (HashMap<GeneticsConfig.Keys, Double>) map.clone();
 
-        Double crossing_parameter = (Double)get_parameter(Param.CROSSING_PARAMETER);
+        Double crossing_parameter = (Double)getParameter(Parameter.CROSSING_PARAMETER);
 
         for(GeneticsConfig.Keys k : modifiers)
         {

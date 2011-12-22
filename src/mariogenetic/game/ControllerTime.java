@@ -28,7 +28,7 @@ public class ControllerTime extends Controller{
     public ControllerTime()
     {
         //c1 = new ChromosomeTime();
-        Integer population_size = (Integer)GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.POPULATION_SIZE);
+        Integer population_size = (Integer)GeneticsConfig.getInstance().getParameter(GeneticsConfig.Parameter.POPULATION_SIZE);
         this.setPopulation(new Population(population_size));
         
         
@@ -36,7 +36,7 @@ public class ControllerTime extends Controller{
 
     public void resetPopulation()
     {
-        Integer population_size = (Integer)GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.POPULATION_SIZE);
+        Integer population_size = (Integer)GeneticsConfig.getInstance().getParameter(GeneticsConfig.Parameter.POPULATION_SIZE);
         this.setPopulation(new Population(population_size));
         
         current_chromosome=0;

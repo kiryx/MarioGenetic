@@ -163,11 +163,11 @@ public class LogicSuperMeatBoy extends Logic{
             return;
         if(key==GeneticsConfig.Keys.LEFT)
         {
-            a.left(velocity_X);
+            a.moveLeft(velocity_X);
         }
         else if(key==GeneticsConfig.Keys.RIGHT)
         {
-            a.right(velocity_X);
+            a.moveRight(velocity_X);
         }
         else if(key==GeneticsConfig.Keys.NONE)
         {

@@ -25,7 +25,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
-import mariogenetic.gene.GeneticsConfig.Param;
+import mariogenetic.gene.GeneticsConfig.Parameter;
 
 /**
  *
@@ -60,45 +60,45 @@ public class Config extends JPanel {
         private static String debug_no = "Debug:OFF";
         
 
-        private void revertBack(ArrayList<Param> params,LabeledTextBox[] ltb_tab)
+        private void revertBack(ArrayList<Parameter> params,LabeledTextBox[] ltb_tab)
         {
             GeneticsConfig gc = GeneticsConfig.getInstance();
-            ArrayList<Param> needs_reset = this.needsReset(ltb_tab);
+            ArrayList<Parameter> needs_reset = this.requiresReset(ltb_tab);
             for(LabeledTextBox label : ltb_tab)
             {
-                Param p = Param.valueOf(label.getLabel());
-                if (p == Param.MAXIMUM_TIME)
+                Parameter p = Parameter.valueOf(label.getLabel());
+                if (p == Parameter.MAXIMUM_TIME)
                 {
-                    label.setValue(String.valueOf((Integer)gc.get_parameter(p)));
+                    label.setValue(String.valueOf((Integer)gc.getParameter(p)));
                 }
-                else if (p == Param.MOVES_PER_SECOND)
+                else if (p == Parameter.MOVES_PER_SECOND)
                 {
-                    label.setValue(String.valueOf((Integer)gc.get_parameter(p)));
+                    label.setValue(String.valueOf((Integer)gc.getParameter(p)));
                 }
             }
         }
 
-        private ArrayList<Param> needsReset(LabeledTextBox[] ltb_tab)
+        private ArrayList<Parameter> requiresReset(LabeledTextBox[] ltb_tab)
         {
 //            Param[] resetingParams = {Param.MAXIMUM_TIME,Param.MOVES_PER_SECOND};
 
             GeneticsConfig gc = GeneticsConfig.getInstance();
-            ArrayList<Param> out_params = new ArrayList<Param>();
+            ArrayList<Parameter> out_params = new ArrayList<Parameter>();
             for(LabeledTextBox label : ltb_tab)
             {
-                Param p = Param.valueOf(label.getLabel());
-                if(p==Param.MAXIMUM_TIME)
+                Parameter p = Parameter.valueOf(label.getLabel());
+                if(p==Parameter.MAXIMUM_TIME)
                 {
-                    Integer max_time = (Integer) gc.get_parameter(p);
+                    Integer max_time = (Integer) gc.getParameter(p);
                     Integer max_time2 = Integer.valueOf(label.getValue());                    
                     if(!max_time.equals(max_time2))
                     {                        
                         out_params.add(p);
                     }
                 }
-                else if (p == Param.MOVES_PER_SECOND)
+                else if (p == Parameter.MOVES_PER_SECOND)
                 {
-                    Integer val1 = (Integer) gc.get_parameter(p);
+                    Integer val1 = (Integer) gc.getParameter(p);
                     Integer val2 = Integer.valueOf(label.getValue());
                     if(!val1.equals(val2))
                     {
@@ -183,32 +183,32 @@ public class Config extends JPanel {
             container.add(genetic_group);
             genetic_group.setLayout(new BoxLayout(genetic_group,BoxLayout.Y_AXIS));
 
-            Double crossing_parameter = (Double)GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.CROSSING_PARAMETER);
+            Double crossing_parameter = (Double)GeneticsConfig.getInstance().getParameter(GeneticsConfig.Parameter.CROSSING_PARAMETER);
 
             
-            HashMap<GeneticsConfig.Param,Object> hash_map = gc.getParamsMap();
+            HashMap<GeneticsConfig.Parameter,Object> hash_map = gc.getParamsMap();
             
                         
-            Param[] param_values = hash_map.keySet().toArray(new Param[hash_map.size()]);
+            Parameter[] param_values = hash_map.keySet().toArray(new Parameter[hash_map.size()]);
             
-            ArrayList<Param> arr_par = new ArrayList<Param>();
-            for(Param p : param_values)
+            ArrayList<Parameter> arr_par = new ArrayList<Parameter>();
+            for(Parameter p : param_values)
             {
                 arr_par.add(p);
             }
-            Collections.sort(arr_par, new Comparator<Param>(){
-                public int compare(Param o1, Param o2) {
+            Collections.sort(arr_par, new Comparator<Parameter>(){
+                public int compare(Parameter o1, Parameter o2) {
                     String s1 = o1.name();
                     String s2=  o2.name();
                     return s1.compareTo(s2);
                 }
             });
-            param_values = arr_par.toArray(new Param[arr_par.size()]);
+            param_values = arr_par.toArray(new Parameter[arr_par.size()]);
             
             final LabeledTextBox[] lbtx_params = new LabeledTextBox[param_values.length];
             for(int i=0;i<lbtx_params.length;++i)
             {
-                lbtx_params[i] = new LabeledTextBox(param_values[i].name(), String.valueOf(gc.get_parameter(param_values[i])));
+                lbtx_params[i] = new LabeledTextBox(param_values[i].name(), String.valueOf(gc.getParameter(param_values[i])));
                 
                 genetic_group.add(lbtx_params[i]);
 
@@ -231,11 +231,11 @@ public class Config extends JPanel {
                     for (int i = 5; i < lbtx.length; i++) {
                         GeneticsConfig.getInstance().setSpecialKeyProbability(lbtx[i].getKey(), Double.valueOf(lbtx[i].getValue()));
                     }
-                    ArrayList<Param> modified = conf_main.needsReset(lbtx_params);
+                    ArrayList<Parameter> modified = conf_main.requiresReset(lbtx_params);
                     if(modified.size()>0)
                     {
                         String params = "";
-                        for(Param p : modified)
+                        for(Parameter p : modified)
                         {
                             params+= p.name()+" ";
                         }
@@ -245,8 +245,8 @@ public class Config extends JPanel {
                         if(chosen==JOptionPane.YES_OPTION)
                         {
                             for(int i=0;i<lbtx_params.length;i++) {
-                                    Param p = GeneticsConfig.Param.valueOf(lbtx_params[i].getLabel());
-                                    GeneticsConfig.getInstance().update_parameter(p, lbtx_params[i].getValue());
+                                    Parameter p = GeneticsConfig.Parameter.valueOf(lbtx_params[i].getLabel());
+                                    GeneticsConfig.getInstance().updateParameter(p, lbtx_params[i].getValue());
                                 }
                             GlobalVariables.main.resetAll();
                         }
@@ -263,8 +263,8 @@ public class Config extends JPanel {
                     }
                      else{
                         for(int i=0;i<lbtx_params.length;i++) {
-                                    Param p = GeneticsConfig.Param.valueOf(lbtx_params[i].getLabel());
-                                    GeneticsConfig.getInstance().update_parameter(p, lbtx_params[i].getValue());
+                                    Parameter p = GeneticsConfig.Parameter.valueOf(lbtx_params[i].getLabel());
+                                    GeneticsConfig.getInstance().updateParameter(p, lbtx_params[i].getValue());
                                 }
                      }
                     

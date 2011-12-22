@@ -60,19 +60,19 @@ public class Actor extends WorldObject{
         previous_pos.y = position.y;
         position.y+=velocity.y;                
     }
-    public void left(double vx)
+    public void moveLeft(double vx)
     {
         velocity.x = -vx;
     }
-    public void right(double vx)
+    public void moveRight(double vx)
     {
         velocity.x = vx;
     }
-    public void down(double vy)
+    public void moveDown(double vy)
     {
         velocity.y = vy;
     }
-    public void up(double vy)
+    public void moveUp(double vy)
     {
         velocity.y = -vy;
     }

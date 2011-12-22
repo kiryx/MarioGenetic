@@ -93,11 +93,11 @@ public class Population {
 //        }
         GeneticsConfig gc = GeneticsConfig.getInstance();
         
-        Integer population_size = (Integer)gc.get_parameter(GeneticsConfig.Param.POPULATION_SIZE);
-        Integer elite_size = (Integer) gc.get_parameter(GeneticsConfig.Param.CROSSING_ELITE_SIZE);
-        Integer offspring_count = (Integer)gc.get_parameter(GeneticsConfig.Param.CROSSING_OFFSPRING_COUNT);
+        Integer population_size = (Integer)gc.getParameter(GeneticsConfig.Parameter.POPULATION_SIZE);
+        Integer elite_size = (Integer) gc.getParameter(GeneticsConfig.Parameter.CROSSING_ELITE_SIZE);
+        Integer offspring_count = (Integer)gc.getParameter(GeneticsConfig.Parameter.CROSSING_OFFSPRING_COUNT);
         Integer remaining = population_size-(elite_size+offspring_count);
-        Boolean elite_parents = (Boolean)gc.get_parameter(GeneticsConfig.Param.CROSSING_ELITE_IS_PARENTS);
+        Boolean elite_parents = (Boolean)gc.getParameter(GeneticsConfig.Parameter.CROSSING_ELITE_IS_PARENTS);
                 
         for (int i = 0; i < elite_size; i++) {
             new_population.add(chromosomes.get(i));
@@ -110,8 +110,8 @@ public class Population {
             parents = (Chromosome[]) new_population.toArray(new Chromosome[new_population.size()]);
         else
         {
-            Integer min = (Integer)gc.get_parameter(GeneticsConfig.Param.CROSSING_PARENT_SET_MIN);
-            Integer max = (Integer)gc.get_parameter(GeneticsConfig.Param.CROSSING_PARENT_SET_MAX);
+            Integer min = (Integer)gc.getParameter(GeneticsConfig.Parameter.CROSSING_PARENT_SET_MIN);
+            Integer max = (Integer)gc.getParameter(GeneticsConfig.Parameter.CROSSING_PARENT_SET_MAX);
             parents = (Chromosome[]) Population.getParents(min, max, chromosomes);
         }        
         
@@ -134,10 +134,10 @@ public class Population {
         
         //krzyzowanie
 
-        Double mut_prob = (Double)gc.get_parameter(GeneticsConfig.Param.MUTATION_MOVES_PROBABILITY);
-        Double spec_mut_prob = (Double)gc.get_parameter(GeneticsConfig.Param.MUTATION_SPECIAL_PROBABILITY);
-        Double mut_breadth = (Double)gc.get_parameter(GeneticsConfig.Param.MUTATION_MOVES_BREADTH);
-        Double spec_mut_breadth = (Double)gc.get_parameter(GeneticsConfig.Param.MUTATION_SPECIAL_BREADTH);
+        Double mut_prob = (Double)gc.getParameter(GeneticsConfig.Parameter.MUTATION_MOVES_PROBABILITY);
+        Double spec_mut_prob = (Double)gc.getParameter(GeneticsConfig.Parameter.MUTATION_SPECIAL_PROBABILITY);
+        Double mut_breadth = (Double)gc.getParameter(GeneticsConfig.Parameter.MUTATION_MOVES_BREADTH);
+        Double spec_mut_breadth = (Double)gc.getParameter(GeneticsConfig.Parameter.MUTATION_SPECIAL_BREADTH);
         Random rand = new Random();
         for (int i = 0; i < new_population.size(); i++) {
             Double d = rand.nextDouble();

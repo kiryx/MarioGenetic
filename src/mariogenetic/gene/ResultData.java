@@ -34,19 +34,19 @@ public class ResultData {
         double multiplier = 1.0;
         if(final_state==GameState.RESULT_TIMEOUT)
         {
-            multiplier = (Double)gc.get_parameter(GeneticsConfig.Param.FUNCTION_TIMEOUT_MULTIPLIER);
+            multiplier = (Double)gc.getParameter(GeneticsConfig.Parameter.FUNCTION_TIMEOUT_MULTIPLIER);
         }
         else if(final_state == GameState.RESULT_WON)
         {
-            multiplier = (Double)gc.get_parameter(GeneticsConfig.Param.FUNCTION_WON_MULTIPLIER);
+            multiplier = (Double)gc.getParameter(GeneticsConfig.Parameter.FUNCTION_WON_MULTIPLIER);
         }
         else if(final_state == GameState.RESULT_LOST)
         {
-            multiplier = (Double)gc.get_parameter(GeneticsConfig.Param.FUNCTION_DEAD_MULTIPLIER);
+            multiplier = (Double)gc.getParameter(GeneticsConfig.Parameter.FUNCTION_DEAD_MULTIPLIER);
         }
         final_score += score;
-        Integer max_time =(Integer)gc.get_parameter(GeneticsConfig.Param.MAXIMUM_TIME);
-        Double time_mult = (Double) gc.get_parameter(GeneticsConfig.Param.FUNCTION_TIME_MULTIPLIER);
+        Integer max_time =(Integer)gc.getParameter(GeneticsConfig.Parameter.MAXIMUM_TIME);
+        Double time_mult = (Double) gc.getParameter(GeneticsConfig.Parameter.FUNCTION_TIME_MULTIPLIER);
         final_score += ((double)max_time/((double)time_elapsed)*time_mult);
         
         final_score = (int)(final_score*multiplier);

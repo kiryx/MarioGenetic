@@ -21,8 +21,8 @@ public class ChromosomeTime extends Chromosome{
     public ChromosomeTime()
     {     
         GeneticsConfig gc = GeneticsConfig.getInstance();
-        Integer moves_per_sec = (Integer) GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.MOVES_PER_SECOND);
-        Integer max_time = (Integer) GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.MAXIMUM_TIME);
+        Integer moves_per_sec = (Integer) GeneticsConfig.getInstance().getParameter(GeneticsConfig.Parameter.MOVES_PER_SECOND);
+        Integer max_time = (Integer) GeneticsConfig.getInstance().getParameter(GeneticsConfig.Parameter.MAXIMUM_TIME);
         Integer size = (max_time*moves_per_sec)/1000;        
         
         this.arr_length = size;
@@ -111,17 +111,17 @@ public class ChromosomeTime extends Chromosome{
 
     public boolean isEnd(long time)
     {
-        int index = (int) (time * moves.length / (Integer) GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.MAXIMUM_TIME));
+        int index = (int) (time * moves.length / (Integer) GeneticsConfig.getInstance().getParameter(GeneticsConfig.Parameter.MAXIMUM_TIME));
         return index>=moves.length;
     }
     public GeneticsConfig.Keys getCurrentMove(long time)
     {
-        int index = (int) (time * moves.length / (Integer) GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.MAXIMUM_TIME));
+        int index = (int) (time * moves.length / (Integer) GeneticsConfig.getInstance().getParameter(GeneticsConfig.Parameter.MAXIMUM_TIME));
         return moves[index];
     }
     public GeneticsConfig.Keys getSpecial(long time)
     {
-        int index = (int) (time * special.length / (Integer) GeneticsConfig.getInstance().get_parameter(GeneticsConfig.Param.MAXIMUM_TIME));
+        int index = (int) (time * special.length / (Integer) GeneticsConfig.getInstance().getParameter(GeneticsConfig.Parameter.MAXIMUM_TIME));
         return special[index];
     }
 //    public void calcFunc()
