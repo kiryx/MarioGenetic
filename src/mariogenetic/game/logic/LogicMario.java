@@ -29,7 +29,8 @@ public class LogicMario extends Logic{
         if(GlobalVariables.resources_mutex)
             return;
         Main m = GlobalVariables.main;
-        
+
+//            Actor a = m.resources.getMainActor();
             for(Actor a : m.resources.actors )
             {
                 //Sprawdzanie kolizji ze scianami

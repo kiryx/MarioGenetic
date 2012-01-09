@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import mariogenetic.main.Config;
 import mariogenetic.main.GlobalVariables;
-import mariogenetic.game.ControllerTime;
+import mariogenetic.game.ControllerGenetic;
 import mariogenetic.gene.Chromosome;
 import mariogenetic.gene.Chromosome;
 
@@ -55,9 +55,9 @@ public class PopulationWindow extends JFrame{
                 
                 if(list.getSelectedIndex()!=-1)
                 {
-                    if(GlobalVariables.main.controller instanceof ControllerTime)
+                    if(GlobalVariables.main.controller instanceof ControllerGenetic)
                     {
-                        ControllerTime ct = (ControllerTime)GlobalVariables.main.controller;
+                        ControllerGenetic ct = (ControllerGenetic)GlobalVariables.main.controller;
                         if(ct.getPopulation().chromosomes.get(list.getSelectedIndex()).resultData!=null)
                         {
                             ct.current_chromosome = list.getSelectedIndex();
@@ -79,9 +79,9 @@ public class PopulationWindow extends JFrame{
 
                 if(list.getSelectedIndex()!=-1)
                 {
-                    if(GlobalVariables.main.controller instanceof ControllerTime)
+                    if(GlobalVariables.main.controller instanceof ControllerGenetic)
                     {
-                        ControllerTime ct = (ControllerTime)GlobalVariables.main.controller;
+                        ControllerGenetic ct = (ControllerGenetic)GlobalVariables.main.controller;
                         Chromosome c = ct.getPopulation().chromosomes.get(list.getSelectedIndex());
                         new GeneDetailsWindow((Chromosome)c);
                     }

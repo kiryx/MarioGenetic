@@ -13,6 +13,7 @@ Terrain 752 301 42 83
 Terrain 605 261 81 15
 Terrain 386 249 36 43
 Terrain 314 234 76 50
+Terrain 142 206 80 12
 BonusCoin 258 448 29 29 50
 BonusCoin 297 432 28 28 50
 BonusCoin 341 408 25 28 50
@@ -24,6 +25,5 @@ BonusCoin 643 223 28 28 50
 BonusCoin 448 249 28 24 50
 BonusLose 144 238 167 40 0
 BonusCoin 255 164 29 26 50
-Actor 149 438 19 37
-Terrain 142 206 80 12
 BonusWin 149 170 43 32 50
+Actor 152 430 17 32

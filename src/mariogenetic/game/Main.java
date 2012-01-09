@@ -18,6 +18,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -47,7 +48,17 @@ public class Main extends JPanel implements Runnable{
         public Resources resources;
         public Controller controller;
         public GameState gamestate;
-        
+        public ArrayList<Logic> logic_list= new ArrayList<Logic>();
+        public int selected_logic;
+
+        private void registerLogic(Logic l)
+        {
+            logic_list.add(l);
+        }
+        public void setLogic(int i)
+        {
+            logic = logic_list.get(i);
+        }
 	public Main()
 	{
             this.setSize(Config.window_main_size);
@@ -60,12 +71,17 @@ public class Main extends JPanel implements Runnable{
             
 
             //logic = new LogicLabyrynth();
-            logic = new LogicMario();
+            //logic = new LogicMario();
+            
+            registerLogic(new LogicMario());
+            registerLogic(new LogicLabyrynth());
+            selected_logic=0;
+            setLogic(selected_logic);
             //logic = new LogicSuperMeatBoy();
             resources = new Resources("maps/map1");
-//            controller = new ControllerHuman();
-            controller = new ControllerTime();
-            renderer = RendererBasic.getInstance();
+            controller = new ControllerHuman();
+            //controller = new ControllerGenetic();
+            renderer = RendererSimple.getInstance();
             gamestate = GameState.getInstance();
 
             this.setFocusable(true);
@@ -135,17 +151,19 @@ public class Main extends JPanel implements Runnable{
                 Graphics2D g2 = (Graphics2D)g;
                 renderer.render(g2);
 	}
+        
    public static void main(String[] args) {
                 
-        JFrame frame = new JFrame("Platformer Genetic");
+        JFrame frame = new JFrame("AI Platformer");
         JMenuBar jmb = new JMenuBar();
-        JMenu menu = new JMenu("Game");
+        JMenu menu = new JMenu("System");
+        JMenu menu_help = new JMenu("Help");
         GlobalVariables.pop_frame = PopulationWindow.getInstance();
         final Main main = new Main();
 
         
 
-        JMenuItem mi_mapedit = new JMenuItem("Open map editor",new ImageIcon("img/globe.png"));
+        JMenuItem mi_mapedit = new JMenuItem("Map Editor",new ImageIcon("img/globe.png"));
         mi_mapedit.addActionListener(new ActionListener(){
 
             public void actionPerformed(ActionEvent e) {
@@ -216,6 +234,7 @@ public class Main extends JPanel implements Runnable{
         toolbar.add(btn_restart);
 
 
+
         final JButton btn_speed = new JButton("SpeedUp",new ImageIcon("img/plane.png"));
         btn_speed.addActionListener(new ActionListener() {
 
@@ -265,10 +284,28 @@ public class Main extends JPanel implements Runnable{
         });
         toolbar.add(btn_cam);
 
+
+        final JButton btn_mode = new JButton("Mode: User",new ImageIcon("img/connections.png"));
+        btn_mode.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                GlobalVariables.MODE_NEXT = (GlobalVariables.MODE_CURRENT+1)%2;
+                if(GlobalVariables.MODE_NEXT==GlobalVariables.MODE_USER) {
+                    btn_mode.setText("Mode: User");
+                }
+                else {
+                    btn_mode.setText("Mode: Genetic");
+                }
+                main.requestFocus();
+            }
+        });
+        toolbar.add(btn_mode);
+
         frame.setLayout(new BorderLayout());
         frame.add(toolbar,BorderLayout.NORTH);
         
         jmb.add(menu);
+        jmb.add(menu_help);
         frame.setJMenuBar(jmb);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(main);
@@ -290,6 +327,7 @@ public class Main extends JPanel implements Runnable{
             Thread.currentThread().yield();
             try
             {
+                if(GlobalVariables.SLEEP_TIME>0)
                     Thread.currentThread().sleep(GlobalVariables.SLEEP_TIME);
             }catch (InterruptedException e) {e.printStackTrace();}
         }

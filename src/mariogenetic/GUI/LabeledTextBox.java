@@ -23,9 +23,9 @@ public class LabeledTextBox extends JPanel{
     JTextField text;
     GeneticsConfig.Keys key;
 
-    public LabeledTextBox(GeneticsConfig.Keys key, String valueText)
+    public LabeledTextBox(GeneticsConfig.Keys key, String valueText, String toolTipText)
     {
-        this(key.toString(),valueText);
+        this(key.toString(),valueText,toolTipText);
         this.key = key;
     }
 
@@ -45,9 +45,10 @@ public class LabeledTextBox extends JPanel{
         this.text = text;
     }
     
-    public LabeledTextBox(String labelText, String valueText)
+    public LabeledTextBox(String labelText, String valueText,String toolTipText)
     {
         label = new JLabel(labelText);
+        label.setToolTipText(toolTipText);
         text = new JTextField(valueText);
 
         label.setSize(50, 50);

@@ -20,8 +20,6 @@ public abstract class Renderer {
     protected static Renderer singleton;
     
     protected Renderer(){ }
-    
-    public void render() {}
 
     public void render(Graphics2D g2) { }
 

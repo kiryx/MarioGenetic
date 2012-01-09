@@ -1,0 +1,22 @@
+Terrain 157 112 15 353
+Terrain 356 106 15 273
+Terrain 355 430 17 40
+Terrain 371 433 47 9
+Terrain 453 367 31 10
+Terrain 519 311 31 12
+Terrain 584 253 6 75
+Terrain 609 311 34 12
+Terrain 690 305 68 14
+Terrain 158 466 646 14
+Terrain 784 107 19 373
+Terrain 159 100 646 19
+Terrain 170 183 54 12
+BonusCoin 267 192 21 33 5
+BonusCoin 315 299 18 37 5
+BonusCoin 389 407 27 25 5
+BonusCoin 455 337 22 26 5
+BonusCoin 523 279 20 28 5
+BonusCoin 614 288 23 22 5
+BonusWin 717 267 32 33 5
+BonusLose 173 443 606 22 0
+Actor 179 141 17 30

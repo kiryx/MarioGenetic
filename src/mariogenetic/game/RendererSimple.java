@@ -20,11 +20,11 @@ import mariogenetic.objects.Terrain;
  *
  * @author alice
  */
-public class RendererBasic extends Renderer{
+public class RendererSimple extends Renderer{
 
 
     
-    private RendererBasic()
+    private RendererSimple()
     {       
         camera = new Camera();
         camera.setTarget(GlobalVariables.main.resources.actors.get(GlobalVariables.camera_actor));
@@ -33,7 +33,7 @@ public class RendererBasic extends Renderer{
     public static Renderer getInstance()
     {
         if(singleton == null)
-            singleton = new RendererBasic();
+            singleton = new RendererSimple();
         return singleton;
     }
 
@@ -98,23 +98,23 @@ public class RendererBasic extends Renderer{
             g2.drawString(String.format("x:%.2f y:%.2f",a.position.x,a.position.y ),30,50);
             g2.drawString(String.format("vx:%.2f vy:%.2f",a.velocity.x,a.velocity.y),30,60);
         
-            if(GlobalVariables.main.controller instanceof ControllerTime)
+            if(GlobalVariables.main.controller instanceof ControllerGenetic)
             {
-                ControllerTime cont = (ControllerTime) GlobalVariables.main.controller;
+                ControllerGenetic cont = (ControllerGenetic) GlobalVariables.main.controller;
                 g2.drawString(String.format("Chromosome: %d",cont.current_chromosome),30,80);
             }
             g2.drawString(GlobalVariables.main.gamestate.toString(), 30, 70);
         }
 
         camera.update();
-        Camera.translateDiffNeg(g2, camera.getPosition());
+        Camera.translateScreenNeg(g2, camera.getPosition());
         //g2.translate(-camera.getPosition().x, -camera.getPosition().y);
         
         Main m = GlobalVariables.main;
         g2.translate(m.getWidth()/2, m.getHeight()/2);
         if(!camera.follow && camera.tmp_drag!=null)
         {
-            Camera.translateDiff(g2, camera.tmp_drag);
+            Camera.translateScreen(g2, camera.tmp_drag);
         }
 //        drawGrid(g2, m);
 
@@ -148,7 +148,7 @@ public class RendererBasic extends Renderer{
 
         if(!camera.follow && camera.tmp_drag!=null)
         {
-            Camera.translateDiffNeg(g2, camera.tmp_drag);
+            Camera.translateScreenNeg(g2, camera.tmp_drag);
         }
 
 //        for(Actor ac : m.resources.actors)

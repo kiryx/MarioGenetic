@@ -19,13 +19,13 @@ import mariogenetic.objects.Actor;
  *
  * @author alice
  */
-public class ControllerTime extends Controller{
+public class ControllerGenetic extends Controller{
 
 
     private Population p;
     public int current_chromosome=0;
     //ChromosomeTime c1;
-    public ControllerTime()
+    public ControllerGenetic()
     {
         //c1 = new ChromosomeTime();
         Integer population_size = (Integer)GeneticsConfig.getInstance().getParameter(GeneticsConfig.Parameter.POPULATION_SIZE);

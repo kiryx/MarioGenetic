@@ -37,33 +37,33 @@ public class Camera {
 //        return singleton;
 //    }
 
-     public static void translateDiff(Graphics2D g2, Rectangle box)
+     public static void translateScreen(Graphics2D g2, Rectangle box)
     {
         if(box!=null)
             g2.translate(box.width-box.x,box.height-box.y);
     }
-    public static void translateDiff(Graphics2D g2, Point box)
+    public static void translateScreen(Graphics2D g2, Point box)
     {
         if(box!=null)
             g2.translate(box.x,box.y);
     }
-    public static void translateDiff(Graphics2D g2, Vector box)
+    public static void translateScreen(Graphics2D g2, Vector box)
     {
         if(box!=null)
             g2.translate(box.x,box.y);
     }
-    public static void translateDiffNeg(Graphics2D g2, Point box)
+    public static void translateScreenNeg(Graphics2D g2, Point box)
     {
         if(box!=null)
             g2.translate(-box.x,-box.y);
     }
-    public static void translateDiffNeg(Graphics2D g2, Rectangle box)
+    public static void translateScreenNeg(Graphics2D g2, Rectangle box)
     {
         if(box!=null)
             g2.translate(box.x-box.width,box.y-box.height);
 
     }
-    public static void translateDiffNeg(Graphics2D g2, Vector box)
+    public static void translateScreenNeg(Graphics2D g2, Vector box)
     {
         if(box!=null)
             g2.translate(-box.x,-box.y);

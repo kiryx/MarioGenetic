@@ -25,6 +25,16 @@ public class GeneticsConfig {
     {
         NONE,UP,DOWN,LEFT,RIGHT,A,B,C,D
     }
+    private HashMap<Parameter,Object> genetic_params = new HashMap<Parameter,Object>();
+    private HashMap<Parameter,Class> genetic_param_classes = new HashMap<Parameter,Class>();
+
+    private HashMap<GeneticsConfig.Keys,Double> moveProb = new HashMap<GeneticsConfig.Keys,Double>();
+    private double totalMove;
+
+    private HashMap<GeneticsConfig.Keys,Double> specialProb = new HashMap<GeneticsConfig.Keys,Double>();
+    private double totalSpecial;
+
+    private Random generator = null;
     public static Keys moveKeys[] = {Keys.UP, Keys.DOWN, Keys.LEFT, Keys.RIGHT, Keys.NONE};
     public static Keys specialKeys[] = {Keys.A, Keys.B, Keys.C, Keys.D, Keys.NONE};
     private GeneticsConfig()
@@ -67,6 +77,7 @@ public class GeneticsConfig {
         registerParameter(Parameter.FUNCTION_WON_MULTIPLIER, 2.0, Double.class);
         registerParameter(Parameter.FUNCTION_TIMEOUT_MULTIPLIER, 1.0, Double.class);
         registerParameter(Parameter.FUNCTION_TIME_MULTIPLIER, 50.0, Double.class);
+
         
     }
     public static enum Parameter {
@@ -89,16 +100,7 @@ public class GeneticsConfig {
         return singleton;
     }
     
-    private HashMap<Parameter,Object> genetic_params = new HashMap<Parameter,Object>();
-    private HashMap<Parameter,Class> genetic_param_classes = new HashMap<Parameter,Class>();
-
-    private HashMap<GeneticsConfig.Keys,Double> moveProb = new HashMap<GeneticsConfig.Keys,Double>();
-    private double totalMove;
     
-    private HashMap<GeneticsConfig.Keys,Double> specialProb = new HashMap<GeneticsConfig.Keys,Double>();
-    private double totalSpecial;
-    
-    private Random generator = null;
 
          
     private void registerParameter(Parameter p, Object o, Class c )

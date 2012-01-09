@@ -1,8 +1,19 @@
-Terrain 122 361 239 27
-Terrain 110 211 25 151
-Terrain 355 201 28 165
-Actor 140 295 20 32
-BonusCoin 202 328 18 30 25
-BonusCoin 248 330 16 27 25
-BonusWin 327 236 18 36 25
-BonusLose 313 311 33 40 0
+Terrain 247 178 14 282
+Terrain 261 244 35 8
+Terrain 346 171 14 229
+Terrain 345 438 15 20
+Terrain 360 439 22 6
+Terrain 399 385 42 10
+Terrain 358 299 24 13
+Terrain 477 162 13 237
+Terrain 472 442 33 13
+Terrain 441 273 8 120
+BonusLose 249 452 274 29 0
+BonusWin 498 384 26 58 5
+BonusCoin 349 410 23 24 5
+BonusCoin 406 356 17 23 5
+BonusCoin 368 269 18 25 5
+BonusCoin 448 239 16 30 5
+BonusCoin 474 416 18 24 5
+Actor 266 211 18 29
+Terrain 236 148 256 32

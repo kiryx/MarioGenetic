@@ -94,7 +94,7 @@ public class GameState {
                 case GlobalVariables.MODE_TIME:
                 {
 //                    Global.main.logic=new LogicMario();
-                    GlobalVariables.main.controller = new ControllerTime();
+                    GlobalVariables.main.controller = new ControllerGenetic();
                     break;
                 }
             }

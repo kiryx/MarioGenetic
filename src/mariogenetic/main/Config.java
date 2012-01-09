@@ -21,10 +21,13 @@ import java.util.Set;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+import mariogenetic.GUI.Locals;
+import mariogenetic.game.Main;
 import mariogenetic.gene.GeneticsConfig.Parameter;
 
 /**
@@ -33,8 +36,8 @@ import mariogenetic.gene.GeneticsConfig.Parameter;
  */
 public class Config extends JPanel {
         public static final Dimension window_main_size = new Dimension(500,500);
-        public static final Dimension window_settings_size = new Dimension(380,730);
-        public static final Dimension window_editor_size = new Dimension(700,500);
+        public static final Dimension window_settings_size = new Dimension(380,750);
+        public static final Dimension window_editor_size = new Dimension(870,500);
 //	public static final int TILE_SIZE = 30;
         public static final Color color_grid_light = new Color(210,210,210);
         public static final Color color_grid_dark = new Color(170,170,170);
@@ -154,22 +157,30 @@ public class Config extends JPanel {
 
             GeneticsConfig gc = GeneticsConfig.getInstance();
             final LabeledTextBox[] lbtx = {
-                new LabeledTextBox(GeneticsConfig.Keys.UP, String.valueOf(gc.getMoveKeyProbability(GeneticsConfig.Keys.UP))),
-                new LabeledTextBox(GeneticsConfig.Keys.DOWN, String.valueOf(gc.getMoveKeyProbability(GeneticsConfig.Keys.DOWN))),
-                new LabeledTextBox(GeneticsConfig.Keys.LEFT, String.valueOf(gc.getMoveKeyProbability(GeneticsConfig.Keys.LEFT))),
-                new LabeledTextBox(GeneticsConfig.Keys.RIGHT, String.valueOf(gc.getMoveKeyProbability(GeneticsConfig.Keys.RIGHT))),
-                new LabeledTextBox(GeneticsConfig.Keys.NONE, String.valueOf(gc.getMoveKeyProbability(GeneticsConfig.Keys.NONE))),
-                new LabeledTextBox(GeneticsConfig.Keys.A, String.valueOf(gc.getSpecialKeyProbability(GeneticsConfig.Keys.A))),
-                new LabeledTextBox(GeneticsConfig.Keys.B, String.valueOf(gc.getSpecialKeyProbability(GeneticsConfig.Keys.B))),
-                new LabeledTextBox(GeneticsConfig.Keys.C, String.valueOf(gc.getSpecialKeyProbability(GeneticsConfig.Keys.C))),
-                new LabeledTextBox(GeneticsConfig.Keys.D, String.valueOf(gc.getSpecialKeyProbability(GeneticsConfig.Keys.D))),
-                new LabeledTextBox(GeneticsConfig.Keys.NONE, String.valueOf(gc.getSpecialKeyProbability(GeneticsConfig.Keys.NONE)))
+                new LabeledTextBox(GeneticsConfig.Keys.UP, String.valueOf(gc.getMoveKeyProbability(GeneticsConfig.Keys.UP)),"Move up probability"),
+                new LabeledTextBox(GeneticsConfig.Keys.DOWN, String.valueOf(gc.getMoveKeyProbability(GeneticsConfig.Keys.DOWN)),"Move down probability"),
+                new LabeledTextBox(GeneticsConfig.Keys.LEFT, String.valueOf(gc.getMoveKeyProbability(GeneticsConfig.Keys.LEFT)),"Move left probability"),
+                new LabeledTextBox(GeneticsConfig.Keys.RIGHT, String.valueOf(gc.getMoveKeyProbability(GeneticsConfig.Keys.RIGHT)),"Move right probability"),
+                new LabeledTextBox(GeneticsConfig.Keys.NONE, String.valueOf(gc.getMoveKeyProbability(GeneticsConfig.Keys.NONE)),"No-action probability"),
+                new LabeledTextBox(GeneticsConfig.Keys.A, String.valueOf(gc.getSpecialKeyProbability(GeneticsConfig.Keys.A)),"A action probability"),
+                new LabeledTextBox(GeneticsConfig.Keys.B, String.valueOf(gc.getSpecialKeyProbability(GeneticsConfig.Keys.B)),"B action probability"),
+                new LabeledTextBox(GeneticsConfig.Keys.C, String.valueOf(gc.getSpecialKeyProbability(GeneticsConfig.Keys.C)),"C action probability"),
+                new LabeledTextBox(GeneticsConfig.Keys.D, String.valueOf(gc.getSpecialKeyProbability(GeneticsConfig.Keys.D)),"D action probability"),
+                new LabeledTextBox(GeneticsConfig.Keys.NONE, String.valueOf(gc.getSpecialKeyProbability(GeneticsConfig.Keys.NONE)),"No-action probability")
             };
 
             JButton btn_ok = new JButton("Apply");
 
             JPanel move_group = new JPanel();
             move_group.setBorder(BorderFactory.createTitledBorder("Movement key probabilities"));
+
+            Main m = GlobalVariables.main;
+            String[] lstr = new String[m.logic_list.size()];
+            for (int i = 0; i < lstr.length; i++) {
+                lstr[i]=m.logic_list.get(i).getClass().getSimpleName();
+            }
+            final JComboBox cbx_logic = new JComboBox(lstr);
+            container.add(cbx_logic);
             container.add(move_group);
             move_group.setLayout(new BoxLayout(move_group,BoxLayout.Y_AXIS));
 
@@ -206,9 +217,10 @@ public class Config extends JPanel {
             param_values = arr_par.toArray(new Parameter[arr_par.size()]);
             
             final LabeledTextBox[] lbtx_params = new LabeledTextBox[param_values.length];
+            Locals locals = Locals.getInstance();
             for(int i=0;i<lbtx_params.length;++i)
             {
-                lbtx_params[i] = new LabeledTextBox(param_values[i].name(), String.valueOf(gc.getParameter(param_values[i])));
+                lbtx_params[i] = new LabeledTextBox(param_values[i].toString(), String.valueOf(gc.getParameter(param_values[i])),locals.getString(param_values[i].toString()));
                 
                 genetic_group.add(lbtx_params[i]);
 
@@ -224,6 +236,7 @@ public class Config extends JPanel {
 
             btn_ok.addActionListener(new ActionListener(){
 
+                
                 public void actionPerformed(ActionEvent e) {
                     for (int i = 0; i < 5; i++) {
                         GeneticsConfig.getInstance().setMoveKeyProbability(lbtx[i].getKey(), Double.valueOf(lbtx[i].getValue()));
@@ -232,13 +245,20 @@ public class Config extends JPanel {
                         GeneticsConfig.getInstance().setSpecialKeyProbability(lbtx[i].getKey(), Double.valueOf(lbtx[i].getValue()));
                     }
                     ArrayList<Parameter> modified = conf_main.requiresReset(lbtx_params);
-                    if(modified.size()>0)
+                    boolean logic_changed = false;
+                    
+                    if(cbx_logic.getSelectedIndex() != GlobalVariables.main.selected_logic)
+                        logic_changed=true;
+                    
+                    if(modified.size()>0 || logic_changed)
                     {
                         String params = "";
                         for(Parameter p : modified)
                         {
-                            params+= p.name()+" ";
+                            params+= p.name()+", ";
                         }
+                        if(logic_changed)
+                            params+="Logic changed";
                         String msg = String.format("Some parameters need to reset the population\nin order to apply the changes: %s\n\nPress YES to reset the population.\nPress NO to revert the values and do nothing.\n\n",params);
 
                         int chosen = JOptionPane.showConfirmDialog(conf_main,msg , "Population reset is needed in order to apply." , JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE);
@@ -249,11 +269,16 @@ public class Config extends JPanel {
                                     GeneticsConfig.getInstance().updateParameter(p, lbtx_params[i].getValue());
                                 }
                             GlobalVariables.main.resetAll();
+                            GlobalVariables.main.setLogic(cbx_logic.getSelectedIndex());
+                            GlobalVariables.main.selected_logic = cbx_logic.getSelectedIndex();
+
                         }
                         else if(chosen == JOptionPane.NO_OPTION)
                         {
                             conf_main.revertBack(modified, lbtx_params);
                             conf_main.repaint();
+                            cbx_logic.setSelectedIndex(GlobalVariables.main.selected_logic);
+
                         }
                         else if(chosen == JOptionPane.CANCEL_OPTION)
                         {

@@ -49,6 +49,7 @@ public abstract class Controller implements KeyListener,MouseMotionListener,Mous
                 }
                 break;
             }
+            //TODO Wyłączyć tryb speed jeśli prezłączamy sie na USERA
             case KeyEvent.VK_H: {GlobalVariables.MODE_NEXT=GlobalVariables.MODE_USER; break;}
             case KeyEvent.VK_T: {GlobalVariables.MODE_NEXT=GlobalVariables.MODE_TIME; break;}
 

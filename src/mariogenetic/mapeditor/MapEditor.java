@@ -6,6 +6,7 @@
 package mariogenetic.mapeditor;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -37,7 +38,7 @@ import mariogenetic.main.Config;
 import mariogenetic.main.GlobalVariables;
 import mariogenetic.main.Vector;
 import mariogenetic.game.Camera;
-import mariogenetic.game.RendererBasic;
+import mariogenetic.game.RendererSimple;
 import mariogenetic.game.Resources;
 import mariogenetic.objects.Actor;
 import mariogenetic.objects.Bonus;
@@ -84,12 +85,16 @@ public class MapEditor extends JPanel implements KeyListener, MouseListener, Mou
 
         btn_testrun = new JButton("Test Run",new ImageIcon("img/cassette.png"));
         btn_testrun.addActionListener(new ActionListener(){
-
             public void actionPerformed(ActionEvent e) {
-                String test_path = "maps/test_run";
-                saveMap(test_path);
-                GlobalVariables.main.resources = new Resources(test_path);
-                GlobalVariables.main.gamestate.reset();
+                
+                if(JOptionPane.showConfirmDialog(this_map, "Do you want to interrupt current game ?\nCurrent Population will be resetted.")==JOptionPane.YES_OPTION)
+                {
+                    String test_path = "maps/test_run";
+                    saveMap(test_path);
+                    GlobalVariables.main.resources = new Resources(test_path);
+                    GlobalVariables.main.gamestate.reset();
+                }
+
                 repaint();
             }
         });
@@ -112,7 +117,7 @@ public class MapEditor extends JPanel implements KeyListener, MouseListener, Mou
 
             public void actionPerformed(ActionEvent e) {
                                 
-                if(JOptionPane.showConfirmDialog(this_map, "Erase the whole thing ?")==JOptionPane.YES_OPTION)
+                if(JOptionPane.showConfirmDialog(this_map, "Do you want to delete all objects ?")==JOptionPane.YES_OPTION)
                 {
                     world_objects.clear();
                     selected_object = null;
@@ -144,7 +149,7 @@ public class MapEditor extends JPanel implements KeyListener, MouseListener, Mou
             }
         });        
 
-        btn_coin = new JButton("Value",new ImageIcon("img/dollar.png"));
+        btn_coin = new JButton("Coin",new ImageIcon("img/dollar.png"));
         btn_coin.addActionListener(new ActionListener(){
 
             public void actionPerformed(ActionEvent e) {
@@ -181,8 +186,7 @@ public class MapEditor extends JPanel implements KeyListener, MouseListener, Mou
         buttons = new JButton[]{ btn_terrain,btn_kills,btn_coin,btn_win,btn_player};
         for(int i=0;i<buttons.length;++i)
             buttons[i].setBackground(Config.color_map_not_selected);
-        this.setSelected(BlockType.Terrain);        
-
+        this.setSelected(BlockType.Terrain);
 
         
     }
@@ -231,9 +235,9 @@ public class MapEditor extends JPanel implements KeyListener, MouseListener, Mou
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        Camera.translateDiff(g2, screenDrag);
-        Camera.translateDiff(g2, screenDrag_tmp);
-        RendererBasic.drawGrid(g2, this);
+        Camera.translateScreen(g2, screenDrag);
+        Camera.translateScreen(g2, screenDrag_tmp);
+        RendererSimple.drawGrid(g2, this);
         if(selection!=null)
         {
             g2.drawRect(Math.min(selection.x,selection.width)-screenDrag.x,
@@ -252,8 +256,8 @@ public class MapEditor extends JPanel implements KeyListener, MouseListener, Mou
             g2.drawRect((int)selected_object.position.x, (int)selected_object.position.y,
                 selected_object.size.x, selected_object.size.y);
 
-        Camera.translateDiffNeg(g2, screenDrag_tmp);
-        Camera.translateDiffNeg(g2, screenDrag);
+        Camera.translateScreenNeg(g2, screenDrag_tmp);
+        Camera.translateScreenNeg(g2, screenDrag);
     
     }
 
@@ -271,6 +275,8 @@ public class MapEditor extends JPanel implements KeyListener, MouseListener, Mou
         //toolbar z ikonami
         JToolBar toolbar = new JToolBar("Tools", JToolBar.HORIZONTAL);
         toolbar.setFloatable(false);
+
+
 
         toolbar.add(map_main.btn_player);
         toolbar.add(map_main.btn_terrain);
